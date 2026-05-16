@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background: #faf6f0;
+    color: #2e3230;
+    font-family: "Nunito Sans", sans-serif;
+  }
+
+  button,
+  a {
+    font: inherit;
+  }
+
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+}
+
+@layer utilities {
+  .mading-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #4a7c59 #f0ece4;
+    touch-action: pan-x;
+  }
+
+  .mading-scroll::-webkit-scrollbar {
+    height: 12px;
+  }
+
+  .mading-scroll::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: #f0ece4;
+  }
+
+  .mading-scroll::-webkit-scrollbar-thumb {
+    border: 3px solid #f0ece4;
+    border-radius: 999px;
+    background: #4a7c59;
+  }
+
+  .explore-viewport {
+    touch-action: none;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(248, 224, 168, 0.38), transparent 36%),
+      radial-gradient(circle at 18% 72%, rgba(120, 168, 134, 0.2), transparent 26%),
+      #faf6f0;
+    background-size: 100% 100%, 100% 100%, auto;
+  }
+
+  .explore-viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  .explore-canvas {
+    transform: translate3d(0, 0, 0);
+    box-shadow: 0 24px 70px rgba(46, 50, 48, 0.2);
+  }
+
+  .explore-panel {
+    transform: translateZ(0) scale(0.985);
+    background-image:
+      linear-gradient(rgba(255, 248, 234, 0.88), rgba(255, 248, 234, 0.88)),
+      radial-gradient(circle at 20% 15%, rgba(216, 188, 139, 0.2), transparent 24%);
+  }
+
+  .module-surface {
+    box-shadow:
+      0 18px 44px rgba(46, 50, 48, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  }
+
+  .module-card {
+    background-image:
+      linear-gradient(rgba(255, 250, 240, 0.95), rgba(255, 250, 240, 0.95)),
+      radial-gradient(circle at 14% 14%, rgba(120, 168, 134, 0.15), transparent 28%);
+  }
+
+  .module-number-tab {
+    clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%);
+  }
+
+  .explore-panel::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 240ms ease;
+    box-shadow: 0 0 0 2px rgba(74, 124, 89, 0.18), 0 0 60px rgba(120, 168, 134, 0.24);
+  }
+
+  .explore-panel:hover,
+  .explore-panel.is-active {
+    transform: translateY(-4px) scale(1);
+    box-shadow: 0 28px 80px rgba(46, 50, 48, 0.18);
+  }
+
+  .explore-panel:hover::before,
+  .explore-panel.is-active::before {
+    opacity: 1;
+  }
+
+  .paper-note {
+    background-image:
+      linear-gradient(rgba(255, 248, 234, 0.9), rgba(255, 248, 234, 0.9)),
+      radial-gradient(circle at 78% 18%, rgba(220, 196, 142, 0.28), transparent 18%);
+  }
+
+  .hero-pin {
+    width: 54px;
+    height: 54px;
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 35% 30%, #fff1bd 0 10%, #d99a36 35%, #9b621c 100%);
+    box-shadow:
+      0 7px 0 #9b621c,
+      0 16px 24px rgba(46, 50, 48, 0.26);
+  }
+
+  .hero-pin::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 45px;
+    width: 64px;
+    height: 52px;
+    transform: translateX(-50%);
+    background: rgba(220, 196, 142, 0.18);
+    clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+  }
+
+  .risk-pin {
+    animation: risk-pulse 2.8s ease-in-out infinite;
+  }
+
+  .quake-pulse {
+    animation: quake-pulse 1.8s ease-in-out infinite;
+  }
+
+  .route-dash {
+    animation: route-flow 1.2s linear infinite;
+  }
+
+  .evac-path {
+    animation: dash-travel 1.4s linear infinite;
+  }
+
+  @keyframes risk-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(36, 72, 50, 0.22), 0 14px 24px rgba(46, 50, 48, 0.18);
+    }
+    50% {
+      box-shadow: 0 0 0 12px rgba(36, 72, 50, 0), 0 18px 32px rgba(46, 50, 48, 0.22);
+    }
+  }
+
+  @keyframes quake-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.08) rotate(-2deg);
+    }
+  }
+
+  @keyframes route-flow {
+    from {
+      border-color: #dc6d2f;
+    }
+    to {
+      border-color: #78a886;
+    }
+  }
+
+  @keyframes dash-travel {
+    from {
+      stroke-dashoffset: 0;
+    }
+    to {
+      stroke-dashoffset: -32;
+    }
+  }
+}
