@@ -1,0 +1,8 @@
+{
+  "name": "EduQuake",
+  "short_name": "EduQuake",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#25303a",
+  "theme_color": "#f56a28"
+}

@@ -1,0 +1,54 @@
+html {
+  font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
+body,
+button,
+input {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+strong {
+  letter-spacing: 0;
+}
+
+h1 {
+  font-size: 1.45rem;
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+p {
+  line-height: 1.45;
+}
+
+.pixel-kicker {
+  color: var(--eq-gold);
+  font-size: 0.76rem;
+  font-weight: 900;
+  line-height: 1.2;
+  text-transform: uppercase;
+}

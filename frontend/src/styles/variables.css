@@ -1,0 +1,19 @@
+:root {
+  --eq-ink: #18212b;
+  --eq-ink-2: #293645;
+  --eq-cream: #fff4d8;
+  --eq-paper: #ffe9b4;
+  --eq-panel: #31485c;
+  --eq-panel-dark: #1f2f3d;
+  --eq-blue: #2d7dd2;
+  --eq-sky: #8ed9ff;
+  --eq-green: #3fa35b;
+  --eq-lime: #b6e36d;
+  --eq-orange: #f56a28;
+  --eq-gold: #f3b43f;
+  --eq-red: #d93f31;
+  --eq-muted: #778892;
+  --eq-shadow: rgba(13, 20, 28, 0.28);
+  --eq-radius: 8px;
+  --eq-border: 3px solid #111922;
+}
