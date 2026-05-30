@@ -1,0 +1,4462 @@
+/* Scoped open-book fidelity layer. Navbar, sidebar, HUD, footer, and leaderboard are untouched. */
+.quest-book {
+  --codex-paper: #d8c29d;
+  --codex-paper-dark: #c4ae84;
+  --codex-wood: #3a2416;
+  --codex-wood-dark: #24150d;
+  --codex-green: #355e3b;
+  --codex-gold: #d9a441;
+  --codex-ink: #2b1d0e;
+  background: url("../assets/ui/bgbook.png") center center / 100% 100% no-repeat;
+  border: 0;
+  border-radius: 16px;
+  box-shadow:
+    0 18px 36px rgba(0, 0, 0, 0.38),
+    0 36px 78px rgba(0, 0, 0, 0.52);
+  display: grid;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  column-gap: clamp(24px, 2.8vw, 44px);
+  row-gap: clamp(7px, 0.8vw, 12px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  isolation: isolate;
+  margin-inline: auto;
+  min-height: 0;
+  overflow: visible;
+  padding:
+    calc(clamp(86px, 7.4vw, 112px) + 10px)
+    clamp(94px, 8vw, 118px)
+    calc(clamp(52px, 5.2vw, 76px) - 10px);
+  position: relative;
+  aspect-ratio: 1448 / 1086;
+  width: min(100%, 1448px);
+}
+
+.quest-book::before {
+  background: linear-gradient(90deg, rgba(67, 37, 13, 0), rgba(67, 37, 13, 0.16) 48%, rgba(67, 37, 13, 0), rgba(255, 238, 184, 0.1), rgba(67, 37, 13, 0));
+  bottom: 13px;
+  box-shadow: none;
+  content: "";
+  left: calc(50% - 12px);
+  pointer-events: none;
+  position: absolute;
+  top: 13px;
+  width: 24px;
+  z-index: 8;
+}
+
+.quest-book::after {
+  display: none;
+}
+
+.quest-book__spine,
+.quest-book__ribbon {
+  display: none;
+}
+
+.quest-page {
+  background: transparent;
+  color: var(--codex-ink);
+  display: grid;
+  gap: clamp(7px, 0.65vw, 11px);
+  grid-auto-rows: min-content;
+  min-width: 0;
+  overflow: hidden;
+  padding: clamp(24px, 2.45vw, 42px);
+  position: relative;
+}
+
+.quest-page::before {
+  display: none;
+}
+
+.quest-page::after {
+  display: none;
+}
+
+.quest-page--left {
+  border-radius: 7px 1px 1px 7px;
+  box-shadow: none;
+  padding: clamp(8px, 1vw, 16px) clamp(18px, 1.8vw, 28px) clamp(8px, 1vw, 16px) clamp(8px, 1vw, 16px);
+}
+
+.quest-page--right {
+  border-radius: 1px 7px 7px 1px;
+  box-shadow: none;
+  padding: clamp(8px, 1vw, 16px) clamp(8px, 1vw, 16px) clamp(8px, 1vw, 16px) clamp(18px, 1.8vw, 28px);
+}
+
+.quest-module-header,
+.quest-illustration,
+.quest-copy,
+.quest-progress,
+.quest-cta,
+.quest-page-title,
+.quest-step-list,
+.quest-bag-slots,
+.quest-mini-quiz,
+.quest-gameplay,
+.quest-left-feature,
+.quest-tutorial-left-notes,
+.quest-book-footer,
+.quest-reward-popup,
+.quest-tip {
+  position: relative;
+  z-index: 2;
+}
+
+.quest-module-header {
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(216, 194, 157, 0.78) 0%, rgba(216, 194, 157, 0.62) 35%, rgba(196, 174, 132, 0.28) 64%, rgba(196, 174, 132, 0.06) 100%),
+    linear-gradient(180deg, rgba(255, 239, 188, 0.12), rgba(71, 43, 17, 0.14)),
+    radial-gradient(ellipse at 76% 58%, rgba(89, 53, 22, 0.18), transparent 58%),
+    var(--quest-module-header-bg) center center / 100% 100% no-repeat,
+    var(--codex-paper);
+  border: 3px solid #26351e;
+  border-radius: 12px;
+  box-shadow:
+    0 3px 0 rgba(43, 29, 14, 0.62),
+    inset 0 0 0 2px rgba(255, 239, 189, 0.64),
+    inset 0 0 0 5px rgba(47, 74, 39, 0.18),
+    inset 0 0 24px rgba(69, 43, 19, 0.24);
+  clip-path: none;
+  display: grid;
+  gap: clamp(8px, 0.8vw, 12px);
+  grid-template-columns: clamp(50px, 5.2vw, 76px) minmax(0, 1fr) minmax(96px, 30%);
+  aspect-ratio: 2172 / 500;
+  height: auto;
+  margin: 0;
+  max-width: none;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(8px, 0.8vw, 11px) clamp(10px, 1vw, 14px);
+  width: 100%;
+}
+
+.quest-module-header::before {
+  border: 1px solid rgba(43, 29, 14, 0.58);
+  content: "";
+  inset: 5px;
+  opacity: 0.72;
+  pointer-events: none;
+  position: absolute;
+  border-radius: 8px;
+  z-index: 5;
+}
+
+.quest-module-header::after {
+  background:
+    radial-gradient(circle at 22% 28%, rgba(91, 59, 29, 0.08) 0 1px, transparent 2px),
+    radial-gradient(ellipse at 78% 50%, rgba(89, 53, 22, 0.18), transparent 58%),
+    linear-gradient(90deg, rgba(255, 241, 192, 0.04), transparent 38%, rgba(71, 43, 17, 0.08) 72%, rgba(43, 29, 14, 0.18));
+  background-size: 100% 100%;
+  content: "";
+  inset: 0;
+  opacity: 0.58;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  position: absolute;
+  z-index: 4;
+}
+
+.quest-module-header > img {
+  display: none;
+}
+
+.quest-module-badge {
+  align-items: center;
+  align-self: center;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: var(--codex-green);
+  display: flex;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(1.05rem, 2vw, 2.1rem);
+  font-weight: 400;
+  height: auto;
+  justify-content: center;
+  line-height: 1;
+  text-shadow: 2px 2px 0 rgba(255, 234, 178, 0.58);
+  width: auto;
+  z-index: 6;
+}
+
+.quest-module-heading {
+  align-self: center;
+  display: grid;
+  gap: clamp(3px, 0.35vw, 6px);
+  min-width: 0;
+  position: relative;
+  z-index: 6;
+}
+
+.quest-module-heading h1 {
+  color: var(--codex-green);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(1.06rem, 1.48vw, 1.58rem);
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 1px 1px 0 rgba(255, 235, 180, 0.7);
+  text-transform: none;
+}
+
+.quest-module-heading small {
+  color: #26190d;
+  display: block;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.58rem, 0.72vw, 0.82rem);
+  font-weight: 600;
+  line-height: 1.05;
+  margin: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.quest-illustration {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  margin: var(--quest-poster-offset-y, 0px) 0 0;
+  max-height: var(--quest-poster-frame-max-height, min(270px, 29vh));
+  max-width: 100%;
+  min-height: var(--quest-poster-frame-min-height, clamp(150px, 13vw, 220px));
+  overflow: hidden;
+  width: 100%;
+}
+
+.quest-illustration img {
+  display: block;
+  filter: drop-shadow(0 3px 0 rgba(70, 42, 18, 0.24)) saturate(0.98) contrast(1.03);
+  height: auto;
+  image-rendering: pixelated;
+  max-height: var(--quest-poster-max-height, min(270px, 29vh));
+  max-width: 100%;
+  object-fit: contain;
+  overflow: hidden;
+  transform: translateY(var(--quest-poster-inner-offset-y, 0px));
+  width: var(--quest-poster-width, 100%);
+}
+
+.quest-illustration figcaption {
+  display: none;
+}
+
+.quest-page--poster {
+  align-content: start;
+  grid-template-rows: min-content minmax(0, 1fr);
+}
+
+.quest-illustration--poster {
+  align-items: center;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  justify-content: center;
+  margin-top: var(--quest-poster-offset-y, -10px);
+  max-height: none;
+  min-height: 0;
+  outline: 0 !important;
+  overflow: visible;
+  position: relative;
+  transform: none !important;
+}
+
+.quest-illustration--poster img {
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  outline: 0 !important;
+  transform: none !important;
+  transform-origin: top center;
+  transition: none;
+  width: var(--quest-poster-width, min(94%, 440px));
+}
+
+.quest-illustration--poster:hover {
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  outline: 0 !important;
+  transform: none !important;
+}
+
+.quest-illustration--poster:hover img {
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  outline: 0 !important;
+  transform: none !important;
+}
+
+.quest-illustration--poster:focus,
+.quest-illustration--poster:focus-visible,
+.quest-illustration--poster:focus-within,
+.quest-illustration--poster img:focus,
+.quest-illustration--poster img:focus-visible {
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  outline: 0 !important;
+  transform: none !important;
+}
+
+.quest-poster-switch {
+  bottom: clamp(7px, 0.8vw, 12px);
+  display: inline-flex;
+  gap: 5px;
+  position: absolute;
+  z-index: 4;
+  center: clamp(21px, 1vw, 12px);
+}
+
+.quest-poster-switch button {
+  background:
+    linear-gradient(180deg, rgba(255, 238, 174, 0.16), transparent 48%),
+    #355e3b;
+  border: 2px solid #2b1d0e;
+  box-shadow: inset 0 0 0 1px rgba(217, 164, 65, 0.56), 2px 2px 0 rgba(43, 29, 14, 0.32);
+  color: #f4df9d;
+  cursor: pointer;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.46rem, 0.52vw, 0.62rem);
+  height: clamp(23px, 2.2vw, 30px);
+  padding: 0;
+  width: clamp(24px, 2.3vw, 31px);
+}
+
+.quest-poster-switch button.is-active {
+  background: linear-gradient(180deg, #d9a441, #8f6023);
+  color: #2b1d0e;
+}
+
+.quest-tutorial-left-notes {
+  display: grid;
+  gap: clamp(5px, 0.5vw, 8px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: -2px;
+}
+
+.quest-tutorial-left-notes article {
+  background:
+    linear-gradient(135deg, rgba(255, 246, 204, 0.36), transparent 64%),
+    rgba(218, 190, 139, 0.5);
+  border: 2px solid rgba(84, 57, 27, 0.58);
+  box-shadow: inset 0 0 0 1px rgba(255, 238, 184, 0.16), 0 2px 0 rgba(57, 35, 17, 0.18);
+  min-width: 0;
+  padding: clamp(5px, 0.48vw, 7px);
+}
+
+.quest-tutorial-left-notes strong {
+  color: var(--codex-green);
+  display: block;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.46rem, 0.52vw, 0.62rem);
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+
+.quest-tutorial-left-notes ul,
+.quest-tutorial-detail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.quest-tutorial-left-notes li {
+  color: #20150b;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.62rem, 0.68vw, 0.78rem);
+  font-weight: 600;
+  line-height: 0.95;
+  padding-left: 8px;
+  position: relative;
+}
+
+.quest-tutorial-left-notes li + li {
+  margin-top: 3px;
+}
+
+.quest-tutorial-left-notes li::before,
+.quest-tutorial-detail-list li::before {
+  color: var(--codex-green);
+  content: "-";
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.quest-copy {
+  color: #20150b;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.84rem, 0.95vw, 1rem);
+  font-weight: 600;
+  line-height: 1.28;
+}
+
+.quest-progress {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  display: grid;
+  gap: 6px;
+  padding: 0 clamp(2px, 0.5vw, 8px);
+}
+
+.quest-progress__heading {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.quest-progress h2 {
+  color: var(--codex-ink);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.78rem, 0.86vw, 0.92rem);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.quest-progress__heading strong {
+  color: var(--codex-ink);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.8rem, 0.88vw, 0.96rem);
+  font-weight: 700;
+}
+
+.quest-progress__row {
+  display: block;
+}
+
+.quest-progress__track {
+  background:
+    linear-gradient(180deg, rgba(255, 242, 191, 0.25), rgba(52, 32, 14, 0.18)),
+    #9f8153;
+  border: 2px solid rgba(72, 46, 22, 0.76);
+  border-radius: 0;
+  box-shadow: inset 0 2px 0 rgba(58, 34, 13, 0.2), 0 1px 0 rgba(255, 238, 184, 0.35);
+  display: block;
+  height: 10px;
+  overflow: hidden;
+}
+
+.quest-progress__track i {
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 244, 194, 0.1) 0 9px, transparent 9px 18px),
+    linear-gradient(180deg, #4f7e39 0%, #244b27 100%);
+  border-radius: 0;
+  border-right: 3px solid rgba(32, 59, 36, 0.7);
+  box-shadow: inset 0 1px 0 rgba(246, 226, 152, 0.2);
+  display: block;
+  height: 100%;
+}
+
+.quest-cta {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 239, 171, 0.12) 0%, transparent 22%),
+    linear-gradient(180deg, #3e6b3d 0%, var(--codex-green) 52%, #203b25 100%);
+  border: 3px solid #142616;
+  border-radius: 2px;
+  box-shadow:
+    0 4px 0 #0d160c,
+    inset 0 0 0 2px var(--codex-gold),
+    inset 0 -5px 0 rgba(0, 0, 0, 0.22),
+    0 0 14px rgba(217, 164, 65, 0.16);
+  color: #f6e5b5;
+  display: inline-flex;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.78rem, 0.88vw, 0.96rem);
+  font-weight: 700;
+  gap: 14px;
+  justify-content: center;
+  justify-self: center;
+  letter-spacing: 0;
+  min-height: 44px;
+  min-width: min(270px, 100%);
+  padding: 0 22px;
+  text-shadow: 2px 2px 0 #101d10;
+  text-transform: uppercase;
+  transition: filter 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+}
+
+.quest-cta span {
+  order: 2;
+}
+
+.quest-cta:hover {
+  box-shadow:
+    0 5px 0 #0d160c,
+    inset 0 0 0 2px #f4c965,
+    inset 0 -5px 0 rgba(0, 0, 0, 0.22),
+    0 0 18px rgba(217, 164, 65, 0.32);
+  filter: brightness(1.08) saturate(1.06);
+  transform: translateY(-2px);
+}
+
+.quest-cta:active {
+  box-shadow: 0 1px 0 #0d160c, inset 0 0 0 2px #f4c965, inset 0 -3px 0 rgba(0, 0, 0, 0.24);
+  transform: translateY(3px);
+}
+
+.quest-page-title {
+  border: 0;
+  justify-self: center;
+  margin: 2px 0 5px;
+  padding: 0 32px 12px;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  width: min(520px, 100%);
+}
+
+.quest-page-title::before,
+.quest-page-title::after {
+  background: linear-gradient(90deg, transparent, rgba(126, 84, 39, 0.5), transparent);
+  bottom: 0;
+  content: "";
+  height: 2px;
+  position: absolute;
+  width: 42%;
+}
+
+.quest-page-title::before {
+  left: 0;
+}
+
+.quest-page-title::after {
+  right: 0;
+}
+
+.quest-page-title h2 {
+  color: var(--codex-green);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.96rem, 1.28vw, 1.28rem);
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 1px 1px 0 rgba(255, 234, 178, 0.7);
+}
+
+.quest-page-title h2::before,
+.quest-page-title h2::after {
+  color: var(--codex-green);
+  content: "+";
+  display: inline-block;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.55em;
+  margin: 0 14px;
+  transform: translateY(-1px);
+}
+
+.quest-step-list {
+  display: grid;
+  gap: clamp(8px, 0.9vw, 12px);
+}
+
+.quest-step-list label {
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(255, 244, 202, 0.2), transparent 38%),
+    radial-gradient(circle at 12% 20%, rgba(255, 240, 190, 0.22), transparent 30%),
+    rgba(213, 186, 136, 0.44);
+  border: 2px solid rgba(115, 77, 34, 0.55);
+  border-radius: 0;
+  box-shadow: inset 0 0 0 2px rgba(255, 238, 184, 0.16), 0 3px 0 rgba(89, 53, 22, 0.22);
+  cursor: pointer;
+  display: grid;
+  gap: clamp(8px, 0.8vw, 12px);
+  grid-template-columns: 32px clamp(50px, 4.6vw, 64px) minmax(0, 1fr) 26px;
+  min-height: clamp(68px, 5.4vw, 86px);
+  padding: clamp(7px, 0.75vw, 10px) clamp(8px, 0.85vw, 12px);
+  position: relative;
+}
+
+.quest-step-list label::before,
+.quest-tip::before {
+  background:
+    linear-gradient(var(--codex-wood), var(--codex-wood)) left 6px top 6px / 18px 1px no-repeat,
+    linear-gradient(var(--codex-wood), var(--codex-wood)) left 6px top 6px / 1px 18px no-repeat,
+    linear-gradient(var(--codex-wood), var(--codex-wood)) right 6px top 6px / 18px 1px no-repeat,
+    linear-gradient(var(--codex-wood), var(--codex-wood)) right 6px top 6px / 1px 18px no-repeat,
+    linear-gradient(var(--codex-wood), var(--codex-wood)) left 6px bottom 6px / 18px 1px no-repeat,
+    linear-gradient(var(--codex-wood), var(--codex-wood)) left 6px bottom 6px / 1px 18px no-repeat,
+    linear-gradient(var(--codex-wood), var(--codex-wood)) right 6px bottom 6px / 18px 1px no-repeat,
+    linear-gradient(var(--codex-wood), var(--codex-wood)) right 6px bottom 6px / 1px 18px no-repeat;
+  content: "";
+  inset: 0;
+  opacity: 0.35;
+  pointer-events: none;
+  position: absolute;
+}
+
+.quest-step-list label:hover {
+  background:
+    linear-gradient(90deg, rgba(255, 244, 202, 0.27), transparent 44%),
+    rgba(223, 197, 150, 0.58);
+  border-color: rgba(217, 164, 65, 0.74);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 238, 184, 0.2),
+    0 4px 0 rgba(89, 53, 22, 0.28),
+    0 0 16px rgba(217, 164, 65, 0.2);
+  transform: translateX(3px);
+}
+
+.quest-step-list label.is-done {
+  background:
+    linear-gradient(90deg, rgba(53, 94, 59, 0.16), transparent 46%),
+    rgba(218, 193, 147, 0.56);
+  border-color: rgba(53, 94, 59, 0.72);
+}
+
+.quest-step-number {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 237, 166, 0.12), transparent 30%),
+    var(--codex-green);
+  border: 2px solid #1d321f;
+  border-radius: 2px;
+  box-shadow: 0 3px 0 #130b06, inset 0 0 0 2px #5c7b43;
+  color: #f6e5b5;
+  display: flex;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.98rem, 1.15vw, 1.16rem);
+  font-weight: 700;
+  height: 32px;
+  justify-content: center;
+  line-height: 1;
+  text-shadow: 1px 1px 0 #0f1d10;
+  width: 32px;
+}
+
+.quest-step-thumb {
+  background:
+    linear-gradient(180deg, rgba(255, 239, 184, 0.2), rgba(45, 28, 13, 0.08)),
+    #b9a26f;
+  border: 3px solid #6d4a22;
+  border-radius: 0;
+  box-shadow: 0 3px 0 rgba(63, 37, 16, 0.48), inset 0 0 0 2px rgba(255, 241, 192, 0.24);
+  display: grid;
+  height: clamp(48px, 4.6vw, 62px);
+  place-items: center;
+  position: relative;
+  width: clamp(50px, 4.6vw, 64px);
+}
+
+.quest-step-thumb::after {
+  background: repeating-linear-gradient(45deg, rgba(43, 29, 14, 0.08) 0 2px, transparent 2px 7px);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.quest-step-icon {
+  display: block;
+  height: 58px;
+  position: relative;
+  width: 58px;
+  transform: scale(0.7);
+  z-index: 1;
+}
+
+.quest-step-icon span {
+  display: block;
+  position: absolute;
+}
+
+.quest-step-icon--map span:nth-child(1) {
+  background:
+    linear-gradient(90deg, #cdb879 0 49%, #9c8b58 50% 51%, #cab574 52%),
+    repeating-linear-gradient(0deg, transparent 0 8px, rgba(53, 94, 59, 0.18) 8px 10px);
+  border: 3px solid #26351e;
+  box-shadow: inset 0 0 0 2px rgba(255, 240, 190, 0.35);
+  height: 36px;
+  left: 8px;
+  top: 16px;
+  width: 42px;
+}
+
+.quest-step-icon--map span:nth-child(2) {
+  background: #d9472e;
+  border: 3px solid #4a2115;
+  border-radius: 50% 50% 50% 0;
+  height: 17px;
+  left: 25px;
+  top: 4px;
+  transform: rotate(-45deg);
+  width: 17px;
+}
+
+.quest-step-icon--map span:nth-child(2)::after {
+  background: #f7e7b8;
+  border-radius: 50%;
+  content: "";
+  height: 5px;
+  left: 3px;
+  position: absolute;
+  top: 3px;
+  width: 5px;
+}
+
+.quest-step-icon--map span:nth-child(3) {
+  border-bottom: 4px dotted #355e3b;
+  height: 14px;
+  left: 14px;
+  top: 30px;
+  transform: rotate(-12deg);
+  width: 32px;
+}
+
+.quest-step-icon--runner span:nth-child(1) {
+  background: #24150d;
+  border-radius: 50%;
+  height: 11px;
+  left: 25px;
+  top: 6px;
+  width: 11px;
+}
+
+.quest-step-icon--runner span:nth-child(2) {
+  background: var(--codex-green);
+  border: 3px solid #24150d;
+  height: 25px;
+  left: 24px;
+  top: 18px;
+  transform: rotate(18deg);
+  width: 12px;
+}
+
+.quest-step-icon--runner span:nth-child(2)::before,
+.quest-step-icon--runner span:nth-child(2)::after {
+  background: #24150d;
+  content: "";
+  height: 6px;
+  position: absolute;
+  top: 6px;
+  width: 23px;
+}
+
+.quest-step-icon--runner span:nth-child(2)::before {
+  left: -19px;
+  transform: rotate(-32deg);
+}
+
+.quest-step-icon--runner span:nth-child(2)::after {
+  right: -19px;
+  transform: rotate(30deg);
+}
+
+.quest-step-icon--runner span:nth-child(3)::before,
+.quest-step-icon--runner span:nth-child(3)::after {
+  background: #24150d;
+  content: "";
+  height: 7px;
+  position: absolute;
+  top: 41px;
+  width: 24px;
+}
+
+.quest-step-icon--runner span:nth-child(3)::before {
+  left: 10px;
+  transform: rotate(-48deg);
+}
+
+.quest-step-icon--runner span:nth-child(3)::after {
+  left: 29px;
+  transform: rotate(36deg);
+}
+
+.quest-step-icon--family span {
+  background: #f2d6a2;
+  border: 3px solid #24150d;
+  bottom: 8px;
+  height: 30px;
+  width: 13px;
+}
+
+.quest-step-icon--family span::before {
+  background: #24150d;
+  border-radius: 50%;
+  content: "";
+  height: 12px;
+  left: -2px;
+  position: absolute;
+  top: -16px;
+  width: 12px;
+}
+
+.quest-step-icon--family span::after {
+  background: linear-gradient(90deg, #24150d 0 5px, transparent 5px 8px, #24150d 8px 13px);
+  bottom: -8px;
+  content: "";
+  height: 8px;
+  left: -3px;
+  position: absolute;
+  width: 16px;
+}
+
+.quest-step-icon--family span:nth-child(1) {
+  background: #e9c48e;
+  left: 8px;
+  transform: scale(0.86);
+}
+
+.quest-step-icon--family span:nth-child(2) {
+  background: #355e3b;
+  left: 23px;
+}
+
+.quest-step-icon--family span:nth-child(3) {
+  background: #e9c48e;
+  left: 40px;
+  transform: scale(0.86);
+}
+
+.quest-step-copy {
+  min-width: 0;
+}
+
+.quest-step-copy strong {
+  color: #1d1208;
+  display: block;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.86rem, 0.98vw, 1.06rem);
+  font-weight: 700;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  text-transform: none;
+}
+
+.quest-step-copy small {
+  color: #20150b;
+  display: block;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.76rem, 0.88vw, 0.94rem);
+  font-weight: 500;
+  line-height: 1.18;
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+
+.quest-step-list input {
+  appearance: none;
+  background: rgba(216, 194, 157, 0.48);
+  border: 3px solid #6c4a25;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 2px rgba(255, 239, 188, 0.26), 0 2px 0 rgba(72, 43, 18, 0.32);
+  height: 25px;
+  position: relative;
+  width: 25px;
+}
+
+.quest-step-list input:checked {
+  background:
+    linear-gradient(135deg, transparent 0 38%, var(--codex-green) 39% 59%, transparent 60%),
+    linear-gradient(45deg, transparent 0 45%, var(--codex-green) 46% 63%, transparent 64%),
+    #e3c891;
+  border-color: var(--codex-green);
+}
+
+.quest-tip {
+  align-items: center;
+  align-self: end;
+  background:
+    linear-gradient(90deg, rgba(255, 243, 203, 0.19), transparent 52%),
+    rgba(221, 196, 151, 0.42);
+  border: 2px solid rgba(85, 55, 27, 0.78);
+  border-radius: 0;
+  box-shadow: inset 0 0 0 2px rgba(255, 239, 190, 0.17), 0 3px 0 rgba(80, 47, 18, 0.22);
+  display: grid;
+  gap: clamp(8px, 0.9vw, 12px);
+  grid-template-columns: 44px minmax(0, 1fr) clamp(58px, 5.5vw, 78px);
+  margin-top: clamp(6px, 0.7vw, 10px);
+  min-height: clamp(74px, 6.3vw, 94px);
+  overflow: hidden;
+  padding: 10px 12px;
+  position: relative;
+}
+
+.quest-tip::before {
+  opacity: 0.42;
+}
+
+.quest-tip__icon {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  display: block;
+  height: 42px;
+  position: relative;
+  width: 42px;
+}
+
+.quest-tip__icon::before {
+  background:
+    radial-gradient(circle at 38% 32%, #fff2a8 0 7px, transparent 8px),
+    radial-gradient(circle at 50% 43%, #ffd94d 0 20px, #d9a441 21px 24px, transparent 25px);
+  border: 3px solid #2b1d0e;
+  border-radius: 50%;
+  box-shadow: 0 3px 0 #2b1d0e;
+  content: "";
+  height: 29px;
+  left: 5px;
+  position: absolute;
+  top: 2px;
+  width: 29px;
+}
+
+.quest-tip__icon::after {
+  background: repeating-linear-gradient(180deg, #2b1d0e 0 3px, #6c4b24 3px 6px);
+  border: 2px solid #2b1d0e;
+  box-shadow: 0 2px 0 #2b1d0e;
+  content: "";
+  height: 12px;
+  left: 14px;
+  position: absolute;
+  top: 28px;
+  width: 13px;
+}
+
+.quest-tip strong {
+  color: #1d1208;
+  display: block;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.92rem, 1.05vw, 1.12rem);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.quest-tip small {
+  color: #20150b;
+  display: block;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.98rem, 1.08vw, 1.14rem);
+  font-weight: 400;
+  line-height: 1.08;
+  margin-top: 6px;
+}
+
+.quest-tip img {
+  align-self: end;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  filter: drop-shadow(3px 4px 0 rgba(43, 29, 14, 0.42));
+  height: clamp(66px, 6.2vw, 86px);
+  image-rendering: pixelated;
+  justify-self: end;
+  object-fit: contain;
+  object-position: bottom center;
+  padding: 0;
+  width: clamp(56px, 5.4vw, 76px);
+}
+
+.quest-left-feature {
+  background:
+    linear-gradient(90deg, rgba(255, 243, 195, 0.22), transparent 58%),
+    rgba(204, 174, 122, 0.38);
+  border: 2px solid rgba(90, 59, 28, 0.56);
+  box-shadow: inset 0 0 0 2px rgba(255, 238, 184, 0.12), 0 2px 0 rgba(70, 42, 18, 0.18);
+  display: grid;
+  gap: 4px;
+  min-height: 42px;
+  padding: 7px 10px;
+}
+
+.quest-left-feature strong {
+  color: var(--codex-green);
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.44rem, 0.5vw, 0.6rem);
+  line-height: 1.18;
+  text-transform: uppercase;
+}
+
+.quest-left-feature small {
+  color: #1e140a;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.92rem, 1vw, 1.1rem);
+  line-height: 1;
+}
+
+.quest-left-feature--comic {
+  background:
+    linear-gradient(90deg, rgba(136, 52, 32, 0.13), transparent 60%),
+    rgba(219, 191, 139, 0.44);
+}
+
+.quest-left-feature--backpack {
+  background:
+    linear-gradient(90deg, rgba(53, 94, 59, 0.16), transparent 60%),
+    rgba(219, 191, 139, 0.46);
+}
+
+.quest-gameplay {
+  display: grid;
+  gap: clamp(7px, 0.7vw, 10px);
+  min-width: 0;
+}
+
+.quest-gameplay button {
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+}
+
+.quest-paper-tabs {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.quest-paper-tabs button,
+.quest-bookmark-grid button,
+.quest-note-pins button,
+.quest-route-options button,
+.quest-message-options button,
+.quest-recipe-list button,
+.quest-final-scenes button {
+  background:
+    linear-gradient(180deg, rgba(255, 244, 194, 0.25), rgba(68, 40, 17, 0.1)),
+    rgba(204, 174, 122, 0.52);
+  border: 2px solid rgba(94, 62, 29, 0.68);
+  box-shadow: inset 0 0 0 2px rgba(255, 238, 184, 0.12), 0 2px 0 rgba(66, 39, 16, 0.22);
+  color: #21160b;
+  min-height: 31px;
+  padding: 5px 8px;
+}
+
+.quest-paper-tabs button {
+  color: var(--codex-green);
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.92rem, 0.96vw, 1.06rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.quest-bookmark-grid {
+  display: grid;
+  gap: 7px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.quest-bookmark-grid button {
+  align-items: center;
+  display: grid;
+  gap: 5px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 52px;
+  text-align: left;
+}
+
+.quest-bookmark-grid span,
+.quest-note-pins button,
+.quest-route-options button,
+.quest-message-options button {
+  font-size: clamp(0.82rem, 0.94vw, 1rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.quest-bookmark-grid i {
+  background: rgba(53, 94, 59, 0.12);
+  border: 1px solid rgba(53, 94, 59, 0.48);
+  color: var(--codex-green);
+  font-family: "VT323", monospace;
+  font-size: 0.82rem;
+  font-style: normal;
+  line-height: 1;
+  padding: 3px 5px;
+}
+
+.quest-bookmark-grid button.is-stamped,
+.quest-note-pins button.is-open,
+.quest-route-options button.is-correct,
+.quest-message-options button.is-correct,
+.quest-recipe-list button.is-crafted,
+.quest-final-scenes button.is-cleared {
+  background:
+    linear-gradient(90deg, rgba(53, 94, 59, 0.18), transparent 58%),
+    rgba(224, 198, 151, 0.68);
+  border-color: rgba(53, 94, 59, 0.78);
+}
+
+.quest-page--finale-left,
+.quest-page--finale-right {
+  align-content: stretch;
+  grid-template-rows: minmax(0, 1fr);
+  overflow: hidden;
+  padding-top: clamp(4px, 0.48vw, 8px);
+}
+
+.quest-page--finale-left {
+  padding-left: clamp(3px, 0.42vw, 8px);
+  padding-right: clamp(18px, 1.85vw, 30px);
+}
+
+.quest-page--finale-right {
+  padding-left: clamp(18px, 1.85vw, 30px);
+  padding-right: clamp(3px, 0.42vw, 8px);
+}
+
+.quest-gameplay--module09 {
+  align-content: stretch;
+  display: grid;
+  height: 100%;
+  justify-items: center;
+  margin: 0;
+  min-height: 0;
+  width: 100%;
+}
+
+.quest-module09-poster-stage {
+  align-self: center;
+  aspect-ratio: 2 / 3;
+  display: grid;
+  filter: drop-shadow(4px 6px 0 rgba(43, 29, 14, 0.24));
+  height: min(120%, 860px);
+  image-rendering: pixelated;
+  justify-self: center;
+  margin: 0;
+  max-width: 100%;
+  position: relative;
+}
+
+.quest-module09-poster-stage img {
+  display: block;
+  grid-area: 1 / 1;
+  height: 100%;
+  image-rendering: pixelated;
+  object-fit: contain;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 900ms ease, filter 900ms ease;
+  width: 100%;
+}
+
+.quest-module09-poster-stage img.is-active {
+  opacity: 1;
+}
+
+.quest-module09-start {
+  background: rgba(53, 94, 59, 0.01);
+  border: 0;
+  bottom: 2.6%;
+  cursor: pointer;
+  display: block;
+  height: 7.2%;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 48%;
+  z-index: 4;
+}
+
+.quest-module09-start:hover,
+.quest-module09-start:focus-visible {
+  background: rgba(217, 164, 65, 0.11);
+  box-shadow: 0 0 18px rgba(217, 164, 65, 0.32);
+  outline: 2px solid rgba(217, 164, 65, 0.48);
+  outline-offset: 3px;
+}
+
+.quest-module09-start.is-locked {
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+.quest-module09-ready {
+  align-self: center;
+  display: block;
+  filter: drop-shadow(4px 6px 0 rgba(43, 29, 14, 0.22));
+  height: min(120%, 860px);
+  image-rendering: pixelated;
+  justify-self: center;
+  max-width: 100%;
+  object-fit: contain;
+  width: auto;
+}
+
+.quest-gameplay--tutorial {
+  gap: clamp(8px, 0.85vw, 12px);
+}
+
+.quest-bookmark-instruction {
+  color: #1f150b;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.86rem, 0.96vw, 1.04rem);
+  font-weight: 600;
+  line-height: 1;
+  margin: -2px 0 2px;
+  text-align: center;
+}
+
+.quest-bookmark-drawer {
+  display: grid;
+  gap: clamp(7px, 0.8vw, 11px);
+}
+
+.quest-bookmark-drawer__item {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: #1d1208;
+  display: block;
+  min-height: clamp(68px, 5.95vw, 90px);
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  text-align: left;
+  transition: filter 160ms ease, transform 160ms ease;
+}
+
+.quest-bookmark-drawer__item img {
+  display: block;
+  filter: drop-shadow(0 3px 0 rgba(56, 34, 14, 0.36));
+  height: 100%;
+  image-rendering: pixelated;
+  left: 0;
+  object-fit: fill;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.quest-bookmark-drawer__item:hover,
+.quest-bookmark-drawer__item.is-active {
+  filter: brightness(1.04) saturate(1.04);
+  transform: translateX(5px);
+}
+
+.quest-bookmark-drawer__item.is-stamped {
+  filter: sepia(0.06) saturate(1.08) brightness(1.02);
+}
+
+.quest-bookmark-drawer__item.is-stamped .quest-bookmark-drawer__text strong {
+  color: var(--codex-green);
+  text-shadow: 1px 1px 0 rgba(255, 235, 180, 0.78), 0 0 7px rgba(217, 164, 65, 0.18);
+}
+
+.quest-bookmark-drawer__text {
+  align-items: center;
+  display: flex;
+  left: clamp(54px, 5.35vw, 78px);
+  max-width: calc(100% - clamp(138px, 14.2vw, 198px));
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.quest-bookmark-drawer__text strong {
+  color: #1d1208;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.96rem, 1.18vw, 1.38rem);
+  font-weight: 700;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.quest-bookmark-drawer__text small {
+  color: #1f150b;
+  display: -webkit-box;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.62rem, 0.68vw, 0.78rem);
+  font-weight: 600;
+  line-height: 1.02;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.quest-open-note.quest-tutorial-drawer-note {
+  align-items: stretch;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  gap: clamp(5px, 0.55vw, 8px);
+  min-height: 0;
+  overflow: visible;
+  padding: clamp(6px, 0.6vw, 9px) clamp(4px, 0.4vw, 7px);
+}
+
+.quest-open-note.quest-tutorial-drawer-note--quiz {
+  gap: clamp(4px, 0.45vw, 7px);
+}
+
+.quest-tutorial-note-header {
+  display: grid;
+  gap: 4px;
+  margin-bottom: clamp(5px, 0.55vw, 9px);
+  min-width: 0;
+}
+
+.quest-open-note .quest-tutorial-note-header strong {
+  color: var(--codex-green);
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.72rem, 0.8vw, 0.92rem);
+  line-height: 1.15;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.quest-open-note .quest-tutorial-note-header p {
+  color: #21160b;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.84rem, 0.94vw, 1.02rem);
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+  text-align: justify;
+}
+
+.quest-tutorial-npc-frame {
+  align-items: end;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  min-height: clamp(78px, 7vw, 104px);
+  overflow: visible;
+  padding: 0;
+}
+
+.quest-tutorial-detail-list {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.quest-tutorial-detail-list li {
+  background: linear-gradient(90deg, rgba(91, 59, 29, 0.08), transparent 72%);
+  border-left: 3px solid rgba(53, 94, 59, 0.52);
+  color: #21160b;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.74rem, 0.84vw, 0.94rem);
+  font-weight: 600;
+  line-height: 1.5;
+  padding: 4px 8px 4px 18px;
+  position: relative;
+  width: 100%;
+}
+
+.quest-tutorial-detail-list--quiz {
+  gap: 3px;
+}
+
+.quest-tutorial-detail-list--quiz li {
+  font-size: clamp(0.7rem, 0.78vw, 0.9rem);
+  line-height: 1;
+}
+
+.quest-tutorial-npc {
+  align-self: end;
+  display: block;
+  filter: drop-shadow(0 4px 0 rgba(61, 37, 17, 0.32));
+  height: clamp(159px, 13.2vw, 193px);
+  image-rendering: pixelated;
+  margin-bottom: -6px;
+  object-fit: contain;
+  width: auto;
+}
+
+.quest-open-note,
+.quest-sticky-note,
+.quest-ending-card {
+  background:
+    linear-gradient(135deg, rgba(255, 248, 206, 0.3), transparent 58%),
+    rgba(223, 195, 142, 0.58);
+  border: 2px solid rgba(92, 59, 27, 0.64);
+  box-shadow: inset 0 0 0 2px rgba(255, 238, 184, 0.13), 0 2px 0 rgba(68, 39, 16, 0.2);
+  display: grid;
+  gap: 4px;
+  min-height: 52px;
+  padding: 8px 10px;
+}
+
+.quest-open-note strong,
+.quest-sticky-note strong,
+.quest-ending-card strong {
+  color: #1e140a;
+  font-size: clamp(0.9rem, 1vw, 1.08rem);
+  line-height: 1;
+}
+
+.quest-open-note small,
+.quest-sticky-note small,
+.quest-ending-card small {
+  color: #21160b;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.96rem, 1.06vw, 1.16rem);
+  line-height: 1;
+}
+
+.quest-seismic-map,
+.quest-room-scan {
+  background:
+    radial-gradient(circle at 36% 44%, rgba(53, 94, 59, 0.18), transparent 24%),
+    radial-gradient(circle at 68% 36%, rgba(141, 60, 36, 0.15), transparent 22%),
+    linear-gradient(135deg, rgba(217, 164, 65, 0.14), rgba(70, 44, 20, 0.1)),
+    rgba(196, 174, 132, 0.52);
+  border: 2px solid rgba(83, 53, 25, 0.72);
+  box-shadow: inset 0 0 0 2px rgba(255, 238, 184, 0.15), inset 0 0 24px rgba(76, 45, 18, 0.16);
+  min-height: clamp(112px, 10.5vw, 150px);
+  overflow: hidden;
+  position: relative;
+}
+
+.quest-seismic-map:hover {
+  filter: contrast(1.04) saturate(1.05);
+}
+
+.quest-crack-line {
+  background:
+    linear-gradient(132deg, transparent 0 17%, #4b2e15 18% 20%, transparent 21% 34%, #4b2e15 35% 38%, transparent 39% 55%, #4b2e15 56% 58%, transparent 59%);
+  inset: 12px;
+  opacity: 0.68;
+  position: absolute;
+}
+
+.quest-seismic-map button,
+.quest-room-scan button {
+  align-items: center;
+  background: #b8452d;
+  border: 3px solid #3a2416;
+  border-radius: 50%;
+  box-shadow: 0 2px 0 #24150d, 0 0 0 4px rgba(217, 164, 65, 0.22);
+  color: #f7e2ac;
+  display: flex;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.52rem;
+  height: 22px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 22px;
+}
+
+.quest-seismic-map button:hover,
+.quest-room-scan button:hover {
+  box-shadow: 0 2px 0 #24150d, 0 0 0 8px rgba(217, 164, 65, 0.3);
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.quest-seismic-map button.is-found,
+.quest-room-scan button.is-found {
+  background: var(--codex-green);
+}
+
+.quest-note-pins,
+.quest-route-options,
+.quest-message-options {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.quest-gameplay--module02 {
+  gap: clamp(6px, 0.68vw, 10px);
+}
+
+.quest-module02-instruction {
+  color: #24170b;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.8rem, 0.82vw, 0.94rem);
+  font-weight: 650;
+  line-height: 1;
+  margin: -2px 0 0;
+  text-align: center;
+}
+
+.quest-module02-notes {
+  background: var(--module02-notes) center center / 100% 100% no-repeat;
+  justify-self: center;
+  min-height: 0;
+  position: relative;
+  width: min(100%, 520px);
+  aspect-ratio: 1107 / 973;
+}
+
+.quest-module02-note-button {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  height: 25%;
+  padding: 0;
+  position: absolute;
+  width: 18.5%;
+  z-index: 3;
+}
+
+.quest-module02-note-button:hover,
+.quest-module02-note-button.is-active {
+  filter: drop-shadow(0 0 7px rgba(217, 164, 65, 0.62)) brightness(1.05);
+}
+
+.quest-module02-note-button.is-open::after {
+  background: rgba(53, 94, 59, 0.62);
+  border: 1px solid rgba(43, 29, 14, 0.58);
+  content: "";
+  height: 6px;
+  position: absolute;
+  right: 8px;
+  top: 7px;
+  transform: rotate(45deg);
+  width: 6px;
+}
+
+.quest-module02-note-button--top-left {
+  left: 6.4%;
+  top: 13.5%;
+}
+
+.quest-module02-note-button--top-right {
+  left: 51.7%;
+  top: 13.5%;
+}
+
+.quest-module02-note-button--bottom-left {
+  left: 6.4%;
+  top: 58.8%;
+}
+
+.quest-module02-note-button--bottom-right {
+  left: 51.7%;
+  top: 58.8%;
+}
+
+.quest-module02-note-paper {
+  align-content: start;
+  color: #2b1d0e;
+  display: grid;
+  gap: 2px;
+  height: 39%;
+  justify-items: center;
+  padding: clamp(5px, 0.48vw, 8px) clamp(8px, 0.78vw, 11px) clamp(8px, 0.78vw, 11px);
+  position: absolute;
+  text-align: center;
+  width: 23%;
+  z-index: 5;
+  margin-top: -8px;
+}
+
+.quest-module02-note-paper strong {
+  color: #1f1409;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.54rem, 0.62vw, 0.72rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.quest-module02-note-paper small {
+  color: #2b1d0e;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.68rem, 0.76vw, 0.88rem);
+  line-height: 0.9;
+}
+
+.quest-module02-note-paper--top-left {
+  left: 25.4%;
+  top: 11.1%;
+}
+
+.quest-module02-note-paper--top-right {
+  left: 70.6%;
+  top: 11.1%;
+}
+
+.quest-module02-note-paper--bottom-left {
+  left: 25.4%;
+  top: 55.7%;
+}
+
+.quest-module02-note-paper--bottom-right {
+  left: 70.6%;
+  top: 55.7%;
+}
+
+.quest-module02-question-nav {
+  align-items: center;
+  display: grid;
+  gap: 7px;
+  grid-template-columns: 34px minmax(0, 1fr) 34px;
+  justify-self: center;
+  margin-top: clamp(6px, 0.75vw, 11px);
+  width: min(88%, 378px);
+}
+
+.quest-module02-question-nav button {
+  background:
+    linear-gradient(180deg, rgba(255, 238, 174, 0.14), transparent 52%),
+    #355e3b;
+  border: 2px solid rgba(43, 29, 14, 0.86);
+  box-shadow: inset 0 0 0 1px rgba(217, 164, 65, 0.5), 2px 2px 0 rgba(43, 29, 14, 0.24);
+  color: #f4df9d;
+  cursor: pointer;
+  font-family: "Press Start 2P", monospace;
+  height: 27px;
+  padding: 0;
+}
+
+.quest-module02-question-nav span {
+  background: rgba(216, 188, 134, 0.48);
+  border: 2px solid rgba(93, 61, 28, 0.58);
+  color: #2b1d0e;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.7rem, 0.8vw, 0.92rem);
+  font-weight: 700;
+  line-height: 1;
+  padding: 5px 8px;
+  text-align: center;
+}
+
+.quest-sticky-note {
+  transform: rotate(-0.7deg);
+}
+
+.quest-comic-panels {
+  display: grid;
+  gap: 7px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.quest-comic-panels span {
+  align-items: end;
+  background:
+    linear-gradient(180deg, rgba(255, 237, 180, 0.15), rgba(69, 42, 18, 0.3)),
+    rgba(146, 103, 58, 0.54);
+  border: 3px solid rgba(58, 36, 18, 0.85);
+  box-shadow: inset 0 0 0 2px rgba(255, 238, 184, 0.12);
+  color: #f8e5b3;
+  display: flex;
+  font-family: "VT323", monospace;
+  font-size: clamp(1rem, 1.2vw, 1.28rem);
+  min-height: 84px;
+  padding: 7px;
+  text-shadow: 2px 2px 0 #24150d;
+}
+
+.quest-reaction-bar,
+.quest-weight-meter span {
+  background: #8f764d;
+  border: 2px solid rgba(70, 44, 20, 0.8);
+  box-shadow: inset 0 2px 0 rgba(58, 34, 13, 0.2);
+  display: block;
+  height: 10px;
+  overflow: hidden;
+}
+
+.quest-reaction-bar i,
+.quest-weight-meter i {
+  background: linear-gradient(180deg, #d9a441, #8b5a24);
+  display: block;
+  height: 100%;
+}
+
+.quest-decision-cards,
+.quest-recipe-list,
+.quest-final-scenes {
+  display: grid;
+  gap: 7px;
+}
+
+.quest-decision-cards button,
+.quest-recipe-list button,
+.quest-final-scenes button {
+  text-align: left;
+}
+
+.quest-decision-cards strong,
+.quest-recipe-list strong,
+.quest-final-scenes strong {
+  display: block;
+  font-size: clamp(0.86rem, 0.96vw, 1.04rem);
+  line-height: 1;
+}
+
+.quest-decision-cards small,
+.quest-recipe-list small,
+.quest-final-scenes small,
+.quest-final-scenes span {
+  display: block;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.92rem, 1vw, 1.08rem);
+  line-height: 1;
+  margin-top: 4px;
+}
+
+.quest-decision-cards button.is-selected,
+.quest-route-options button.is-selected {
+  border-color: rgba(217, 164, 65, 0.86);
+}
+
+.quest-gameplay--module03 {
+  align-content: start;
+  gap: clamp(5px, 0.58vw, 8px);
+  justify-items: center;
+}
+
+.quest-gameplay--module03-left {
+  justify-items: stretch;
+  margin-left: clamp(-10px, -0.75vw, -6px);
+  margin-top: clamp(-6px, -0.35vw, -2px);
+  width: calc(100% + clamp(14px, 1.2vw, 24px));
+}
+
+.quest-gameplay--module03-right {
+  gap: clamp(7px, 0.72vw, 10px);
+}
+
+.quest-module03-action-copy {
+  color: #2b1d0e;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.78rem, 0.88vw, 0.98rem);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+  padding: 0 clamp(26px, 2.2vw, 36px) 2px;
+  position: relative;
+  text-align: center;
+  text-shadow: 1px 1px 0 rgba(255, 235, 178, 0.55);
+  width: min(96%, 480px);
+}
+
+.quest-module03-action-copy::before,
+.quest-module03-action-copy::after {
+  background: linear-gradient(90deg, transparent, rgba(126, 84, 39, 0.45), transparent);
+  bottom: 0;
+  content: "";
+  height: 2px;
+  position: absolute;
+  width: 38%;
+}
+
+.quest-module03-action-copy::before {
+  left: 0;
+}
+
+.quest-module03-action-copy::after {
+  right: 0;
+}
+
+.quest-module03-action-board {
+  aspect-ratio: 1257 / 862;
+  justify-self: center;
+  margin-top: -2px;
+  position: relative;
+  width: min(96%, 480px);
+}
+
+.quest-module03-action-board > img {
+  display: block;
+  height: 100%;
+  image-rendering: pixelated;
+  object-fit: fill;
+  pointer-events: none;
+  width: 100%;
+}
+
+.quest-module03-action {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: transparent;
+  font-size: 0;
+  opacity: 1;
+  outline: 0;
+  padding: 0;
+  position: absolute;
+  top: 27.5%;
+  height: 57.5%;
+  z-index: 2;
+}
+
+.quest-module03-action:hover,
+.quest-module03-action:focus-visible {
+  background: transparent;
+  outline: 0;
+}
+
+.quest-module03-action--safe-action {
+  --module03-check-x: 40.5%;
+  left: 8.6%;
+  width: 27.1%;
+}
+
+.quest-module03-action--run {
+  --module03-check-x: 46%;
+  left: 37.7%;
+  width: 26.5%;
+}
+
+.quest-module03-action--glass {
+  --module03-check-x: 56%;
+  left: 66.4%;
+  width: 26.6%;
+}
+
+.quest-module03-action::after {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 99px;
+  box-shadow: none;
+  color: transparent;
+  content: "";
+  display: flex;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.4rem, 0.46vw, 0.54rem);
+  height: clamp(14px, 1.25vw, 18px);
+  justify-content: center;
+  left: var(--module03-check-x, 50%);
+  line-height: 1;
+  position: absolute;
+  top: var(--module03-check-y, 98.9%);
+  transform: translate(-50%, -50%);
+  width: clamp(14px, 1.25vw, 18px);
+}
+
+.quest-module03-action.is-selected::after {
+  background:
+    linear-gradient(180deg, rgba(255, 238, 174, 0.28), rgba(35, 62, 38, 0.16)),
+    #355e3b;
+  border: 2px solid #1f351f;
+  box-shadow: inset 0 0 0 2px rgba(217, 164, 65, 0.58), 0 2px 0 rgba(43, 29, 14, 0.38);
+  color: #f6e5b5;
+  content: "V";
+  text-shadow: 1px 1px 0 #101d10;
+}
+
+.quest-module03-action:not(.is-selected) span {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.quest-module03-result-panel {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: clamp(-7px, -0.45vw, -3px) 0 0;
+  max-height: clamp(130px, 12vw, 172px);
+  overflow: visible;
+  width: min(100%, 440px);
+}
+
+.quest-module03-result-panel img {
+  display: block;
+  filter: none;
+  height: auto;
+  image-rendering: pixelated;
+  max-height: clamp(130px, 12vw, 172px);
+  max-width: 100%;
+  object-fit: contain;
+  width: auto;
+}
+
+.quest-module03-guide-tabs {
+  display: grid;
+  gap: clamp(5px, 0.5vw, 8px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(96%, 430px);
+}
+
+.quest-module03-guide-tabs article {
+  background: transparent;
+  border-left: 2px solid rgba(53, 94, 59, 0.55);
+  color: rgba(32, 21, 11, 0.9);
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 0 0 0 clamp(6px, 0.62vw, 9px);
+  text-shadow: 1px 1px 0 rgba(255, 236, 177, 0.32);
+}
+
+.quest-module03-guide-tabs article > span {
+  align-items: center;
+  background: rgba(53, 94, 59, 0.9);
+  border: 2px solid rgba(43, 29, 14, 0.7);
+  color: #f6e5b5;
+  display: inline-flex;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.38rem, 0.42vw, 0.5rem);
+  height: 18px;
+  justify-content: center;
+  line-height: 1;
+  width: 18px;
+}
+
+.quest-module03-guide-tabs strong {
+  color: var(--codex-green);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.76rem, 0.84vw, 0.95rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.quest-module03-guide-tabs small {
+  color: rgba(32, 21, 11, 0.82);
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.78rem, 0.86vw, 0.98rem);
+  line-height: 0.9;
+}
+
+.quest-module03-quiz {
+  width: min(96%, 430px);
+}
+
+.quest-gameplay--module03 .quest-game-quiz.variant-pixel-card {
+  max-height: clamp(140px, 12vw, 168px);
+  padding: clamp(5px, 0.52vw, 8px);
+  width: 100%;
+}
+
+.quest-gameplay--module03 .quest-game-quiz.variant-pixel-card .quest-game-quiz__title {
+  font-size: clamp(0.42rem, 0.5vw, 0.58rem);
+  padding: 4px 8px;
+}
+
+.quest-gameplay--module03 .quest-game-quiz.variant-pixel-card .quest-game-quiz__question {
+  font-size: clamp(0.58rem, 0.68vw, 0.78rem);
+  padding: 5px 8px;
+}
+
+.quest-gameplay--module03 .quest-game-quiz.variant-pixel-card .quest-game-quiz__option {
+  font-size: clamp(0.58rem, 0.68vw, 0.78rem);
+  min-height: 22px;
+  padding: 3px 7px;
+}
+
+.quest-module03-playfield {
+  align-items: start;
+  display: grid;
+  gap: clamp(6px, 0.62vw, 9px);
+  grid-template-columns: minmax(118px, 0.76fr) minmax(0, 1fr);
+  width: min(100%, 460px);
+}
+
+.quest-module03-playfield .quest-module03-action-board {
+  margin-top: 0;
+  width: 100%;
+}
+
+.quest-module03-comic-stack {
+  --module03-comic-width: min(100%, 420px);
+  --module03-main-height: clamp(120px, 26vw, 420px);
+  --module03-result-height: clamp(228px, 27vw, 200px);
+  align-items: center;
+  display: grid;
+  gap: 0;
+  justify-items: stretch;
+  min-width: 0;
+  justify-self: center;
+  width: var(--module03-comic-width);
+}
+
+.quest-module03-main-comic,
+.quest-module03-result-panel {
+  display: grid;
+  margin: 0;
+  overflow: hidden;
+  place-items: center;
+  width: 100%;
+}
+
+.quest-module03-main-comic img,
+.quest-module03-result-panel img {
+  display: block;
+  filter: none;
+  height: 100%;
+  image-rendering: pixelated;
+  object-fit: cover;
+  width: 100%;
+}
+
+.quest-module03-main-comic img {
+  height: var(--module03-main-height);
+  max-height: none;
+}
+
+.quest-module03-result-panel {
+  height: var(--module03-result-height);
+  max-height: var(--module03-result-height);
+  min-height: var(--module03-result-height);
+}
+
+.quest-module03-result-panel img {
+  height: var(--module03-result-height);
+  max-height: none;
+  object-position: center;
+  width: 100%;
+}
+
+.quest-module03-result-panel figcaption {
+  align-items: center;
+  color: rgba(141, 60, 36, 0.68);
+  display: flex;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.78rem, 0.95vw, 1.08rem);
+  justify-content: center;
+  letter-spacing: 0;
+  min-height: var(--module03-result-height);
+  text-align: center;
+  text-shadow: 1px 1px 0 rgba(255, 235, 178, 0.45);
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.quest-gameplay--module03-right .quest-module03-action-board {
+  --module03-act-offset-x: 0px;
+  --module03-act-width: min(100%, 550px);
+  margin-left: var(--module03-act-offset-x);
+  width: var(--module03-act-width);
+}
+
+.quest-gameplay--module03-right .quest-module03-outcome,
+.quest-gameplay--module03-right .quest-module03-outdoor-info,
+.quest-gameplay--module03-right .quest-module03-quiz {
+  width: min(96%, 430px);
+}
+
+.quest-module03-outcome,
+.quest-module03-outdoor-info {
+  background:
+    linear-gradient(90deg, rgba(53, 94, 59, 0.08), transparent 72%),
+    rgba(216, 194, 157, 0.18);
+  border-left: 3px solid rgba(53, 94, 59, 0.64);
+  color: #20150b;
+  display: grid;
+  gap: 4px;
+  padding: 0 0 0 clamp(8px, 0.8vw, 11px);
+  text-shadow: 1px 1px 0 rgba(255, 236, 177, 0.22);
+  width: min(96%, 450px);
+}
+
+.quest-gameplay--module03-right .quest-module03-outcome {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0 clamp(8px, 0.8vw, 12px);
+  text-shadow: 1px 1px 0 rgba(255, 236, 177, 0.34);
+}
+
+.quest-module03-outcome header {
+  align-items: center;
+  display: grid;
+  gap: 4px 7px;
+  grid-template-columns: 24px minmax(0, 1fr);
+}
+
+.quest-module03-outcome header span {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--codex-green);
+  display: inline-flex;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: 0.45rem;
+  height: 22px;
+  justify-content: center;
+  line-height: 1;
+  width: 22px;
+}
+
+.quest-module03-outcome--run header span {
+  background: transparent;
+  color: #9d6b1f;
+}
+
+.quest-module03-outcome--glass header span {
+  background: transparent;
+  color: #8d3c24;
+}
+
+.quest-module03-outcome strong,
+.quest-module03-outdoor-info strong {
+  color: var(--codex-green);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.78rem, 0.88vw, 1rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.quest-module03-outcome header strong {
+  align-self: center;
+  background:
+    linear-gradient(180deg, rgba(255, 238, 174, 0.28), rgba(27, 50, 29, 0.1)),
+    #355e3b;
+  border: 2px solid rgba(43, 29, 14, 0.72);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 232, 169, 0.24),
+    2px 2px 0 rgba(43, 29, 14, 0.22);
+  color: #f6e5b5;
+  display: inline-flex;
+  justify-self: start;
+  padding: 3px 8px;
+  text-shadow: 1px 1px 0 rgba(43, 29, 14, 0.35);
+}
+
+.quest-module03-outcome--safe-action header strong {
+  background:
+    linear-gradient(180deg, rgba(255, 238, 174, 0.3), rgba(27, 50, 29, 0.12)),
+    #355e3b;
+  color: #f6e5b5;
+}
+
+.quest-module03-outcome--run header strong {
+  background:
+    linear-gradient(180deg, rgba(255, 239, 176, 0.32), rgba(82, 55, 17, 0.08)),
+    #d9a441;
+  color: #2b1d0e;
+}
+
+.quest-module03-outcome--glass header strong {
+  background:
+    linear-gradient(180deg, rgba(255, 220, 188, 0.24), rgba(72, 23, 18, 0.12)),
+    #8d3c24;
+  color: #f6e5b5;
+}
+
+.quest-module03-outcome header small {
+  color: #2b1d0e;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.96rem, 1.04vw, 1.14rem);
+  font-weight: 700;
+  grid-column: 2;
+  line-height: 1;
+}
+
+.quest-module03-outcome p,
+.quest-module03-outcome li,
+.quest-module03-outdoor-info small,
+.quest-module03-outdoor-info p {
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.86rem, 0.96vw, 1.06rem);
+  font-weight: 600;
+  line-height: 1.08;
+  margin: 0;
+}
+
+.quest-module03-outcome b {
+  align-items: center;
+  color: var(--codex-green);
+  display: inline-flex;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.72rem, 0.82vw, 0.94rem);
+  gap: 5px;
+  line-height: 1;
+}
+
+.quest-module03-outcome b span {
+  color: #d9a441;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: 0.48rem;
+}
+
+.quest-module03-outcome ul {
+  list-style: none;
+  margin: 2px 0 0;
+  padding: 0;
+}
+
+.quest-module03-outcome li {
+  padding-left: 10px;
+  position: relative;
+}
+
+.quest-module03-outcome li::before {
+  color: var(--codex-green);
+  content: "-";
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.quest-module03-guide-tabs {
+  gap: clamp(4px, 0.42vw, 6px);
+  width: min(96%, 450px);
+}
+
+.quest-module03-guide-tabs article {
+  gap: 2px;
+}
+
+.quest-module03-guide-tabs article > span {
+  height: 16px;
+  width: 16px;
+}
+
+.quest-module03-guide-tabs strong {
+  font-size: clamp(0.62rem, 0.7vw, 0.82rem);
+}
+
+.quest-module03-guide-tabs small {
+  font-size: clamp(0.68rem, 0.78vw, 0.9rem);
+}
+
+.quest-module03-outdoor-info {
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(255, 244, 202, 0.18), transparent 48%),
+    rgba(213, 186, 136, 0.42);
+  border: 2px solid rgba(91, 59, 29, 0.62);
+  box-shadow: inset 0 0 0 1px rgba(255, 238, 184, 0.18);
+  display: grid;
+  gap: clamp(7px, 0.75vw, 10px);
+  grid-template-columns: 42px minmax(0, 1fr);
+  min-height: clamp(82px, 7.4vw, 108px);
+  padding: clamp(8px, 0.8vw, 11px);
+  position: relative;
+}
+
+.quest-gameplay--module03-right {
+  --module03-right-gap: clamp(7px, 0.68vw, 10px);
+  --module03-right-width: min(94%, 430px);
+  --module03-act-width: min(100%, 535px);
+  align-content: start;
+  gap: var(--module03-right-gap);
+  justify-items: center;
+  padding-top: 0;
+}
+
+.quest-gameplay--module03-right .quest-module03-action-board,
+.quest-gameplay--module03-right .quest-module03-outcome,
+.quest-gameplay--module03-right .quest-module03-outdoor-info,
+.quest-gameplay--module03-right .quest-module03-top-question,
+.quest-gameplay--module03-right .quest-module03-quiz {
+  box-sizing: border-box;
+  margin: 0;
+  width: var(--module03-right-width);
+}
+
+.quest-module03-top-question {
+  align-self: start;
+  justify-self: center;
+}
+
+.quest-module03-top-question .quest-game-quiz.variant-pixel-card {
+  max-height: clamp(128px, 10vw, 154px);
+  padding: clamp(4px, 0.46vw, 7px);
+  width: 100%;
+}
+
+.quest-module03-top-question .quest-game-quiz.variant-pixel-card::before {
+  inset: 6px;
+}
+
+.quest-module03-top-question .quest-game-quiz.variant-pixel-card .quest-game-quiz__title {
+  font-size: clamp(0.38rem, 0.45vw, 0.52rem);
+  padding: 3px 8px;
+}
+
+.quest-module03-top-question .quest-game-quiz.variant-pixel-card .quest-game-quiz__question {
+  font-size: clamp(0.52rem, 0.62vw, 0.72rem);
+  padding: 4px 7px;
+}
+
+.quest-module03-top-question .quest-game-quiz.variant-pixel-card .quest-game-quiz__option {
+  font-size: clamp(0.52rem, 0.62vw, 0.72rem);
+  min-height: 20px;
+  padding: 3px 7px;
+}
+
+.quest-gameplay--module03-right .quest-module03-action-board {
+  aspect-ratio: 1257 / 862;
+  justify-self: center;
+  margin: 0 auto;
+  transform: none;
+  width: var(--module03-act-width);
+}
+
+.quest-gameplay--module03-right .quest-module03-outdoor-info {
+  grid-template-columns: 42px minmax(0, 1fr) clamp(82px, 8vw, 120px);
+  min-height: clamp(96px, 8.8vw, 132px);
+  overflow: hidden;
+  padding: clamp(7px, 0.72vw, 10px) clamp(6px, 0.62vw, 9px);
+}
+
+.quest-module03-info-npc {
+  align-self: end;
+  display: block;
+  filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.32));
+  height: clamp(102px, 8.8vw, 140px);
+  image-rendering: pixelated;
+  justify-self: end;
+  max-width: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  width: auto;
+}
+
+.quest-module03-outdoor-info p {
+  color: #2b1d0e;
+}
+
+.quest-module03-outdoor-info p > span {
+  color: var(--codex-green);
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: 0.46rem;
+}
+
+.quest-module03-quiz {
+  width: min(96%, 450px);
+}
+
+.quest-gameplay--module04 {
+  align-content: start;
+  gap: clamp(7px, 0.68vw, 10px);
+  justify-items: center;
+}
+
+.quest-module04-puzzle {
+  aspect-ratio: 1445 / 1077;
+  justify-self: center;
+  max-height: clamp(560px, 48vw, 790px);
+  position: relative;
+  width: min(128%, 560px);
+}
+
+.quest-module04-puzzle > img {
+  display: block;
+  height: 100%;
+  image-rendering: pixelated;
+  object-fit: contain;
+  pointer-events: none;
+  width: 100%;
+}
+
+.quest-module04-dropzone {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: transparent;
+  display: flex;
+  cursor: pointer;
+  height: var(--module04-slot-h, 9.95%);
+  justify-content: center;
+  left: var(--module04-slot-x, 24%);
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  top: var(--module04-slot-y, 30%);
+  transition: filter 140ms ease, transform 140ms ease;
+  width: var(--module04-slot-w, 6.55%);
+  z-index: 5;
+}
+
+.quest-module04-dropzone:hover,
+.quest-module04-dropzone:focus-visible {
+  filter: drop-shadow(0 0 8px rgba(217, 164, 65, 0.48));
+  outline: 0;
+  transform: translateY(-1px);
+}
+
+.quest-module04-dropzone.is-filled {
+  filter: drop-shadow(0 0 7px rgba(53, 94, 59, 0.38));
+}
+
+.quest-module04-dropzone img {
+  display: block;
+  height: 100%;
+  image-rendering: pixelated;
+  object-fit: fill;
+  width: 100%;
+}
+
+.quest-module04-puzzle.is-complete .quest-module04-dropzone {
+  filter: drop-shadow(0 0 8px rgba(217, 164, 65, 0.5));
+}
+
+.quest-module04-route-piece {
+  background: transparent;
+  border: 2px solid transparent;
+  color: transparent;
+  cursor: grab;
+  font-size: 0;
+  height: var(--module04-piece-h, 9.4%);
+  left: var(--module04-piece-x, 79.45%);
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  top: var(--module04-piece-y, 17.7%);
+  width: var(--module04-piece-w, 7.4%);
+  z-index: 4;
+}
+
+.quest-module04-route-piece img {
+  display: block;
+  height: 100%;
+  image-rendering: pixelated;
+  object-fit: fill;
+  pointer-events: none;
+  width: 100%;
+}
+
+.quest-module04-route-piece:active {
+  cursor: grabbing;
+}
+
+.quest-module04-route-piece:hover,
+.quest-module04-route-piece:focus-visible,
+.quest-module04-route-piece.is-selected {
+  border-color: rgba(217, 164, 65, 0.9);
+  box-shadow:
+    inset 0 0 0 2px rgba(53, 94, 59, 0.35),
+    0 0 12px rgba(217, 164, 65, 0.42);
+  outline: 0;
+}
+
+.quest-module04-route-piece.is-used,
+.quest-module04-route-piece:disabled {
+  cursor: default;
+  filter: grayscale(0.45) brightness(0.82);
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.quest-module04-route-tip {
+  align-items: stretch;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  min-height: 0;
+  overflow: visible;
+  padding: 0 clamp(8px, 0.8vw, 12px);
+  width: min(92%, 410px);
+}
+
+.quest-module04-route-tip__row {
+  align-items: end;
+  display: grid;
+  gap: clamp(8px, 0.75vw, 12px);
+  grid-template-columns: minmax(0, 1fr) var(--module04-woman2-column, clamp(58px, 5.8vw, 126px));
+}
+
+.quest-module04-route-tip__row--reverse {
+  grid-template-columns: var(--module04-woman3-column, clamp(58px, 5.8vw, 188px)) minmax(0, 1fr);
+}
+
+.quest-module04-route-tip strong {
+  color: var(--codex-green);
+  display: block;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.72rem, 0.82vw, 0.94rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.quest-module04-route-tip p {
+  color: #2b1d0e;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.82rem, 0.9vw, 1rem);
+  font-weight: 600;
+  line-height: 1;
+  margin: 3px 0 0;
+}
+
+.quest-module04-route-tip__row img {
+  align-self: end;
+  display: block;
+  filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.32));
+  height: var(--module04-woman2-height, clamp(72px, 6.4vw, 128px));
+  image-rendering: pixelated;
+  justify-self: end;
+  max-width: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  width: auto;
+}
+
+.quest-module04-route-tip__row--reverse img {
+  height: var(--module04-woman3-height, var(--module04-woman2-height, clamp(102px, 6.4vw, 228px)));
+  justify-self: start;
+}
+
+.quest-gameplay--module04 .quest-game-quiz.variant-pixel-card {
+  max-height: clamp(156px, 13vw, 186px);
+  width: min(94%, 430px);
+}
+
+.quest-maze {
+  background:
+    linear-gradient(90deg, rgba(53, 94, 59, 0.08), transparent),
+    rgba(202, 174, 122, 0.48);
+  border: 2px solid rgba(83, 53, 25, 0.72);
+  display: grid;
+  gap: 4px;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 7px;
+}
+
+.quest-maze__cell {
+  border: 2px solid rgba(78, 50, 24, 0.55);
+  min-height: 28px;
+}
+
+.quest-maze__cell--path,
+.quest-maze__cell--start,
+.quest-maze__cell--finish,
+.quest-maze__cell--safe {
+  background: rgba(217, 164, 65, 0.34);
+  box-shadow: 0 0 12px rgba(217, 164, 65, 0.18);
+}
+
+.quest-maze__cell--block {
+  background: rgba(57, 37, 19, 0.38);
+}
+
+.quest-gameplay--module06 {
+  align-content: start;
+  justify-items: center;
+}
+
+.quest-gameplay--module06-left {
+  gap: clamp(8px, 0.72vw, 12px);
+  margin-top: clamp(-8px, -0.55vw, -3px);
+  transform: translateX(clamp(14px, 1.35vw, 24px));
+  width: min(104%, 520px);
+}
+
+.quest-gameplay--module06-right {
+  gap: clamp(4px, 0.42vw, 7px);
+  margin-top: clamp(-8px, -0.48vw, -3px);
+  transform: translateX(clamp(30px, 0.95vw, 18px));
+  width: min(100%, 480px);
+}
+
+.quest-module06-number-grid {
+  display: grid;
+  gap: clamp(5px, 0.46vw, 7px);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  width: min(100%, 420px);
+}
+
+.quest-module06-number-grid button {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 238, 174, 0.24), rgba(38, 63, 39, 0.1)),
+    #355e3b;
+  border: 2px solid rgba(43, 29, 14, 0.74);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 232, 169, 0.26),
+    2px 2px 0 rgba(43, 29, 14, 0.28);
+  color: #f7e7b4;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.5rem, 0.58vw, 0.68rem);
+  height: clamp(25px, 2.2vw, 32px);
+  justify-content: center;
+  padding: 0;
+  text-shadow: 1px 1px 0 rgba(43, 29, 14, 0.42);
+}
+
+.quest-module06-number-grid button:hover,
+.quest-module06-number-grid button:focus-visible,
+.quest-module06-number-grid button.is-active {
+  border-color: rgba(217, 164, 65, 0.96);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 232, 169, 0.32),
+    0 0 10px rgba(217, 164, 65, 0.34),
+    2px 2px 0 rgba(43, 29, 14, 0.28);
+  outline: 0;
+}
+
+.quest-module06-number-grid button.is-found {
+  background:
+    linear-gradient(180deg, rgba(255, 238, 174, 0.28), rgba(23, 41, 24, 0.12)),
+    #7f2f24;
+}
+
+.quest-module06-divider {
+  background:
+    linear-gradient(90deg, transparent, rgba(87, 56, 25, 0.58), transparent);
+  display: block;
+  height: 2px;
+  width: min(100%, 430px);
+}
+
+.quest-module06-scale {
+  display: block;
+  filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.22));
+  image-rendering: pixelated;
+  margin: 0 auto clamp(1px, 0.12vw, 2px);
+  width: min(100%, 478px);
+}
+
+.quest-module06-inspection-board {
+  display: block;
+  filter: drop-shadow(3px 5px 0 rgba(43, 29, 14, 0.22));
+  image-rendering: pixelated;
+  margin: 0 auto;
+  position: relative;
+  width: min(102%, 550px);
+}
+
+.quest-module06-inspection-board__frame {
+  display: block;
+  image-rendering: pixelated;
+  width: 100%;
+}
+
+.quest-module06-inspection-slot {
+  align-items: center;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 58% auto minmax(0, 1fr);
+  height: var(--module06-slot-h);
+  justify-items: center;
+  left: var(--module06-slot-x);
+  margin: 0;
+  padding: clamp(18px, 2vw, 27px) clamp(5px, 0.56vw, 8px) clamp(8px, 0.76vw, 11px);
+  pointer-events: none;
+  position: absolute;
+  top: var(--module06-slot-y);
+  transform: translateZ(0);
+  width: var(--module06-slot-w);
+}
+
+.quest-module06-inspection-slot img {
+  align-self: end;
+  display: block;
+  filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.28));
+  image-rendering: pixelated;
+  margin-bottom: clamp(6px, 0.7vw, 10px);
+  max-height: clamp(55px, 6.1vw, 88px);
+  max-width: 82%;
+  object-fit: contain;
+}
+
+.quest-module06-inspection-slot strong {
+  align-self: end;
+  color: #8d3c24;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.44rem, 0.52vw, 0.62rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 0.82;
+  margin-bottom: clamp(2px, 0.28vw, 4px);
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 rgba(255, 235, 180, 0.45);
+}
+
+.quest-module06-inspection-slot.is-aman strong {
+  color: #355e3b;
+}
+
+.quest-module06-inspection-slot.is-waspada strong {
+  color: #9f6815;
+}
+
+.quest-module06-inspection-slot small {
+  align-self: start;
+  color: #2b1d0e;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.48rem, 0.58vw, 0.68rem);
+  font-weight: 700;
+  line-height: 0.82;
+  text-align: center;
+  text-shadow: 1px 1px 0 rgba(255, 235, 180, 0.3);
+}
+
+.quest-module06-result-card {
+  background:
+    linear-gradient(180deg, rgba(255, 236, 182, 0.5), rgba(199, 162, 100, 0.22)),
+    rgba(216, 194, 157, 0.34);
+  border: 2px solid rgba(95, 61, 28, 0.72);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 239, 190, 0.22),
+    2px 3px 0 rgba(43, 29, 14, 0.26);
+  box-sizing: border-box;
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  min-height: clamp(210px, 18vw, 265px);
+  padding: clamp(14px, 1.25vw, 18px) clamp(12px, 1vw, 16px) clamp(12px, 1vw, 15px);
+  place-items: center;
+  position: relative;
+  width: min(100%, 260px);
+}
+
+.quest-module06-result-card::before,
+.quest-module06-result-card::after {
+  border-color: rgba(91, 58, 27, 0.56);
+  border-style: solid;
+  content: "";
+  height: 22px;
+  pointer-events: none;
+  position: absolute;
+  width: 22px;
+}
+
+.quest-module06-result-card::before {
+  border-width: 2px 0 0 2px;
+  left: 6px;
+  top: 6px;
+}
+
+.quest-module06-result-card::after {
+  border-width: 0 2px 2px 0;
+  bottom: 6px;
+  right: 6px;
+}
+
+.quest-module06-result-card__number {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 223, 154, 0.22), rgba(91, 23, 16, 0.14)),
+    #8d3c24;
+  border: 2px solid rgba(43, 29, 14, 0.72);
+  color: #f7e7b4;
+  display: inline-flex;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.72rem, 0.88vw, 1rem);
+  height: clamp(34px, 3.1vw, 44px);
+  justify-content: center;
+  left: 10px;
+  line-height: 1;
+  position: absolute;
+  top: 9px;
+  width: clamp(26px, 2.6vw, 34px);
+}
+
+.quest-module06-result-card__number::after {
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 9px solid #8d3c24;
+  bottom: -10px;
+  content: "";
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.quest-module06-result-card__status {
+  align-items: center;
+  border: 2px solid rgba(43, 29, 14, 0.64);
+  border-radius: 99px;
+  display: inline-flex;
+  height: clamp(24px, 2.3vw, 32px);
+  justify-content: center;
+  position: absolute;
+  right: 11px;
+  top: 12px;
+  width: clamp(24px, 2.3vw, 32px);
+}
+
+.quest-module06-result-card__status::before {
+  color: #f7e7b4;
+  content: "!";
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.52rem, 0.6vw, 0.68rem);
+}
+
+.quest-module06-result-card.is-aman .quest-module06-result-card__status {
+  background: #355e3b;
+}
+
+.quest-module06-result-card.is-aman .quest-module06-result-card__status::before {
+  content: "✓";
+}
+
+.quest-module06-result-card.is-waspada .quest-module06-result-card__status {
+  background: #d9a441;
+}
+
+.quest-module06-result-card.is-waspada .quest-module06-result-card__status::before {
+  color: #2b1d0e;
+  content: "!";
+}
+
+.quest-module06-result-card.is-bahaya .quest-module06-result-card__status {
+  background: #8d3c24;
+}
+
+.quest-module06-result-card.is-bahaya .quest-module06-result-card__status::before {
+  content: "☠";
+}
+
+.quest-module06-result-card > img {
+  display: block;
+  filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.32));
+  image-rendering: pixelated;
+  justify-self: center;
+  max-height: clamp(92px, 8.2vw, 128px);
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.quest-module06-result-card figcaption {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  text-align: center;
+}
+
+.quest-module06-result-card figcaption strong {
+  color: #8d3c24;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.8rem, 0.9vw, 1.04rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.quest-module06-result-card figcaption small {
+  color: #2b1d0e;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.86rem, 0.96vw, 1.06rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.quest-module06-mitigation {
+  background: transparent;
+  color: #2b1d0e;
+  display: grid;
+  gap: 5px;
+  padding: 0 clamp(8px, 0.82vw, 12px);
+  text-shadow: 1px 1px 0 rgba(255, 236, 177, 0.24);
+  width: min(100%, 430px);
+}
+
+.quest-module06-mitigation strong {
+  color: var(--codex-green);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.72rem, 0.82vw, 0.94rem);
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.quest-module06-mitigation ul {
+  display: grid;
+  gap: 3px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.quest-module06-mitigation li {
+  border-left: 2px solid rgba(53, 94, 59, 0.58);
+  align-items: start;
+  display: grid;
+  gap: 1px;
+  grid-template-columns: auto minmax(0, 1fr);
+  padding-left: 7px;
+}
+
+.quest-module06-mitigation b,
+.quest-module06-mitigation span {
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.78rem, 0.88vw, 0.98rem);
+  font-weight: 700;
+  line-height: 0.95;
+}
+
+.quest-module06-mitigation b {
+  align-items: center;
+  background: rgba(53, 94, 59, 0.88);
+  border: 1px solid rgba(43, 29, 14, 0.52);
+  color: #f6e3aa;
+  display: inline-flex;
+  height: clamp(13px, 1.12vw, 16px);
+  justify-content: center;
+  line-height: 1;
+  margin-right: 5px;
+  min-width: clamp(13px, 1.12vw, 16px);
+  text-shadow: 1px 1px 0 rgba(43, 29, 14, 0.35);
+}
+
+.quest-module06-home-poster {
+  justify-self: center;
+  margin: 8px 0 clamp(12px, 1.1vw, 18px);
+  position: relative;
+  width: min(108%, 500px);
+}
+
+.quest-module06-home-poster > img {
+  display: block;
+  image-rendering: pixelated;
+  width: 100%;
+}
+
+.quest-module06-hotspot {
+  background: transparent;
+  border: 0;
+  border-radius: 99px;
+  color: transparent;
+  cursor: pointer;
+  display: block;
+  font-size: 0;
+  height: clamp(30px, 3vw, 42px);
+  left: var(--module06-x);
+  padding: 0;
+  position: absolute;
+  top: var(--module06-y);
+  transform: translate(-50%, -50%);
+  width: clamp(30px, 3vw, 42px);
+}
+
+.quest-module06-hotspot:hover,
+.quest-module06-hotspot:focus-visible,
+.quest-module06-hotspot.is-active {
+  box-shadow: none;
+  outline: 0;
+}
+
+.quest-module06-hotspot.is-found {
+  box-shadow: none;
+}
+
+.quest-module06-found {
+  color: var(--codex-green);
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.54rem, 0.62vw, 0.72rem);
+  margin: 0;
+  text-align: center;
+  text-shadow: 1px 1px 0 rgba(255, 236, 177, 0.3);
+}
+
+.quest-module06-meja-illustration {
+  display: block;
+  filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.24));
+  image-rendering: pixelated;
+  margin: clamp(1px, 0.12vw, 2px) auto 0;
+  max-height: var(--module06-meja-max-height, clamp(58px, 5.5vw, 84px));
+  object-fit: contain;
+  pointer-events: none;
+  width: var(--module06-meja-width, min(58%, 210px));
+}
+
+.final-simulation-blank {
+  align-items: center;
+  background:
+    radial-gradient(circle at center, rgba(53, 94, 59, 0.28), transparent 42%),
+    #100d0a;
+  color: #f4df9d;
+  display: flex;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.final-simulation-blank span {
+  border: 3px solid #d9a441;
+  box-shadow:
+    inset 0 0 0 2px rgba(53, 94, 59, 0.7),
+    0 0 26px rgba(217, 164, 65, 0.22);
+  padding: 18px 24px;
+}
+
+.quest-chat-board {
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 241, 190, 0.07) 0 2px, transparent 2px 8px),
+    rgba(67, 42, 20, 0.28);
+  border: 2px solid rgba(78, 50, 24, 0.7);
+  display: grid;
+  gap: 5px;
+  padding: 8px;
+}
+
+.quest-chat-board span {
+  background: rgba(238, 209, 154, 0.62);
+  border: 2px solid rgba(78, 50, 24, 0.42);
+  color: #1e140a;
+  font-family: "VT323", monospace;
+  font-size: clamp(0.98rem, 1.05vw, 1.16rem);
+  line-height: 1;
+  padding: 5px 7px;
+}
+
+.quest-chat-board .is-alert {
+  border-color: rgba(217, 164, 65, 0.8);
+  color: var(--codex-green);
+}
+
+.quest-gameplay--module05 {
+  align-content: start;
+  gap: clamp(6px, 0.56vw, 9px);
+  justify-items: center;
+  margin-top: clamp(-8px, -0.52vw, -3px);
+}
+
+.quest-module05-info-header {
+  box-sizing: border-box;
+  color: #2b1d0e;
+  display: grid;
+  gap: clamp(3px, 0.3vw, 5px);
+  padding: clamp(2px, 0.24vw, 4px) clamp(8px, 0.82vw, 12px);
+  text-shadow: 1px 1px 0 rgba(255, 236, 177, 0.46);
+  width: min(92%, 424px);
+}
+
+.quest-module05-info-header strong {
+  color: var(--codex-green);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.8rem, 0.92vw, 1.05rem);
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.quest-module05-info-header span {
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.88rem, 0.98vw, 1.1rem);
+  font-weight: 700;
+  line-height: 0.95;
+  text-align: center;
+}
+
+.quest-module05-call-card {
+  display: block;
+  filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.22));
+  image-rendering: pixelated;
+  object-fit: contain;
+  width: min(100%, 468px);
+}
+
+.quest-module05-call-card--hotline {
+  max-height: clamp(124px, 11.4vw, 176px);
+}
+
+.quest-module05-call-row {
+  align-items: end;
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(0, clamp(250px, 25vw, 330px)) clamp(96px, 9vw, 142px);
+  justify-content: center;
+  justify-items: center;
+  margin-top: clamp(-6px, -0.42vw, -2px);
+  width: min(98%, 452px);
+}
+
+.quest-module05-call-card--info {
+  margin-top: 20px;
+  max-height: clamp(256px, 16.4vw, 312px);
+  width: 200%;
+}
+
+.quest-module05-timsar-point {
+  align-self: end;
+  display: block;
+  filter: drop-shadow(2px 4px 0 rgba(43, 29, 14, 0.24));
+  image-rendering: pixelated;
+  max-height: clamp(150px, 14.6vw, 230px);
+  object-fit: contain;
+  transform: translate(clamp(-18px, -1.1vw, -10px), clamp(4px, 0.42vw, 7px));
+  width: 100%;
+}
+
+.quest-gameplay--module05 .quest-game-quiz.variant-pixel-card {
+  margin: 0 auto;
+  max-height: none;
+  overflow: visible;
+  padding: clamp(5px, 0.52vw, 8px);
+  width: min(96%, 430px);
+}
+
+.quest-gameplay--module05 .quest-game-quiz.variant-pixel-card .quest-game-quiz__title {
+  font-size: clamp(0.42rem, 0.5vw, 0.58rem);
+  min-height: 0;
+  padding: 4px 8px;
+}
+
+.quest-gameplay--module05 .quest-game-quiz.variant-pixel-card .quest-game-quiz__question,
+.quest-gameplay--module05 .quest-game-quiz.variant-pixel-card .quest-game-quiz__option {
+  font-size: clamp(0.58rem, 0.68vw, 0.78rem);
+  line-height: 0.95;
+  min-height: 22px;
+  padding: 3px 7px;
+}
+
+.quest-gameplay--module05 .quest-game-quiz.variant-pixel-card .quest-game-quiz__question {
+  padding: 5px 8px;
+}
+
+.quest-family-tree {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.quest-family-tree span {
+  background: rgba(53, 94, 59, 0.13);
+  border: 2px solid rgba(53, 94, 59, 0.48);
+  color: #1e140a;
+  font-family: "VT323", monospace;
+  font-size: clamp(0.92rem, 1vw, 1.08rem);
+  line-height: 1;
+  min-height: 30px;
+  padding: 6px;
+  text-align: center;
+}
+
+.quest-room-scan {
+  background:
+    linear-gradient(90deg, rgba(93, 63, 30, 0.32) 0 18%, transparent 18% 62%, rgba(93, 63, 30, 0.18) 62%),
+    linear-gradient(0deg, rgba(110, 72, 35, 0.22) 0 28%, transparent 28%),
+    rgba(209, 181, 131, 0.55);
+}
+
+.quest-craft-grid,
+.quest-equipment-slots {
+  display: grid;
+  gap: 7px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.quest-craft-grid span,
+.quest-equipment-slots button {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 240, 188, 0.18), rgba(76, 45, 18, 0.11)),
+    rgba(204, 174, 122, 0.44);
+  border: 2px solid rgba(93, 63, 30, 0.65);
+  box-shadow: inset 0 0 0 2px rgba(255, 238, 184, 0.12), 0 2px 0 rgba(69, 41, 17, 0.24);
+  display: grid;
+  gap: 4px;
+  min-height: 58px;
+  padding: 5px;
+  place-items: center;
+  position: relative;
+}
+
+.quest-craft-grid img,
+.quest-equipment-slots img {
+  filter: drop-shadow(0 2px 0 rgba(43, 29, 14, 0.42));
+  height: 29px;
+  image-rendering: pixelated;
+  object-fit: contain;
+  width: 29px;
+}
+
+.quest-craft-grid small,
+.quest-equipment-slots span,
+.quest-equipment-slots small {
+  color: #1f150b;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.76rem, 0.84vw, 0.92rem);
+  line-height: 0.95;
+  text-align: center;
+}
+
+.quest-gameplay--module07 {
+  align-content: start;
+  gap: clamp(7px, 0.68vw, 11px);
+  justify-items: center;
+  margin-top: clamp(-4px, -0.28vw, -1px);
+}
+
+.quest-module07-copy,
+.quest-module07-note {
+  box-sizing: border-box;
+  color: #2b1d0e;
+  display: grid;
+  gap: clamp(4px, 0.42vw, 7px);
+  text-shadow: 1px 1px 0 rgba(255, 236, 177, 0.44);
+  width: min(94%, 468px);
+}
+
+.quest-module07-copy strong,
+.quest-module07-note strong {
+  color: var(--codex-green);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.86rem, 0.94vw, 1.08rem);
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.quest-module07-copy p,
+.quest-module07-note p {
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.94rem, 1.02vw, 1.18rem);
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 0;
+  text-align: justify;
+}
+
+.quest-module07-craft-board {
+  display: block;
+  filter: drop-shadow(3px 4px 0 rgba(43, 29, 14, 0.2));
+  image-rendering: pixelated;
+  margin: 0;
+  position: relative;
+  width: min(104%, 548px);
+}
+
+.quest-module07-craft-board__frame {
+  display: block;
+  image-rendering: pixelated;
+  width: 100%;
+}
+
+.quest-module07-material-desk {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  left: 13.9%;
+  position: absolute;
+  top: 82.1%;
+  transform: translate(-50%, -50%);
+  width: 12.5%;
+}
+
+.quest-module07-material-desk span {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.quest-module07-material-desk img {
+  display: block;
+  filter: drop-shadow(1px 2px 0 rgba(43, 29, 14, 0.28));
+  image-rendering: pixelated;
+  max-height: clamp(28px, 3vw, 44px);
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.quest-module07-craft-item,
+.quest-module07-craft-result {
+  display: block;
+  filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.28));
+  image-rendering: pixelated;
+  object-fit: contain;
+  pointer-events: none;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.quest-module07-craft-item {
+  height: var(--module07-material-slot-size, clamp(34px, 3.55vw, 52px));
+  width: var(--module07-material-slot-size, clamp(34px, 3.55vw, 52px));
+}
+
+.quest-module07-craft-item--a {
+  left: 13.3%;
+  top: 41.6%;
+}
+
+.quest-module07-craft-item--b {
+  left: 36%;
+  top: 41.6%;
+}
+
+.quest-module07-craft-result {
+  left: 58.8%;
+  max-height: var(--module07-actmed-slot-size, clamp(52px, 5.4vw, 78px));
+  max-width: var(--module07-actmed-slot-size, clamp(52px, 5.4vw, 78px));
+  top: 41.6%;
+}
+
+.quest-module07-craft-board figcaption {
+  color: #2b1d0e;
+  display: grid;
+  gap: clamp(4px, 0.42vw, 7px);
+  left: 82.9%;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  text-shadow: 1px 1px 0 rgba(255, 236, 177, 0.35);
+  top: 49.2%;
+  transform: translate(-50%, -50%);
+  width: 21.5%;
+}
+
+.quest-module07-description-item {
+  display: block;
+  filter: drop-shadow(1px 2px 0 rgba(43, 29, 14, 0.28));
+  image-rendering: pixelated;
+  justify-self: center;
+  max-height: var(--module07-description-item-size, clamp(38px, 3.8vw, 58px));
+  max-width: var(--module07-description-item-size, clamp(42px, 4.2vw, 64px));
+  object-fit: contain;
+}
+
+.quest-module07-craft-board figcaption strong {
+  color: var(--codex-green);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.52rem, 0.62vw, 0.72rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.quest-module07-craft-board figcaption small {
+  color: #2b1d0e;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.4rem, 0.48vw, 0.58rem);
+  font-weight: 900;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.quest-module07-craft-board figcaption small.is-valid {
+  color: #355e3b;
+}
+
+.quest-module07-craft-board figcaption small.is-invalid {
+  color: #8d3c24;
+}
+
+.quest-module07-craft-board figcaption span {
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.62rem, 0.74vw, 0.86rem);
+  font-weight: 700;
+  line-height: 0.9;
+}
+
+.quest-module07-craft-controls {
+  align-items: center;
+  display: grid;
+  gap: clamp(4px, 0.38vw, 6px);
+  grid-template-columns: clamp(24px, 2.2vw, 31px) minmax(54px, 1fr) clamp(24px, 2.2vw, 31px);
+  margin-top: clamp(4px, 0.4vw, 6px);
+  pointer-events: auto;
+  width: 100%;
+}
+
+.quest-module07-craft-controls button {
+  align-items: center;
+  background:
+    linear-gradient(180deg, #466f41, #214520);
+  border: 2px solid #2b1d0e;
+  box-shadow:
+    inset 0 0 0 1px rgba(217, 164, 65, 0.52),
+    1px 1px 0 rgba(43, 29, 14, 0.36);
+  color: #f7e6b4;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.34rem, 0.42vw, 0.54rem);
+  height: clamp(22px, 2vw, 28px);
+  justify-content: center;
+  line-height: 1;
+  padding: 0 clamp(3px, 0.34vw, 5px);
+}
+
+.quest-module07-craft-board > button {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: transparent;
+  cursor: pointer;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: 0;
+  height: 10.5%;
+  left: 34.6%;
+  padding: 0;
+  position: absolute;
+  text-transform: uppercase;
+  top: 68.6%;
+  transform: translate(-50%, -50%);
+  width: 31.6%;
+}
+
+.quest-module07-craft-board > button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.quest-module07-craft-board > button.is-crafted {
+  background: rgba(53, 94, 59, 0.16);
+  box-shadow: 0 0 14px rgba(53, 94, 59, 0.26);
+}
+
+.quest-module07-note {
+  border-left: 3px solid rgba(53, 94, 59, 0.72);
+  padding-left: clamp(8px, 0.8vw, 12px);
+}
+
+.quest-module07-result-list {
+  display: grid;
+  gap: clamp(4px, 0.46vw, 7px);
+}
+
+.quest-module07-result-list section {
+  align-items: center;
+  display: grid;
+  gap: clamp(6px, 0.62vw, 9px);
+  grid-template-columns: minmax(0, 1fr) clamp(42px, 4.2vw, 60px);
+}
+
+.quest-module07-result-list section.is-reversed {
+  grid-template-columns: clamp(42px, 4.2vw, 60px) minmax(0, 1fr);
+}
+
+.quest-module07-result-list section.is-reversed span {
+  order: 2;
+}
+
+.quest-module07-result-list section.is-reversed img {
+  order: 1;
+}
+
+.quest-module07-result-list span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.quest-module07-result-list b {
+  color: var(--codex-green);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.58rem, 0.68vw, 0.78rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.quest-module07-result-list small {
+  color: #2b1d0e;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.68rem, 0.78vw, 0.9rem);
+  font-weight: 700;
+  line-height: 0.9;
+}
+
+.quest-module07-result-list img {
+  display: block;
+  filter: drop-shadow(1px 2px 0 rgba(43, 29, 14, 0.28));
+  image-rendering: pixelated;
+  justify-self: center;
+  max-height: var(--module07-actmed-list-size, clamp(42px, 4.8vw, 66px));
+  max-width: var(--module07-actmed-list-size, clamp(42px, 4.8vw, 66px));
+  object-fit: contain;
+}
+
+.quest-equipment-slots button.is-locked {
+  cursor: not-allowed;
+  filter: grayscale(0.7) brightness(0.78);
+  opacity: 0.5;
+}
+
+.quest-equipment-slots button.is-equipped {
+  border-color: var(--codex-green);
+  box-shadow:
+    inset 0 0 0 2px rgba(53, 94, 59, 0.28),
+    0 0 14px rgba(53, 94, 59, 0.18);
+}
+
+.quest-weight-meter {
+  align-items: center;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.quest-weight-meter strong {
+  color: var(--codex-green);
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.48rem, 0.55vw, 0.66rem);
+  line-height: 1.15;
+}
+
+.quest-weight-meter.is-overweight strong {
+  color: #8d3c24;
+}
+
+.quest-weight-meter.is-overweight i {
+  background: linear-gradient(180deg, #c75a35, #7d2e1c);
+}
+
+.quest-gameplay--module08 {
+  align-content: start;
+  display: grid;
+  justify-items: center;
+}
+
+.quest-gameplay--module08-left {
+  gap: clamp(2px, 0.9vw, 8px);
+  padding-top: clamp(4px, 0.45vw, 8px);
+}
+
+.quest-module08-bag,
+.quest-module08-inventory {
+  display: block;
+  margin: 0;
+  position: relative;
+}
+
+.quest-module08-bag {
+  width: min(85%, 600px);
+  margin-top: clamp(-15px, -0.45vw, -8px);
+}
+
+.quest-module08-bag > img,
+.quest-module08-inventory > img {
+  display: block;
+  filter: drop-shadow(2px 4px 0 rgba(43, 29, 14, 0.28));
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+  width: 100%;
+}
+
+.quest-module08-bag.is-complete > img {
+  filter:
+    drop-shadow(0 0 10px rgba(217, 164, 65, 0.26))
+    drop-shadow(2px 4px 0 rgba(43, 29, 14, 0.28));
+}
+
+.quest-module08-bag-slot,
+.quest-module08-inventory-item {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: grab;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.quest-module08-bag-slot {
+  cursor: pointer;
+  height: var(--module08-slot-h);
+  left: var(--module08-slot-x);
+  top: var(--module08-slot-y);
+  transform: none;
+  width: var(--module08-slot-w);
+}
+
+.quest-module08-bag-slot:hover,
+.quest-module08-bag-slot:focus-visible {
+  filter: drop-shadow(0 0 7px rgba(217, 164, 65, 0.44));
+  outline: none;
+}
+
+.quest-module08-bag-slot.is-filled {
+  filter: drop-shadow(0 0 6px rgba(53, 94, 59, 0.28));
+}
+
+.quest-module08-inventory-item {
+  height: clamp(26px, 3vw, 44px);
+  left: var(--module08-x);
+  top: var(--module08-y);
+  width: clamp(26px, 3vw, 44px);
+}
+
+.quest-module08-inventory-item.is-selected {
+  filter: drop-shadow(0 0 8px rgba(217, 164, 65, 0.72));
+}
+
+.quest-module08-bag-slot:active,
+.quest-module08-inventory-item:active {
+  cursor: grabbing;
+}
+
+.quest-module08-bag-slot img,
+.quest-module08-inventory-item img {
+  display: block;
+  filter: drop-shadow(1px 2px 0 rgba(43, 29, 14, 0.42));
+  image-rendering: pixelated;
+  max-height: 86%;
+  max-width: 86%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.quest-module08-inventory-item img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.quest-module08-inventory-wrap {
+  align-items: center;
+  display: grid;
+  gap: clamp(5px, 0.65vw, 9px);
+  grid-template-columns: 28px minmax(0, 1fr) 28px;
+  width: min(96%, 456px);
+}
+
+.quest-module08-inventory {
+  width: 100%;
+}
+
+.quest-module08-arrow {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 238, 174, 0.14), transparent 54%),
+    #355e3b;
+  border: 2px solid rgba(43, 29, 14, 0.88);
+  box-shadow:
+    inset 0 0 0 1px rgba(217, 164, 65, 0.52),
+    2px 2px 0 rgba(43, 29, 14, 0.24);
+  color: #f4df9d;
+  cursor: pointer;
+  display: flex;
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(0.56rem, 0.62vw, 0.72rem);
+  height: 27px;
+  justify-content: center;
+  padding: 0;
+  width: 28px;
+}
+
+.quest-module08-arrow:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 238, 174, 0.24), transparent 54%),
+    #456f42;
+}
+
+.quest-module08-page-count,
+.quest-module08-empty-inventory {
+  color: rgba(43, 29, 14, 0.82);
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.62rem, 0.76vw, 0.86rem);
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+  text-align: center;
+}
+
+.quest-module08-empty-inventory {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 78%;
+}
+
+.quest-gameplay--module08-right {
+  gap: clamp(6px, 0.72vw, 10px);
+  padding-top: clamp(2px, 0.35vw, 6px);
+}
+
+.quest-module08-mission-board,
+.quest-module08-material {
+  display: block;
+  margin: 0;
+}
+
+.quest-module08-mission-board {
+  position: relative;
+  width: min(100%, 430px);
+}
+
+.quest-module08-mission,
+.quest-module08-material {
+  display: block;
+  filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.18));
+  height: auto;
+  image-rendering: pixelated;
+  object-fit: contain;
+  width: 100%;
+}
+
+.quest-module08-mission {
+  margin-top: -2px;
+  width: min(100%, 430px);
+}
+
+.quest-module08-material {
+  max-height: clamp(350px, 33vw, 555px);
+  width: min(104%, 470px);
+}
+
+.quest-module08-progress-text {
+  color: #355e3b;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.56rem, 0.68vw, 0.78rem);
+  line-height: 1.35;
+  margin: 0;
+  text-align: center;
+  text-shadow: 1px 1px 0 rgba(244, 223, 157, 0.58);
+  text-transform: uppercase;
+}
+
+.quest-module08-progress-text.is-complete {
+  color: #2f7a31;
+}
+
+.quest-module08-mission-status {
+  align-items: center;
+  bottom: 7.6%;
+  color: #f2ddb0;
+  display: grid;
+  gap: 5px 8px;
+  grid-template-columns: clamp(23px, 2.3vw, 34px) minmax(0, 1fr);
+  left: 6.8%;
+  position: absolute;
+  text-shadow: 2px 2px 0 rgba(36, 21, 13, 0.86);
+  width: 84.5%;
+  z-index: 2;
+}
+
+.quest-module08-mission-status span,
+.quest-module08-mission-status img {
+  align-items: center;
+  color: #ffd55a;
+  display: flex;
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(0.34rem, 0.42vw, 0.52rem);
+  height: clamp(23px, 2.3vw, 34px);
+  image-rendering: pixelated;
+  justify-content: center;
+  width: clamp(23px, 2.3vw, 34px);
+}
+
+.quest-module08-mission-status img {
+  filter: drop-shadow(1px 2px 0 rgba(43, 29, 14, 0.34));
+  object-fit: contain;
+}
+
+.quest-module08-mission-status strong {
+  color: #ffd55a;
+  display: block;
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(0.46rem, 0.58vw, 0.68rem);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.quest-module08-mission-status small {
+  color: #f4df9d;
+  display: block;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.84rem, 0.98vw, 1.12rem);
+  font-weight: 700;
+  line-height: 0.86;
+  margin-top: 3px;
+}
+
+.quest-module08-mission-status.is-unlocked strong {
+  color: #95cf5d;
+}
+
+.quest-module08-mission-bar {
+  background: rgba(36, 21, 13, 0.78);
+  border: 2px solid rgba(11, 7, 4, 0.86);
+  box-shadow:
+    inset 0 0 0 2px rgba(116, 74, 31, 0.45),
+    1px 1px 0 rgba(255, 222, 133, 0.22);
+  display: block;
+  grid-column: 2;
+  height: clamp(10px, 1vw, 14px);
+  overflow: hidden;
+  width: 100%;
+}
+
+.quest-module08-mission-bar b {
+  background:
+    linear-gradient(180deg, rgba(255, 239, 169, 0.24), transparent 54%),
+    #2f8e2f;
+  display: block;
+  height: 100%;
+  transition: width 180ms ease-out;
+}
+
+.quest-gameplay--module08-right .quest-weight-meter {
+  width: min(82%, 360px);
+}
+
+.quest-final-scenes {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.quest-final-scenes button {
+  min-height: 104px;
+}
+
+.quest-module-list button.is-complete {
+  border-color: rgba(217, 164, 65, 0.82);
+  box-shadow:
+    inset 0 0 0 2px rgba(217, 164, 65, 0.2),
+    0 3px 0 rgba(4, 2, 1, 0.82);
+}
+
+.quest-module-list button.is-locked:not(.is-active) {
+  filter: grayscale(0.35) brightness(0.78);
+}
+
+.quest-inventory-grid button {
+  position: relative;
+}
+
+.quest-inventory-grid img {
+  display: block;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.55));
+  image-rendering: pixelated;
+}
+
+.quest-inventory-grid button.is-locked {
+  opacity: 0.45;
+  filter: grayscale(0.7) brightness(0.75);
+}
+
+.quest-inventory-grid button.is-locked::after {
+  background:
+    linear-gradient(45deg, transparent 0 42%, rgba(217, 164, 65, 0.8) 43% 57%, transparent 58%),
+    linear-gradient(-45deg, transparent 0 42%, rgba(217, 164, 65, 0.8) 43% 57%, transparent 58%);
+  content: "";
+  height: 18px;
+  pointer-events: none;
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  width: 18px;
+}
+
+.quest-inventory-grid button.is-unlocked {
+  border-color: rgba(217, 164, 65, 0.9);
+  box-shadow:
+    inset 0 0 0 2px rgba(217, 164, 65, 0.38),
+    0 3px 0 #050302,
+    0 0 14px rgba(217, 164, 65, 0.18);
+}
+
+.quest-step-list label.is-locked {
+  cursor: not-allowed;
+  filter: grayscale(0.18) brightness(0.9);
+  opacity: 0.68;
+}
+
+.quest-step-list input:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.quest-bag-slots {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.quest-bag-slots span {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 240, 188, 0.18), rgba(76, 45, 18, 0.11)),
+    rgba(204, 174, 122, 0.44);
+  border: 2px solid rgba(93, 63, 30, 0.65);
+  box-shadow: inset 0 0 0 2px rgba(255, 238, 184, 0.12), 0 2px 0 rgba(69, 41, 17, 0.24);
+  display: grid;
+  gap: 3px;
+  min-height: 50px;
+  padding: 5px;
+  place-items: center;
+  position: relative;
+}
+
+.quest-bag-slots img {
+  filter: drop-shadow(0 2px 0 rgba(43, 29, 14, 0.42));
+  height: 27px;
+  image-rendering: pixelated;
+  object-fit: contain;
+  width: 27px;
+}
+
+.quest-bag-slots small {
+  color: #1f150b;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.72rem, 0.8vw, 0.86rem);
+  line-height: 0.95;
+  text-align: center;
+}
+
+.quest-bag-slots span.is-locked {
+  filter: grayscale(0.65) brightness(0.78);
+  opacity: 0.48;
+}
+
+.quest-bag-slots span.is-locked::after {
+  color: #4b3219;
+  content: "LOCK";
+  font-family: "VT323", monospace;
+  font-size: 0.74rem;
+  font-weight: 700;
+  position: absolute;
+  right: 5px;
+  top: 4px;
+}
+
+.quest-game-quiz.variant-pixel-card {
+  background:
+    linear-gradient(180deg, rgba(226, 195, 137, 0.78), rgba(198, 166, 113, 0.72)),
+    repeating-linear-gradient(90deg, rgba(70, 43, 18, 0.055) 0 1px, transparent 1px 8px);
+  border: 3px solid rgba(62, 40, 20, 0.84);
+  border-radius: 0;
+  box-shadow:
+    inset 0 0 0 2px rgba(138, 98, 48, 0.78),
+    inset 0 0 0 4px rgba(255, 232, 169, 0.28),
+    3px 3px 0 rgba(35, 22, 10, 0.26);
+  display: grid;
+  filter: saturate(0.84) sepia(0.08);
+  gap: clamp(4px, 0.48vw, 7px);
+  justify-self: center;
+  max-height: clamp(172px, 15.4vw, 212px);
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(7px, 0.72vw, 10px);
+  position: relative;
+  width: min(92%, 520px);
+}
+
+.quest-game-quiz.variant-pixel-card::before {
+  border: 2px solid rgba(62, 40, 20, 0.32);
+  box-shadow: 0 0 0 1px rgba(255, 241, 190, 0.35);
+  content: "";
+  inset: 8px;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.quest-game-quiz.variant-pixel-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__title {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 236, 151, 0.09), transparent 44%),
+    #355e3b;
+  border: 2px solid rgba(62, 40, 20, 0.88);
+  box-shadow: 2px 2px 0 rgba(62, 40, 20, 0.35), inset 0 0 0 2px rgba(244, 223, 157, 0.12);
+  color: #f4df9d;
+  display: grid;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.48rem, 0.58vw, 0.68rem);
+  grid-template-columns: 20px minmax(0, 1fr) 20px;
+  line-height: 1;
+  padding: clamp(5px, 0.5vw, 7px) 10px;
+  position: center;
+  text-align: center;
+  text-shadow: 2px 2px 0 rgba(43, 29, 14, 0.72);
+  text-transform: uppercase;
+}
+
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__title::before,
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__title::after {
+  background:
+    radial-gradient(ellipse at 50% 18%, #f4df9d 0 18%, transparent 19%),
+    radial-gradient(ellipse at 50% 82%, #f4df9d 0 18%, transparent 19%),
+    radial-gradient(ellipse at 18% 50%, #d9a441 0 18%, transparent 19%),
+    radial-gradient(ellipse at 82% 50%, #d9a441 0 18%, transparent 19%),
+    #315a33;
+  border: 1px solid rgba(62, 40, 20, 0.72);
+  box-shadow: 1px 1px 0 rgba(43, 29, 14, 0.5);
+  content: "";
+  display: block;
+  height: 13px;
+  justify-self: center;
+  transform: rotate(45deg);
+  width: 13px;
+}
+
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__question,
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__option {
+  background:
+    linear-gradient(180deg, rgba(255, 245, 201, 0.34), rgba(111, 71, 32, 0.04)),
+    rgba(228, 196, 139, 0.5);
+  border: 2px solid rgba(115, 80, 38, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(255, 246, 205, 0.2);
+  color: #20150b;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+}
+
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__question {
+  background:
+    linear-gradient(180deg, rgba(239, 208, 151, 0.68), rgba(117, 78, 36, 0.08)),
+    rgba(213, 179, 121, 0.54);
+  font-size: clamp(0.66rem, 0.78vw, 0.9rem);
+  font-weight: 700;
+  line-height: 1.1;
+  padding: clamp(6px, 0.62vw, 8px) clamp(8px, 0.82vw, 11px);
+}
+
+.quest-lock-note {
+  color: #5b2f1b;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.9rem, 0.98vw, 1.04rem);
+  line-height: 1;
+}
+
+.quest-quiz-options {
+  display: grid;
+  gap: clamp(4px, 0.44vw, 6px);
+}
+
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__option {
+  align-items: center;
+  border-radius: 0;
+  cursor: pointer;
+  display: flex;
+  font-size: clamp(0.68rem, 0.78vw, 0.9rem);
+  font-weight: 700;
+  gap: 6px;
+  line-height: 1.05;
+  min-height: clamp(23px, 2.2vw, 30px);
+  padding: clamp(4px, 0.42vw, 6px) clamp(7px, 0.72vw, 10px);
+  text-align: left;
+  transition: background 140ms ease, border-color 140ms ease, transform 140ms ease;
+}
+
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__option span {
+  color: rgba(90, 59, 27, 0.9);
+  flex: 0 0 auto;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  min-width: 17px;
+}
+
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__option:hover {
+  background: #d6d18a;
+  border-color: #315a33;
+  transform: translateX(3px);
+}
+
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__option.is-selected {
+  background:
+    linear-gradient(90deg, rgba(53, 94, 59, 0.18), transparent 58%),
+    rgba(224, 198, 151, 0.78);
+  border-color: #315a33;
+}
+
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__option.is-correct {
+  box-shadow: inset 0 0 0 2px rgba(53, 94, 59, 0.24), 0 0 12px rgba(53, 94, 59, 0.18);
+}
+
+.quest-game-quiz.variant-pixel-card .quest-game-quiz__option.is-wrong {
+  border-color: #8d3c24;
+  box-shadow: inset 0 0 0 2px rgba(141, 60, 36, 0.18);
+}
+
+.quest-mini-quiz.is-locked,
+.quest-mini-quiz.is-locked .quest-quiz-choice,
+.quest-game-quiz.is-locked,
+.quest-game-quiz.is-locked .quest-quiz-choice {
+  cursor: not-allowed;
+  filter: grayscale(0.25) brightness(0.9);
+}
+
+.quest-book-footer {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  bottom: 95px;
+  display: flex;
+  gap: 0;
+  grid-column: 1 / -1;
+  justify-content: center;
+  left: 50%;
+  min-height: 0;
+  padding: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  z-index: 15;
+}
+
+.quest-next {
+  font-size: clamp(0.58rem, 0.64vw, 0.72rem);
+  gap: 9px;
+  justify-self: center;
+  min-height: clamp(30px, 2.7vw, 38px);
+  min-width: clamp(126px, 12.5vw, 168px);
+  padding: 0 clamp(13px, 1.2vw, 18px);
+  pointer-events: auto;
+}
+
+.quest-cta:disabled,
+.quest-cta:disabled:hover {
+  cursor: not-allowed;
+  filter: grayscale(0.55) brightness(0.72);
+  opacity: 0.72;
+  transform: none;
+}
+
+.quest-reward-popup {
+  animation: questRewardPop 420ms steps(4, end) both;
+  background:
+    linear-gradient(180deg, rgba(255, 242, 186, 0.18), rgba(37, 22, 11, 0.16)),
+    linear-gradient(180deg, #3e6b3d 0%, var(--codex-green) 56%, #1f3b24 100%);
+  border: 3px solid #142616;
+  box-shadow:
+    0 5px 0 #0d160c,
+    inset 0 0 0 2px var(--codex-gold),
+    inset 0 -6px 0 rgba(0, 0, 0, 0.22),
+    0 0 22px rgba(217, 164, 65, 0.34);
+  color: #f8e7b8;
+  display: grid;
+  gap: 8px;
+  max-width: none;
+  min-width: 0;
+  padding: 11px 13px;
+  position: absolute;
+  right: clamp(96px, 8.2vw, 126px);
+  top: clamp(26px, 2.8vw, 42px);
+  width: clamp(210px, 18vw, 270px);
+  z-index: 16;
+}
+
+.quest-reward-popup::before {
+  background:
+    linear-gradient(var(--codex-gold), var(--codex-gold)) left 6px top 6px / 18px 2px no-repeat,
+    linear-gradient(var(--codex-gold), var(--codex-gold)) left 6px top 6px / 2px 18px no-repeat,
+    linear-gradient(var(--codex-gold), var(--codex-gold)) right 6px top 6px / 18px 2px no-repeat,
+    linear-gradient(var(--codex-gold), var(--codex-gold)) right 6px top 6px / 2px 18px no-repeat,
+    linear-gradient(var(--codex-gold), var(--codex-gold)) left 6px bottom 6px / 18px 2px no-repeat,
+    linear-gradient(var(--codex-gold), var(--codex-gold)) left 6px bottom 6px / 2px 18px no-repeat,
+    linear-gradient(var(--codex-gold), var(--codex-gold)) right 6px bottom 6px / 18px 2px no-repeat,
+    linear-gradient(var(--codex-gold), var(--codex-gold)) right 6px bottom 6px / 2px 18px no-repeat;
+  content: "";
+  inset: 0;
+  opacity: 0.68;
+  pointer-events: none;
+  position: absolute;
+}
+
+.quest-reward-popup > strong {
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.48rem, 0.55vw, 0.68rem);
+  line-height: 1.3;
+  position: relative;
+  text-shadow: 2px 2px 0 #101d10;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.quest-reward-popup__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  position: relative;
+  z-index: 1;
+}
+
+.quest-reward-popup__items span {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 241, 184, 0.18), rgba(54, 33, 15, 0.12)),
+    rgba(213, 177, 103, 0.24);
+  border: 2px solid rgba(217, 164, 65, 0.74);
+  display: inline-flex;
+  gap: 6px;
+  min-height: 36px;
+  padding: 4px 8px;
+}
+
+.quest-reward-popup__items img {
+  filter: drop-shadow(0 2px 0 rgba(15, 8, 4, 0.68));
+  height: 25px;
+  image-rendering: pixelated;
+  object-fit: contain;
+  width: 25px;
+}
+
+.quest-reward-popup__items small {
+  color: #f8e7b8;
+  font-family: "VT323", "Pixelify Sans", monospace;
+  font-size: clamp(0.9rem, 0.98vw, 1.08rem);
+  line-height: 1;
+  text-shadow: 1px 1px 0 #101d10;
+}
+
+@keyframes questRewardPop {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.94);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.02);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 1440px) {
+  .quest-book {
+    padding:
+      calc(clamp(80px, 7.1vw, 108px) + 10px)
+      clamp(88px, 7.6vw, 112px)
+      calc(clamp(48px, 4.9vw, 72px) - 10px);
+  }
+
+  .quest-page {
+    padding: clamp(18px, 2vw, 28px);
+  }
+
+  .quest-page--left {
+    padding: clamp(8px, 1vw, 14px) clamp(16px, 1.6vw, 24px) clamp(8px, 1vw, 14px) clamp(8px, 1vw, 14px);
+  }
+
+  .quest-page--right {
+    padding: clamp(8px, 1vw, 14px) clamp(8px, 1vw, 14px) clamp(8px, 1vw, 14px) clamp(16px, 1.6vw, 24px);
+  }
+
+  .quest-step-list label {
+    grid-template-columns: 32px clamp(50px, 4.6vw, 64px) minmax(0, 1fr) 26px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .quest-book {
+    gap: 12px;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 860px;
+    min-height: auto;
+    padding: 74px 48px 34px;
+  }
+
+  .quest-book::before {
+    bottom: auto;
+    display: block;
+    height: 24px;
+    left: 18px;
+    right: 18px;
+    top: calc(50% - 12px);
+    width: auto;
+  }
+
+  .quest-book__spine {
+    display: none;
+  }
+
+  .quest-page--left,
+  .quest-page--right {
+    border-radius: 6px;
+    padding: 30px;
+    box-shadow: none;
+  }
+
+  .quest-page--left {
+    padding-bottom: 18px;
+  }
+
+  .quest-page--right {
+    padding-top: 18px;
+  }
+
+  .quest-module-header {
+    height: auto;
+  }
+
+  .quest-book-footer {
+    bottom: 34px;
+  }
+
+  .quest-reward-popup {
+    max-width: min(320px, calc(100% - 96px));
+    right: 48px;
+    top: 46px;
+    width: min(260px, calc(100% - 96px));
+  }
+
+  .quest-next {
+    justify-self: center;
+    width: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .quest-book {
+    border-width: 5px;
+    border-radius: 8px;
+    padding: 12px;
+  }
+
+  .quest-book::after {
+    inset: 7px;
+  }
+
+  .quest-book__ribbon {
+    display: none;
+  }
+
+  .quest-page--left,
+  .quest-page--right {
+    padding: 22px;
+  }
+
+  .quest-page::before {
+    inset: 12px;
+  }
+
+  .quest-module-header {
+    grid-template-columns: 52px minmax(0, 1fr);
+    height: auto;
+    padding: 10px;
+  }
+
+  .quest-module-header > img {
+    display: block;
+    opacity: 0.42;
+    width: 52%;
+  }
+
+  .quest-module-badge {
+    font-size: 1.05rem;
+  }
+
+  .quest-module-heading h1 {
+    font-size: 1.04rem;
+  }
+
+  .quest-module-heading small {
+    font-size: 0.72rem;
+  }
+
+  .quest-illustration {
+    height: auto;
+    min-height: 170px;
+  }
+
+  .quest-page-title {
+    padding-inline: 14px;
+  }
+
+  .quest-page-title h2 {
+    font-size: 1.02rem;
+  }
+
+  .quest-page-title h2::before,
+  .quest-page-title h2::after {
+    margin-inline: 8px;
+  }
+
+  .quest-step-list label {
+    gap: 9px;
+    grid-template-columns: 34px 58px minmax(0, 1fr) 28px;
+    min-height: 88px;
+    padding: 10px;
+  }
+
+  .quest-step-number {
+    font-size: 1.05rem;
+    height: 34px;
+    width: 34px;
+  }
+
+  .quest-step-thumb {
+    height: 58px;
+    width: 58px;
+  }
+
+  .quest-step-icon {
+    transform: scale(0.74);
+  }
+
+  .quest-step-copy strong {
+    font-size: 0.98rem;
+  }
+
+  .quest-step-copy small {
+    font-size: 0.88rem;
+    line-height: 1.18;
+  }
+
+  .quest-tip {
+    gap: 10px;
+    grid-template-columns: 44px minmax(0, 1fr) 56px;
+    min-height: 96px;
+    padding: 12px;
+  }
+
+  .quest-tip__icon {
+    transform: scale(0.82);
+    transform-origin: left center;
+  }
+
+  .quest-tip small {
+    font-size: 1.04rem;
+  }
+
+  .quest-tip img {
+    height: 78px;
+    width: 58px;
+  }
+
+  .quest-bag-slots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .quest-book-footer {
+    bottom: 16px;
+  }
+
+  .quest-reward-popup {
+    left: 22px;
+    max-width: none;
+    min-width: 0;
+    right: 22px;
+    top: 20px;
+    width: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .quest-page--left,
+  .quest-page--right {
+    padding: 18px;
+  }
+
+  .quest-copy {
+    font-size: 0.94rem;
+  }
+
+  .quest-cta {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .quest-step-list label {
+    align-items: start;
+    grid-template-columns: 34px minmax(0, 1fr) 28px;
+  }
+
+  .quest-step-thumb {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .quest-step-copy {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .quest-step-list input {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}

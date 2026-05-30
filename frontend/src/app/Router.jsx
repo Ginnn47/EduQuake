@@ -1,5 +1,14 @@
-import Journey from "../pages/Journey";
+import DashboardPage from "../pages/DashboardPage";
+import FinalSimulationPlayPage from "../pages/FinalSimulationPlayPage";
 
-const Router = () => <Journey />;
+const Router = () => {
+  const path = window.location.pathname;
+
+  if (path === "/final-simulation" || path === "/simulasi-akhir") {
+    return <FinalSimulationPlayPage />;
+  }
+
+  return <DashboardPage />;
+};
 
 export default Router;

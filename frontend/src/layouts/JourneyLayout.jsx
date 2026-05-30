@@ -1,4 +1,4 @@
-import PixelHUD from "../components/ui/PixelHUD";
+import PixelHUD from "./PixelHUD";
 
 const JourneyLayout = ({ sidebar, map, workspace, mission }) => (
   <div className="eduquake-shell">

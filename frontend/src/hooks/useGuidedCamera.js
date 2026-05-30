@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { applyCameraDrag } from "../systems/camera/dragController";
-import { getZoneFocusOffset } from "../systems/camera/zoneFocus";
+import { applyCameraDrag } from "../utils/dragController";
+import { getZoneFocusOffset } from "../utils/zoneFocus";
 
 const useGuidedCamera = (zone) => {
   const dragRef = useRef({ active: false, x: 0, y: 0 });

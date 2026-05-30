@@ -4,77 +4,234 @@
 
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  darkMode: 'class',
+
+  darkMode: "class",
+
   theme: {
     extend: {
       colors: {
-        "surface-container-high": "#eae6de",
-        "tertiary-fixed": "#f8e0a8",
-        "primary-container": "#78a886",
-        "primary-fixed": "#c8e8d0",
-        "inverse-on-surface": "#f5f0e8",
-        "primary-fixed-dim": "#8ecf9e",
-        "on-primary": "#ffffff",
-        "error-container": "#ffdad8",
-        "outline-variant": "#c4c8bc",
-        "surface-container": "#f0ece4",
-        "secondary-fixed": "#f0e8db",
-        "on-tertiary-fixed": "#221a05",
-        "background": "#faf6f0",
-        "on-error": "#ffffff",
-        "on-primary-fixed": "#002110",
-        "on-background": "#2e3230",
-        "surface-variant": "#e4e0d8",
-        "tertiary": "#705c30",
-        "on-tertiary-container": "#554020",
-        "on-surface": "#2e3230",
-        "secondary-container": "#f0e8db",
-        "on-tertiary": "#ffffff",
-        "surface-container-low": "#f5f1ea",
-        "surface-dim": "#dbd7cf",
-        "on-secondary-fixed-variant": "#4a4538",
-        "on-secondary-container": "#5e5548",
-        "on-secondary": "#ffffff",
-        "on-primary-fixed-variant": "#2a6038",
-        "tertiary-container": "#c4a66a",
-        "secondary-fixed-dim": "#d4ccbf",
-        "on-secondary-fixed": "#1e1a13",
-        "on-primary-container": "#d8f0de",
-        "inverse-surface": "#2e3230",
-        "inverse-primary": "#8ecf9e",
-        "error": "#b83230",
-        "tertiary-fixed-dim": "#dcc48e",
-        "surface-container-lowest": "#ffffff",
-        "secondary": "#6b6358",
-        "surface-bright": "#faf6f0",
-        "surface": "#faf6f0",
-        "outline": "#74796e",
-        "primary": "#4a7c59",
-        "on-error-container": "#690005",
-        "surface-container-highest": "#e4e0d8",
-        "surface-tint": "#4a7c59",
-        "on-surface-variant": "#4a4e4a",
-        "on-tertiary-fixed-variant": "#554020"
+        /*
+        ========================================
+        EDUQUAKE PIXEL RPG PALETTE
+        ========================================
+        */
+
+        background: "#0B1220",
+        surface: "#1A120B",
+        parchment: "#D8C29D",
+        parchmentDark: "#C4AE84",
+
+        wood: "#3A2416",
+        woodDark: "#24150D",
+
+        primary: "#D9A441",
+        primaryHover: "#E8B85C",
+
+        secondary: "#5FA34C",
+        secondaryDark: "#3D6E32",
+
+        danger: "#B13A2E",
+        dangerDark: "#7D241D",
+
+        accentBlue: "#3B5B8A",
+
+        border: "#6B4E2E",
+        borderDark: "#3B2A1A",
+
+        textPrimary: "#2B1D0E",
+        textSecondary: "#5B4630",
+
+        glowGold: "#F6D28A",
+
+        success: "#78C850",
+        warning: "#E9A93D",
+        error: "#D94C3A",
+
+        xp: "#78C850",
+        hp: "#D94C3A",
+        mana: "#4D8BFF",
+
+        shadow: "rgba(0,0,0,0.45)",
       },
-      borderRadius: {
-        DEFAULT: "0.5rem",
-        lg: "1rem",
-        xl: "1.5rem",
-        full: "9999px"
-      },
+
+      /*
+      ========================================
+      TYPOGRAPHY
+      ========================================
+      */
+
       fontFamily: {
-        headline: ["Literata", "serif"],
-        display: ["Literata", "serif"],
-        body: ["Nunito Sans", "sans-serif"],
-        label: ["Nunito Sans", "sans-serif"],
+        /*
+        Main Pixel Headers
+        */
+        pixel: ['"Press Start 2P"', "cursive"],
+
+        /*
+        RPG Dialogue / HUD
+        */
+        terminal: ['"VT323"', "monospace"],
+
+        /*
+        Main UI / Readable Pixel
+        */
+        pixelui: ['"Pixelify Sans"', "sans-serif"],
+
+        /*
+        Parchment Book Text
+        */
+        parchment: ['"Cormorant Garamond"', "serif"],
       },
+
+      /*
+      ========================================
+      BORDER RADIUS
+      ========================================
+      */
+
+      borderRadius: {
+        sm: "2px",
+        DEFAULT: "4px",
+        md: "6px",
+        lg: "8px",
+        xl: "12px",
+      },
+
+      /*
+      ========================================
+      SHADOWS
+      ========================================
+      */
+
       boxShadow: {
-        custom: "0 4px 20px rgba(46,50,48,0.06)"
+        pixel: "0 4px 0 #24150D",
+
+        panel: `
+          inset 0 0 0 2px #6B4E2E,
+          0 6px 0 #24150D,
+          0 10px 18px rgba(0,0,0,0.45)
+        `,
+
+        button: `
+          inset 0 0 0 2px #E8B85C,
+          0 4px 0 #7A4E12
+        `,
+
+        glow: `
+          0 0 12px rgba(246,210,138,0.35)
+        `,
+
+        parchment: `
+          inset 0 0 30px rgba(0,0,0,0.08)
+        `,
       },
+
+      /*
+      ========================================
+      BACKGROUNDS
+      ========================================
+      */
+
+      backgroundImage: {
+        wood: `
+          linear-gradient(
+            to bottom,
+            #3A2416,
+            #24150D
+          )
+        `,
+
+        parchment: `
+          linear-gradient(
+            to bottom,
+            #E4D3B2,
+            #D8C29D
+          )
+        `,
+
+        darkOverlay: `
+          linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.1),
+            rgba(0,0,0,0.4)
+          )
+        `,
+      },
+
+      /*
+      ========================================
+      SPACING
+      ========================================
+      */
+
       spacing: {
-        'layout-x': '40px', // contoh spacing custom
+        "layout-x": "32px",
+        "layout-y": "24px",
+
+        panel: "18px",
+
+        bookPadding: "36px",
+
+        sidebar: "220px",
+
+        navbar: "72px",
+      },
+
+      /*
+      ========================================
+      ANIMATION
+      ========================================
+      */
+
+      keyframes: {
+        glow: {
+          "0%, 100%": {
+            boxShadow: "0 0 6px rgba(246,210,138,0.15)",
+          },
+          "50%": {
+            boxShadow: "0 0 18px rgba(246,210,138,0.4)",
+          },
+        },
+
+        pulsePixel: {
+          "0%, 100%": {
+            transform: "scale(1)",
+          },
+          "50%": {
+            transform: "scale(1.03)",
+          },
+        },
+
+        floatPixel: {
+          "0%, 100%": {
+            transform: "translateY(0px)",
+          },
+          "50%": {
+            transform: "translateY(-2px)",
+          },
+        },
+      },
+
+      animation: {
+        glow: "glow 2s ease-in-out infinite",
+        pulsePixel: "pulsePixel 1.6s ease-in-out infinite",
+        floatPixel: "floatPixel 2.5s ease-in-out infinite",
+      },
+
+      /*
+      ========================================
+      FONT SIZES
+      ========================================
+      */
+
+      fontSize: {
+        pixelxs: ["10px", "14px"],
+        pixelsm: ["12px", "18px"],
+        pixelbase: ["14px", "22px"],
+        pixellg: ["18px", "26px"],
+        pixelxl: ["24px", "32px"],
       },
     },
   },
+
   plugins: [],
 };

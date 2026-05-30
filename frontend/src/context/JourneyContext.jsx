@@ -1,12 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { journeyZones, zoneById } from "../data/zones/zones";
-import { getNextZoneId } from "../systems/route/progressionFlow";
-import { loadSave, persistSave } from "../systems/save/saveManager";
-import { calculateCoins, calculateJourneyProgress, calculateXp } from "../systems/progression/xpSystem";
-import { getFirstIncompleteZone, getUnlockedZoneIds, isZoneUnlocked } from "../systems/progression/unlockSystem";
-import { getLevelProgress, getPreparednessLevel } from "../systems/progression/levelSystem";
-import { getUnlockedBadges } from "../systems/progression/badgeSystem";
+import { journeyZones, zoneById } from "../constants/zones";
+import { getNextZoneId } from "../services/progressionFlow";
+import { loadSave, persistSave } from "../services/saveManager";
+import { calculateCoins, calculateJourneyProgress, calculateXp } from "../services/xpSystem";
+import { getFirstIncompleteZone, getUnlockedZoneIds, isZoneUnlocked } from "../services/unlockSystem";
+import { getLevelProgress, getPreparednessLevel } from "../services/levelSystem";
+import { getUnlockedBadges } from "../services/badgeSystem";
 
 const defaultSave = {
   activeZoneId: "command-center",

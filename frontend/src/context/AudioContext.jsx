@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { playSfx } from "../systems/audio/sfxManager";
+import { playSfx } from "../services/sfxManager";
 
 const AudioContext = createContext(null);
 
