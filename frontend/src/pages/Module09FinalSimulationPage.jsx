@@ -9,6 +9,7 @@ const simulationPosters = [
   { id: "poster-1", image: posterOne, label: "Poster simulasi 1" },
   { id: "poster-2", image: posterTwo, label: "Poster simulasi 2" },
 ];
+const simulationHref = "/final-simulation";
 
 export const moduleMeta = {
   id: "simulasi-akhir",
@@ -60,11 +61,11 @@ const Module09FinalSimulationPage = ({ placement = "default", isFinalLocked }) =
               className={index === activePosterIndex ? "is-active" : ""}
             />
           ))}
-          {isFinalLocked ? (
-            <span className="quest-module09-start is-locked" aria-label="Simulasi akhir terkunci" />
-          ) : (
-            <a className="quest-module09-start" href="/final-simulation" aria-label="Mulai simulasi akhir" />
-          )}
+          <a
+            className={isFinalLocked ? "quest-module09-start is-locked" : "quest-module09-start"}
+            href={simulationHref}
+            aria-label="Mulai simulasi akhir"
+          />
         </figure>
       </section>
     );
@@ -73,7 +74,10 @@ const Module09FinalSimulationPage = ({ placement = "default", isFinalLocked }) =
   if (placement === "right") {
     return (
       <section className="quest-gameplay quest-gameplay--module09 quest-gameplay--module09-right">
-        <img className="quest-module09-ready" src={readyBoard} alt="Alur simulasi akhir" />
+        <figure className="quest-module09-ready-stage" aria-label="Alur simulasi akhir">
+          <img className="quest-module09-ready" src={readyBoard} alt="Alur simulasi akhir" />
+          <a className="quest-module09-ready-start" href={simulationHref} aria-label="Mulai simulasi akhir" />
+        </figure>
       </section>
     );
   }
