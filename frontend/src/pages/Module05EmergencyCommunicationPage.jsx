@@ -29,7 +29,7 @@ export const moduleMeta = {
   },
   leftPosterOnly: true,
   hideTip: true,
-  rewards: [rewardItems.radio, rewardItems.baterai],
+  rewards: [rewardItems.radio, rewardItems.baterai, rewardItems.badge2],
   tip: "Jangan menyebarkan kabar yang belum jelas. Ikuti kanal resmi agar keluarga tidak mengambil keputusan dari rumor.",
   gameplay: {
     type: "message",

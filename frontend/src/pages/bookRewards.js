@@ -17,28 +17,28 @@ import senterItem from "../assets/items/senter-cutout.png";
 import tasItem from "../assets/items/tas72jam-cutout.png";
 import { badgeSprites } from "../constants/eduquakeAssets";
 
-const alatTulisReward = { key: "alat-tulis", label: "Alat Tulis", icon: atkItem };
-const dokPentingReward = { key: "dokpenting", label: "Dokumen Penting", icon: dokplusItem };
-const kartuIdentitasReward = { key: "kartu-identitas", label: "Kartu Identitas", icon: ktpItem };
+const alatTulisReward = { key: "alat-tulis", label: "Alat Tulis", icon: atkItem, description: "Mencatat jalur aman dan kontak penting." };
+const dokPentingReward = { key: "dokpenting", label: "Dokumen Penting", icon: dokplusItem, description: "Salinan data keluarga untuk kondisi darurat." };
+const kartuIdentitasReward = { key: "kartu-identitas", label: "Kartu Identitas", icon: ktpItem, description: "Identitas diri untuk pendataan bantuan." };
 
 export const rewardItems = {
   alatTulis: alatTulisReward,
   atk: alatTulisReward,
-  paspor: { key: "paspor", label: "Paspor", icon: pasporItem },
+  paspor: { key: "paspor", label: "Paspor", icon: pasporItem, description: "Dokumen identitas penting untuk keadaan darurat." },
   kartuIdentitas: kartuIdentitasReward,
-  senter: { key: "senter", label: "Senter", icon: senterItem },
-  gunting: { key: "gunting", label: "Gunting", icon: guntingItem },
-  lakbanLuka: { key: "lakban-luka", label: "Lakban Luka", icon: lakbanLukaItem },
-  air: { key: "air", label: "Air", icon: airItem },
-  makananInstan: { key: "makanan-instan", label: "Makanan Instan", icon: makananInstanItem },
-  radio: { key: "radio", label: "Radio", icon: radioItem },
-  baterai: { key: "baterai", label: "Baterai", icon: bateraiItem },
-  masker: { key: "masker", label: "Masker", icon: maskerItem },
-  medkit: { key: "medkit", label: "Medkit", icon: medkitItem },
-  plester: { key: "plester", label: "Plester", icon: plesterItem },
-  antibiotik: { key: "antibiotik", label: "Antibiotik", icon: antibiotikItem },
-  obat: { key: "obat", label: "Obat", icon: obatItem },
-  tas72Jam: { key: "tas-72-jam", label: "Tas 72 Jam", icon: tasItem },
+  senter: { key: "senter", label: "Senter", icon: senterItem, description: "Membantu melihat saat listrik padam." },
+  gunting: { key: "gunting", label: "Gunting", icon: guntingItem, description: "Memotong perban, tali, dan kemasan bantuan." },
+  lakbanLuka: { key: "lakban-luka", label: "Lakban Luka", icon: lakbanLukaItem, description: "Merekatkan penutup luka sementara." },
+  air: { key: "air", label: "Air Minum", icon: airItem, description: "Menjaga hidrasi setelah evakuasi." },
+  makananInstan: { key: "makanan-instan", label: "Makanan Instan", icon: makananInstanItem, description: "Bekal cepat saat akses dapur terbatas." },
+  radio: { key: "radio", label: "Radio", icon: radioItem, description: "Memantau informasi resmi saat jaringan padat." },
+  baterai: { key: "baterai", label: "Baterai", icon: bateraiItem, description: "Cadangan daya untuk alat penting." },
+  masker: { key: "masker", label: "Masker", icon: maskerItem, description: "Melindungi pernapasan dari debu." },
+  medkit: { key: "medkit", label: "Medkit", icon: medkitItem, description: "Paket P3K untuk penanganan awal." },
+  plester: { key: "plester", label: "Plester", icon: plesterItem, description: "Menutup luka kecil dengan cepat." },
+  antibiotik: { key: "antibiotik", label: "Antibiotik", icon: antibiotikItem, description: "Persediaan obat sesuai arahan medis." },
+  obat: { key: "obat", label: "Obat", icon: obatItem, description: "Kebutuhan kesehatan harian keluarga." },
+  tas72Jam: { key: "tas-72-jam", label: "Tas 72 Jam", icon: tasItem, description: "Tas siaga untuk tiga hari pertama." },
   dokplus: dokPentingReward,
   dokpenting: dokPentingReward,
   badge1: { key: "badge-aware-citizen", label: "Badge 01", icon: badgeSprites.awareCitizen, inventory: false },

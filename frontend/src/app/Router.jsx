@@ -1,11 +1,11 @@
 import DashboardPage from "../pages/DashboardPage";
-import FinalSimulationPlayPage from "../pages/FinalSimulationPlayPage";
+import SimulationPage from "../pages/SimulationPage";
 
 const Router = () => {
   const path = window.location.pathname;
 
-  if (path === "/final-simulation" || path === "/simulasi-akhir") {
-    return <FinalSimulationPlayPage />;
+  if (path === "/final-simulation" || path === "/simulasi-akhir" || path === "/simulation") {
+    return <SimulationPage />;
   }
 
   return <DashboardPage />;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import posterOne from "../assets/ui/09-poster1-clean.png";
 import posterTwo from "../assets/ui/09-poster2-clean.png";
-import readyBoard from "../assets/ui/09-ready-clean.png";
+import readyBoard from "../assets/ui/09-ready-cutout.png";
 import { badgeSprites } from "../constants/eduquakeAssets";
 import { rewardItems } from "./bookRewards";
 
@@ -14,7 +14,7 @@ const simulationHref = "/final-simulation";
 export const moduleMeta = {
   id: "simulasi-akhir",
   number: "09",
-  navLabel: "09. Simulasi Akhir",
+  navLabel: "Final Simulation",
   title: "Simulasi Akhir",
   icon: badgeSprites.survivalReady,
   image: posterOne,

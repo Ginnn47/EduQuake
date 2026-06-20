@@ -21,16 +21,37 @@ const leaderboard = [
 
 const AdventureBookHomePage = ({ navigationProps, playerHud, children }) => {
   const [activePixelFrame, setActivePixelFrame] = useState(0);
+  const [isInventoryOpen, setIsInventoryOpen] = useState(false);
 
   return (
-    <div className="quest-dashboard" style={{ "--quest-bg-main": `url(${bgMain})` }}>
-      <BookTopbar {...playerHud} />
+    <div id="beranda" className="quest-dashboard" style={{ "--quest-bg-main": `url(${bgMain})` }}>
+      <BookTopbar
+        {...playerHud}
+        modules={navigationProps.modules}
+        activeModule={navigationProps.activeModule}
+        setActiveModuleId={navigationProps.setActiveModuleId}
+        inventoryOpen={isInventoryOpen}
+        onInventoryClick={() => setIsInventoryOpen((current) => !current)}
+      />
 
-      <main className="quest-stage">
+      <main id="modul-belajar" className="quest-stage">
         <span className="quest-drawer-trigger" aria-hidden="true">
           <b>Sidebar Progress</b>
         </span>
-        <BookSidebar {...navigationProps} />
+        {isInventoryOpen ? (
+          <button
+            className="quest-inventory-backdrop"
+            type="button"
+            aria-label="Tutup inventory"
+            onClick={() => setIsInventoryOpen(false)}
+          />
+        ) : null}
+        <BookSidebar
+          {...navigationProps}
+          {...playerHud}
+          isInventoryOpen={isInventoryOpen}
+          onCloseInventory={() => setIsInventoryOpen(false)}
+        />
         {children}
       </main>
 
@@ -49,7 +70,7 @@ const AdventureBookHomePage = ({ navigationProps, playerHud, children }) => {
         <button type="button">Lihat Semua</button>
       </section>
 
-      <section className="quest-support" aria-label="Bantuan dan kontak">
+      <section id="tentang-kami" className="quest-support" aria-label="Bantuan dan kontak">
         <a href="#bantuan">
           <strong>Bantuan</strong>
           <span>Panduan modul dan progres belajar</span>

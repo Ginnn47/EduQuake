@@ -1135,6 +1135,12 @@
   width: var(--module09-frame-width, min(100%, 484px));
 }
 
+.quest-module09-ready-stage {
+  aspect-ratio: 2 / 3;
+  height: var(--module09-frame-height, min(100%, 724px));
+  width: var(--module09-frame-width, min(100%, 484px));
+}
+
 .quest-module09-poster-stage img,
 .quest-module09-ready-stage img {
   display: block;
@@ -1182,7 +1188,8 @@
   filter: grayscale(0.5);
 }
 
-.quest-module09-ready {
+.quest-module09-ready-stage img.quest-module09-ready {
+  object-fit: contain;
   opacity: 1;
 }
 
@@ -2549,10 +2556,14 @@
 }
 
 .quest-gameplay--module06-right {
-  gap: clamp(4px, 0.42vw, 7px);
-  margin-top: clamp(-8px, -0.48vw, -3px);
-  transform: translateX(clamp(30px, 0.95vw, 18px));
-  width: min(100%, 480px);
+  align-content: start;
+  gap: clamp(1px, 0.14vw, 3px);
+  justify-items: center;
+  justify-self: center;
+  margin-inline: auto;
+  margin-top: clamp(-8px, -0.5vw, -3px);
+  transform: translateX(0);
+  width: min(100%, 430px);
 }
 
 .quest-module06-number-grid {
@@ -2611,17 +2622,18 @@
   display: block;
   filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.22));
   image-rendering: pixelated;
-  margin: 0 auto clamp(1px, 0.12vw, 2px);
-  width: min(100%, 478px);
+  margin: 0 auto clamp(-3px, -0.16vw, -1px);
+  object-fit: contain;
+  width: min(68%, 292px);
 }
 
 .quest-module06-inspection-board {
   display: block;
   filter: drop-shadow(3px 5px 0 rgba(43, 29, 14, 0.22));
   image-rendering: pixelated;
-  margin: 0 auto;
+  margin: clamp(-3px, -0.16vw, -1px) auto 0;
   position: relative;
-  width: min(102%, 550px);
+  width: min(70%, 302px);
 }
 
 .quest-module06-inspection-board__frame {
@@ -2633,13 +2645,12 @@
 .quest-module06-inspection-slot {
   align-items: center;
   box-sizing: border-box;
-  display: grid;
-  grid-template-rows: 58% auto minmax(0, 1fr);
+  display: block;
   height: var(--module06-slot-h);
   justify-items: center;
   left: var(--module06-slot-x);
   margin: 0;
-  padding: clamp(18px, 2vw, 27px) clamp(5px, 0.56vw, 8px) clamp(8px, 0.76vw, 11px);
+  padding: 0;
   pointer-events: none;
   position: absolute;
   top: var(--module06-slot-y);
@@ -2648,28 +2659,37 @@
 }
 
 .quest-module06-inspection-slot img {
-  align-self: end;
   display: block;
   filter: drop-shadow(2px 3px 0 rgba(43, 29, 14, 0.28));
   image-rendering: pixelated;
-  margin-bottom: clamp(6px, 0.7vw, 10px);
-  max-height: clamp(55px, 6.1vw, 88px);
-  max-width: 82%;
+  left: 50%;
+  max-height: 40%;
+  max-width: 72%;
   object-fit: contain;
+  position: absolute;
+  top: 17%;
+  transform: translateX(-50%);
 }
 
 .quest-module06-inspection-slot strong {
-  align-self: end;
   color: #8d3c24;
   font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
-  font-size: clamp(0.44rem, 0.52vw, 0.62rem);
+  display: block;
+  font-size: clamp(0.34rem, 0.42vw, 0.5rem);
   font-weight: 900;
+  left: 9%;
   letter-spacing: 0;
   line-height: 0.82;
-  margin-bottom: clamp(2px, 0.28vw, 4px);
+  margin: 0;
+  max-height: 18px;
+  max-width: 82%;
+  overflow: hidden;
+  position: absolute;
   text-align: center;
   text-transform: uppercase;
   text-shadow: 1px 1px 0 rgba(255, 235, 180, 0.45);
+  top: 59.6%;
+  width: 82%;
 }
 
 .quest-module06-inspection-slot.is-aman strong {
@@ -2681,14 +2701,36 @@
 }
 
 .quest-module06-inspection-slot small {
-  align-self: start;
   color: #2b1d0e;
+  display: -webkit-box;
   font-family: "VT323", "Pixelify Sans", monospace;
-  font-size: clamp(0.48rem, 0.58vw, 0.68rem);
+  font-size: clamp(0.34rem, 0.42vw, 0.5rem);
   font-weight: 700;
-  line-height: 0.82;
+  left: 9%;
+  line-height: 0.8;
+  margin: 0;
+  max-width: 82%;
+  overflow: hidden;
+  position: absolute;
   text-align: center;
   text-shadow: 1px 1px 0 rgba(255, 235, 180, 0.3);
+  top: 72.7%;
+  width: 82%;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.quest-module06-inspection-slot:nth-of-type(n + 4) img {
+  max-height: 38%;
+  top: 18.5%;
+}
+
+.quest-module06-inspection-slot:nth-of-type(n + 4) strong {
+  top: 58.2%;
+}
+
+.quest-module06-inspection-slot:nth-of-type(n + 4) small {
+  top: 70.8%;
 }
 
 .quest-module06-result-card {
@@ -2845,16 +2887,16 @@
   background: transparent;
   color: #2b1d0e;
   display: grid;
-  gap: 5px;
-  padding: 0 clamp(8px, 0.82vw, 12px);
+  gap: 3px;
+  padding: 0 clamp(6px, 0.6vw, 9px);
   text-shadow: 1px 1px 0 rgba(255, 236, 177, 0.24);
-  width: min(100%, 430px);
+  width: min(76%, 320px);
 }
 
 .quest-module06-mitigation strong {
   color: var(--codex-green);
   font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
-  font-size: clamp(0.72rem, 0.82vw, 0.94rem);
+  font-size: clamp(0.62rem, 0.7vw, 0.82rem);
   line-height: 1;
   text-align: center;
   text-transform: uppercase;
@@ -2862,7 +2904,7 @@
 
 .quest-module06-mitigation ul {
   display: grid;
-  gap: 3px;
+  gap: 2px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -2880,9 +2922,9 @@
 .quest-module06-mitigation b,
 .quest-module06-mitigation span {
   font-family: "VT323", "Pixelify Sans", monospace;
-  font-size: clamp(0.78rem, 0.88vw, 0.98rem);
+  font-size: clamp(0.68rem, 0.76vw, 0.86rem);
   font-weight: 700;
-  line-height: 0.95;
+  line-height: 0.86;
 }
 
 .quest-module06-mitigation b {
@@ -2943,7 +2985,7 @@
 .quest-module06-found {
   color: var(--codex-green);
   font-family: "Press Start 2P", "Pixelify Sans", monospace;
-  font-size: clamp(0.54rem, 0.62vw, 0.72rem);
+  font-size: clamp(0.48rem, 0.54vw, 0.62rem);
   margin: 0;
   text-align: center;
   text-shadow: 1px 1px 0 rgba(255, 236, 177, 0.3);
@@ -2960,25 +3002,111 @@
   width: var(--module06-meja-width, min(58%, 210px));
 }
 
-.final-simulation-blank {
+.final-simulation-page {
   align-items: center;
   background:
-    radial-gradient(circle at center, rgba(53, 94, 59, 0.28), transparent 42%),
+    radial-gradient(circle at 50% 35%, rgba(217, 164, 65, 0.18), transparent 36%),
+    linear-gradient(180deg, rgba(18, 16, 15, 0.92), rgba(9, 7, 6, 0.98)),
     #100d0a;
   color: #f4df9d;
   display: flex;
   font-family: "Press Start 2P", "Pixelify Sans", monospace;
   justify-content: center;
   min-height: 100vh;
+  overflow: hidden;
+  padding: clamp(14px, 2vw, 28px);
   text-align: center;
 }
 
-.final-simulation-blank span {
-  border: 3px solid #d9a441;
+.final-simulation-game-shell {
+  align-items: center;
+  background:
+    linear-gradient(180deg, #2b2622, #15110f),
+    #17120f;
+  border: 5px solid #d9a441;
   box-shadow:
-    inset 0 0 0 2px rgba(53, 94, 59, 0.7),
-    0 0 26px rgba(217, 164, 65, 0.22);
-  padding: 18px 24px;
+    inset 0 0 0 4px rgba(53, 94, 59, 0.75),
+    0 24px 48px rgba(0, 0, 0, 0.42);
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  max-width: min(96vw, 980px);
+  padding: clamp(12px, 2vw, 20px);
+  position: relative;
+  width: 100%;
+}
+
+.final-simulation-ds-top {
+  align-items: center;
+  background:
+    repeating-linear-gradient(0deg, rgba(244, 223, 157, 0.08) 0 2px, transparent 2px 7px),
+    #12100f;
+  border: 3px solid #7a4b22;
+  color: #f4df9d;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  min-height: 54px;
+  padding: 10px 14px;
+  width: min(100%, 800px);
+}
+
+.final-simulation-ds-top span,
+.final-simulation-ds-top strong {
+  font-size: clamp(0.42rem, 0.9vw, 0.68rem);
+  line-height: 1.55;
+}
+
+.final-simulation-ds-top span {
+  color: #d9a441;
+}
+
+.final-simulation-canvas {
+  aspect-ratio: 5 / 3;
+  background: #160f0a;
+  border: 4px solid #7a4b22;
+  box-shadow:
+    inset 0 0 0 3px rgba(0, 0, 0, 0.5),
+    0 0 28px rgba(217, 164, 65, 0.2);
+  max-width: 800px;
+  overflow: hidden;
+  outline: none;
+  width: min(100%, 800px);
+}
+
+.final-simulation-canvas canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+
+.final-simulation-page--fullscreen {
+  height: 100vh;
+  inset: 0;
+  padding: 0;
+  position: fixed;
+  width: 100vw;
+}
+
+.final-simulation-page--fullscreen .final-simulation-game-shell {
+  border: 0;
+  box-shadow: none;
+  height: 100%;
+  max-width: none;
+  padding: 0;
+  width: 100%;
+}
+
+.final-simulation-page--fullscreen .final-simulation-canvas {
+  aspect-ratio: auto;
+  border: 0;
+  height: 100%;
+  max-width: none;
+  width: 100%;
+}
+
+.final-simulation-page--fullscreen .final-simulation-canvas canvas {
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .quest-chat-board {
@@ -4157,42 +4285,6 @@
   z-index: 1;
 }
 
-.quest-reward-popup__items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  position: relative;
-  z-index: 1;
-}
-
-.quest-reward-popup__items span {
-  align-items: center;
-  background:
-    linear-gradient(180deg, rgba(255, 241, 184, 0.18), rgba(54, 33, 15, 0.12)),
-    rgba(213, 177, 103, 0.24);
-  border: 2px solid rgba(217, 164, 65, 0.74);
-  display: inline-flex;
-  gap: 6px;
-  min-height: 36px;
-  padding: 4px 8px;
-}
-
-.quest-reward-popup__items img {
-  filter: drop-shadow(0 2px 0 rgba(15, 8, 4, 0.68));
-  height: 25px;
-  image-rendering: pixelated;
-  object-fit: contain;
-  width: 25px;
-}
-
-.quest-reward-popup__items small {
-  color: #f8e7b8;
-  font-family: "VT323", "Pixelify Sans", monospace;
-  font-size: clamp(0.9rem, 0.98vw, 1.08rem);
-  line-height: 1;
-  text-shadow: 1px 1px 0 #101d10;
-}
-
 @keyframes questRewardPop {
   0% {
     opacity: 0;
@@ -4465,3 +4557,5743 @@
     grid-row: 1;
   }
 }
+
+/* Jogja pixel RPG top navigation */
+.quest-topbar {
+  align-items: end;
+  column-gap: clamp(8px, 0.85vw, 16px);
+  display: grid;
+  grid-template-columns: minmax(310px, 0.92fr) minmax(460px, 1.34fr) minmax(330px, 0.94fr);
+  isolation: isolate;
+  margin: 0 auto clamp(10px, 1vw, 18px);
+  max-width: min(100%, 1900px);
+  min-height: clamp(218px, 19.5vw, 330px);
+  overflow: visible;
+  padding: clamp(76px, 7.4vw, 138px) clamp(8px, 0.8vw, 14px) 0;
+  position: relative;
+  width: 100%;
+}
+
+.quest-topbar::before {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(17, 27, 34, 0.55), transparent 58%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.12) 72%, transparent);
+  content: "";
+  inset: 0 -4vw auto;
+  height: 72%;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+.quest-topbar__city {
+  bottom: clamp(72px, 6.8vw, 122px);
+  display: block;
+  filter:
+    drop-shadow(0 8px 0 rgba(0, 0, 0, 0.34))
+    drop-shadow(0 0 12px rgba(217, 164, 65, 0.14));
+  height: clamp(130px, 13vw, 248px);
+  image-rendering: pixelated;
+  left: 50%;
+  object-fit: cover;
+  object-position: center bottom;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  width: min(100vw, 1920px);
+  z-index: 0;
+}
+
+.quest-brand,
+.quest-nav,
+.quest-player {
+  position: relative;
+  z-index: 2;
+}
+
+.quest-brand {
+  align-self: end;
+  display: block;
+  filter: drop-shadow(0 8px 0 rgba(0, 0, 0, 0.36));
+  min-width: 0;
+  text-decoration: none;
+}
+
+.quest-brand img {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  display: block;
+  height: auto;
+  image-rendering: pixelated;
+  object-fit: contain;
+  padding: 0;
+  width: min(100%, 560px);
+}
+
+.quest-brand__text {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.quest-nav {
+  align-self: end;
+  display: grid;
+  gap: clamp(7px, 0.62vw, 12px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  justify-content: center;
+  min-width: 0;
+  transform: translateY(clamp(-4px, -0.28vw, -1px));
+}
+
+.quest-nav a {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(251, 229, 157, 0.14), transparent 38%),
+    radial-gradient(ellipse at 50% 100%, rgba(217, 164, 65, 0.16), transparent 58%),
+    #123120;
+  border: 3px solid #c78b2f;
+  box-shadow:
+    inset 0 0 0 2px #050302,
+    inset 0 0 0 5px rgba(27, 65, 37, 0.82),
+    inset 0 -8px 0 rgba(0, 0, 0, 0.22),
+    0 5px 0 #050302,
+    0 0 0 2px rgba(5, 3, 2, 0.72);
+  color: #f5e4b2;
+  display: inline-flex;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.48rem, 0.6vw, 0.76rem);
+  font-weight: 400;
+  justify-content: center;
+  line-height: 1.15;
+  min-height: clamp(56px, 5.5vw, 88px);
+  min-width: 0;
+  padding: 0 clamp(8px, 0.82vw, 16px);
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.66);
+  text-transform: uppercase;
+}
+
+.quest-nav a::before,
+.quest-nav a::after {
+  color: #d9a441;
+  content: "+";
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.64em;
+  opacity: 0.9;
+  position: absolute;
+}
+
+.quest-nav a::before {
+  bottom: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.quest-nav a::after {
+  display: none;
+}
+
+.quest-nav a:hover,
+.quest-nav a:focus-visible,
+.quest-nav a.is-active {
+  background:
+    linear-gradient(180deg, rgba(255, 236, 172, 0.2), transparent 38%),
+    radial-gradient(ellipse at 50% 100%, rgba(217, 164, 65, 0.24), transparent 58%),
+    #173f28;
+  border-color: #f0bd58;
+  color: #fff0bf;
+  filter: brightness(1.08) saturate(1.08);
+  outline: 0;
+  transform: translateY(-2px);
+}
+
+.quest-player {
+  align-self: end;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  display: grid;
+  gap: clamp(10px, 0.8vw, 16px);
+  grid-template-columns: clamp(54px, 4.8vw, 78px) minmax(0, 1fr) clamp(46px, 4.2vw, 70px);
+  min-height: 0;
+  padding: clamp(24px, 2.1vw, 36px) clamp(34px, 3vw, 56px);
+  width: min(100%, 860px);
+}
+
+.quest-player__frame {
+  display: block;
+  height: 100%;
+  image-rendering: pixelated;
+  inset: 0;
+  object-fit: fill;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+.quest-avatar {
+  align-self: center;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  display: grid;
+  height: clamp(52px, 4.55vw, 74px);
+  place-items: center;
+  width: clamp(52px, 4.55vw, 74px);
+}
+
+.quest-avatar img {
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.45));
+  height: 94%;
+  image-rendering: pixelated;
+  object-fit: contain;
+  width: 94%;
+}
+
+.quest-player__stats {
+  align-self: center;
+  display: grid;
+  gap: clamp(4px, 0.38vw, 7px);
+  min-width: 0;
+}
+
+.quest-player__stats strong {
+  color: #78e852;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace;
+  font-size: clamp(0.66rem, 0.86vw, 1.08rem);
+  line-height: 1;
+  text-shadow: 2px 2px 0 #050302;
+  white-space: nowrap;
+}
+
+.quest-player__stats small {
+  color: #f4d38a;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.58rem, 0.72vw, 0.86rem);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.quest-xp {
+  background: #0b0907;
+  border: 2px solid #3c2818;
+  box-shadow:
+    inset 0 0 0 2px #050302,
+    0 1px 0 rgba(217, 164, 65, 0.28);
+  display: block;
+  height: clamp(12px, 1.16vw, 18px);
+  min-width: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.quest-xp i {
+  background: linear-gradient(90deg, #4fb83d, #82e74a);
+  display: block;
+  height: 100%;
+}
+
+.quest-player__crest {
+  align-self: center;
+  display: block;
+  height: clamp(42px, 4vw, 62px);
+  width: clamp(34px, 3.2vw, 50px);
+}
+
+@media (max-width: 1120px) {
+  .quest-topbar {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    padding-top: 78px;
+    row-gap: 10px;
+  }
+
+  .quest-topbar__city {
+    bottom: auto;
+    height: 118px;
+    top: 0;
+  }
+
+  .quest-brand,
+  .quest-player {
+    justify-self: center;
+    width: min(100%, 560px);
+  }
+
+  .quest-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-self: center;
+    width: min(100%, 640px);
+  }
+}
+
+@media (max-width: 620px) {
+  .quest-topbar {
+    padding-inline: 0;
+  }
+
+  .quest-nav {
+    grid-template-columns: minmax(0, 1fr);
+    width: min(100%, 360px);
+  }
+
+  .quest-player {
+    padding-inline: 28px;
+  }
+}
+
+/* Unified compact RPG navbar correction */
+.quest-topbar {
+  align-items: end;
+  column-gap: clamp(8px, 0.75vw, 14px);
+  grid-template-columns: clamp(360px, 27vw, 500px) minmax(440px, 1fr) clamp(330px, 26vw, 470px);
+  margin-bottom: clamp(10px, 0.9vw, 16px);
+  max-width: min(100%, 1780px);
+  min-height: clamp(196px, 16.6vw, 292px);
+  padding:
+    clamp(106px, 9vw, 168px)
+    clamp(20px, 1.8vw, 34px)
+    clamp(8px, 0.65vw, 14px);
+}
+
+.quest-topbar::after {
+  background:
+    linear-gradient(180deg, rgba(246, 211, 123, 0.08), transparent 32%),
+    linear-gradient(90deg, #0a0d0a, #0d1710 16%, #0d1710 84%, #0a0d0a);
+  border: 4px solid #0b0704;
+  box-shadow:
+    inset 0 0 0 2px #c68b2d,
+    inset 0 0 0 6px #163820,
+    inset 0 -10px 0 rgba(0, 0, 0, 0.22),
+    0 6px 0 rgba(0, 0, 0, 0.72);
+  content: "";
+  height: clamp(86px, 7.4vw, 126px);
+  left: clamp(14px, 1.1vw, 22px);
+  pointer-events: none;
+  position: absolute;
+  right: clamp(14px, 1.1vw, 22px);
+  bottom: 0;
+  z-index: 1;
+}
+
+.quest-topbar__city {
+  bottom: clamp(62px, 5.4vw, 94px);
+  height: clamp(132px, 12vw, 218px);
+  object-fit: cover;
+  object-position: center bottom;
+  width: min(100%, 1760px);
+  z-index: 0;
+}
+
+.quest-brand,
+.quest-nav,
+.quest-player {
+  align-self: end;
+  z-index: 3;
+}
+
+.quest-brand {
+  justify-self: start;
+  margin-bottom: clamp(-6px, -0.38vw, -2px);
+  width: 100%;
+}
+
+.quest-brand img {
+  filter:
+    drop-shadow(0 5px 0 rgba(0, 0, 0, 0.58))
+    drop-shadow(0 0 10px rgba(217, 164, 65, 0.16));
+  margin-left: clamp(-8px, -0.45vw, -3px);
+  width: min(100%, 510px);
+}
+
+.quest-nav {
+  align-self: end;
+  display: flex;
+  gap: clamp(6px, 0.52vw, 10px);
+  justify-content: center;
+  padding-bottom: clamp(11px, 0.92vw, 17px);
+  transform: none;
+  width: 100%;
+}
+
+.quest-nav a {
+  border-width: 2px;
+  box-shadow:
+    inset 0 0 0 2px #050302,
+    inset 0 0 0 4px rgba(27, 65, 37, 0.84),
+    inset 0 -6px 0 rgba(0, 0, 0, 0.2),
+    0 3px 0 #050302,
+    0 0 0 1px rgba(5, 3, 2, 0.7);
+  flex: 0 1 clamp(100px, 8.7vw, 144px);
+  font-size: clamp(0.38rem, 0.48vw, 0.58rem);
+  min-height: clamp(42px, 3.7vw, 60px);
+  padding: 0 clamp(6px, 0.58vw, 10px);
+}
+
+.quest-nav a::before {
+  bottom: 5px;
+  font-size: 0.54em;
+}
+
+.quest-player {
+  justify-self: end;
+  margin-bottom: clamp(3px, 0.32vw, 6px);
+  padding:
+    clamp(12px, 1.02vw, 18px)
+    clamp(23px, 1.9vw, 34px)
+    clamp(12px, 1vw, 17px);
+  width: min(100%, 440px);
+}
+
+.quest-player__frame {
+  filter:
+    drop-shadow(0 4px 0 rgba(0, 0, 0, 0.58))
+    drop-shadow(0 0 8px rgba(217, 164, 65, 0.12));
+  object-fit: fill;
+}
+
+.quest-avatar {
+  height: clamp(42px, 3.65vw, 58px);
+  width: clamp(42px, 3.65vw, 58px);
+}
+
+.quest-player__stats strong {
+  font-size: clamp(0.52rem, 0.68vw, 0.84rem);
+}
+
+.quest-player__stats small {
+  font-size: clamp(0.42rem, 0.54vw, 0.66rem);
+}
+
+.quest-xp {
+  height: clamp(8px, 0.74vw, 12px);
+}
+
+.quest-player__crest {
+  height: clamp(34px, 3vw, 48px);
+  width: clamp(28px, 2.5vw, 40px);
+}
+
+@media (max-width: 1240px) {
+  .quest-topbar {
+    grid-template-columns: minmax(280px, 1fr);
+    min-height: auto;
+    padding-top: 118px;
+  }
+
+  .quest-topbar::after {
+    display: none;
+  }
+
+  .quest-brand,
+  .quest-nav,
+  .quest-player {
+    justify-self: center;
+  }
+
+  .quest-brand {
+    width: min(100%, 500px);
+  }
+
+  .quest-nav {
+    flex-wrap: wrap;
+    padding-bottom: 0;
+    width: min(100%, 620px);
+  }
+}
+
+/* Simple topbar reset: logo | compact nav | profile + inventory */
+.quest-topbar {
+  align-items: center;
+  column-gap: clamp(10px, 1vw, 18px);
+  grid-template-columns: clamp(270px, 24vw, 420px) minmax(360px, 1fr) clamp(390px, 34vw, 760px);
+  margin-bottom: clamp(10px, 0.9vw, 16px);
+  max-width: min(100%, 1540px);
+  min-height: 0;
+  padding: clamp(8px, 0.8vw, 14px) clamp(14px, 1.35vw, 24px);
+}
+
+.quest-topbar::before,
+.quest-topbar::after,
+.quest-topbar__city {
+  display: none !important;
+}
+
+.quest-brand {
+  align-self: center;
+  justify-self: start;
+  margin: 0;
+  width: 100%;
+}
+
+.quest-brand img {
+  display: block;
+  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.48));
+  margin: 0;
+  width: min(100%, 405px);
+}
+
+.quest-nav {
+  align-self: center;
+  display: flex;
+  gap: clamp(6px, 0.58vw, 10px);
+  justify-content: center;
+  padding: 0;
+  transform: none;
+  width: 100%;
+}
+
+.quest-nav a {
+  border-width: 2px;
+  flex: 0 1 clamp(82px, 7.2vw, 118px);
+  font-size: clamp(0.34rem, 0.43vw, 0.52rem);
+  min-height: clamp(34px, 3vw, 48px);
+  padding: 0 clamp(5px, 0.5vw, 9px);
+}
+
+.quest-nav a::before {
+  bottom: 4px;
+  font-size: 0.48em;
+}
+
+.quest-player {
+  align-self: center;
+  gap: clamp(8px, 0.72vw, 13px);
+  grid-template-columns: clamp(48px, 4.3vw, 68px) minmax(150px, 1fr) clamp(44px, 4vw, 62px);
+  justify-self: end;
+  margin: 0;
+  min-height: clamp(82px, 7.2vw, 116px);
+  padding:
+    clamp(16px, 1.35vw, 23px)
+    clamp(30px, 2.55vw, 46px)
+    clamp(15px, 1.3vw, 22px);
+  width: min(100%, 560px);
+}
+
+.quest-player__frame {
+  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.5));
+}
+
+.quest-avatar {
+  height: clamp(44px, 4vw, 62px);
+  width: clamp(44px, 4vw, 62px);
+}
+
+.quest-player__stats {
+  gap: clamp(4px, 0.4vw, 7px);
+}
+
+.quest-player__stats strong {
+  font-size: clamp(0.58rem, 0.72vw, 0.9rem);
+}
+
+.quest-player__stats small {
+  font-size: clamp(0.46rem, 0.58vw, 0.72rem);
+}
+
+.quest-xp {
+  height: clamp(9px, 0.82vw, 13px);
+}
+
+.quest-player__crest {
+  display: none;
+}
+
+.quest-inventory-shortcut {
+  align-self: center;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(246, 222, 152, 0.18), transparent 58%),
+    #15351f;
+  border: 2px solid #d9a441;
+  box-shadow:
+    inset 0 0 0 2px #050302,
+    inset 0 0 0 4px rgba(38, 77, 43, 0.72),
+    0 3px 0 rgba(0, 0, 0, 0.62);
+  display: grid;
+  height: clamp(38px, 3.4vw, 54px);
+  place-items: center;
+  text-decoration: none;
+  width: clamp(38px, 3.4vw, 54px);
+}
+
+.quest-inventory-shortcut img {
+  display: block;
+  filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, 0.45));
+  height: 82%;
+  image-rendering: pixelated;
+  object-fit: contain;
+  width: 82%;
+}
+
+.quest-inventory-shortcut:hover,
+.quest-inventory-shortcut:focus-visible {
+  border-color: #f2c563;
+  box-shadow:
+    inset 0 0 0 2px #050302,
+    inset 0 0 0 4px rgba(38, 77, 43, 0.72),
+    0 0 14px rgba(217, 164, 65, 0.35),
+    0 3px 0 rgba(0, 0, 0, 0.62);
+  outline: 0;
+}
+
+@media (max-width: 1120px) {
+  .quest-topbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .quest-brand,
+  .quest-player {
+    justify-self: center;
+    width: min(100%, 560px);
+  }
+
+  .quest-nav {
+    flex-wrap: wrap;
+    width: min(100%, 560px);
+  }
+}
+
+/* Final minimal topbar: dark spotlight bar, text navigation, stacked inventory/profile. */
+.quest-topbar {
+  align-items: center !important;
+  background:
+    radial-gradient(ellipse at 50% 44%, rgba(217, 164, 65, 0.18), transparent 46%),
+    linear-gradient(180deg, rgba(53, 94, 59, 0.34), rgba(36, 21, 13, 0.1) 42%, rgba(20, 12, 7, 0.18)),
+    linear-gradient(180deg, #2c1b10 0%, #171008 100%) !important;
+  border: 2px solid rgba(217, 164, 65, 0.28) !important;
+  border-radius: 999px !important;
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.52),
+    inset 0 0 0 2px rgba(58, 36, 22, 0.86),
+    inset 0 1px 0 rgba(245, 218, 143, 0.12),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.42) !important;
+  column-gap: clamp(22px, 2.2vw, 46px) !important;
+  display: grid !important;
+  grid-template-columns: clamp(220px, 18vw, 315px) minmax(420px, 1fr) clamp(520px, 38vw, 690px) !important;
+  justify-self: center !important;
+  margin: 10px auto clamp(14px, 1.2vw, 22px) !important;
+  max-width: none !important;
+  min-height: clamp(128px, 9.5vw, 158px) !important;
+  overflow: visible !important;
+  padding: clamp(8px, 0.7vw, 13px) clamp(34px, 2.6vw, 56px) !important;
+  width: min(calc(100vw - 28px), 1740px) !important;
+}
+
+.quest-topbar::before,
+.quest-topbar::after,
+.quest-topbar__city {
+  display: none !important;
+}
+
+.quest-brand {
+  align-self: center !important;
+  filter: none !important;
+  justify-self: start !important;
+  margin: 0 !important;
+  width: clamp(220px, 17vw, 305px) !important;
+}
+
+.quest-brand img {
+  display: block !important;
+  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.45)) !important;
+  height: auto !important;
+  margin: 0 !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-nav {
+  align-items: center !important;
+  align-self: center !important;
+  display: flex !important;
+  gap: clamp(26px, 2.45vw, 46px) !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  transform: none !important;
+  width: auto !important;
+}
+
+.quest-nav a {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #e6d2a0 !important;
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.72rem, 0.72vw, 0.9rem) !important;
+  font-weight: 800 !important;
+  justify-content: center !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  padding: 8px 0 10px !important;
+  position: relative !important;
+  text-shadow: 0 2px 0 #0b0704, 0 0 6px rgba(217, 164, 65, 0.12) !important;
+  text-transform: none !important;
+}
+
+.quest-nav a::before {
+  display: none !important;
+}
+
+.quest-nav a::after {
+  background: #d9a441 !important;
+  border-radius: 999px !important;
+  bottom: 0 !important;
+  box-shadow: 0 0 8px rgba(217, 164, 65, 0.38) !important;
+  content: "" !important;
+  height: 3px !important;
+  left: 0 !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  right: 0 !important;
+  transform: scaleX(0.5) !important;
+  transition: opacity 160ms ease, transform 160ms ease !important;
+}
+
+.quest-nav a:hover,
+.quest-nav a:focus-visible,
+.quest-nav a.is-active {
+  color: #78c565 !important;
+  outline: 0 !important;
+}
+
+.quest-nav a:hover::after,
+.quest-nav a:focus-visible::after,
+.quest-nav a.is-active::after {
+  opacity: 1 !important;
+  transform: scaleX(1) !important;
+}
+
+.quest-topbar__right {
+  align-items: center !important;
+  align-self: center !important;
+  display: grid !important;
+  gap: 8px !important;
+  justify-items: center !important;
+  justify-self: end !important;
+  width: clamp(520px, 38vw, 690px) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut {
+  align-self: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+  height: auto !important;
+  justify-self: center !important;
+  padding: 0 !important;
+  text-decoration: none !important;
+  transform: translateY(6px) !important;
+  width: clamp(255px, 20vw, 350px) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut img {
+  display: block !important;
+  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.44)) !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut:hover,
+.quest-topbar__right .quest-inventory-shortcut:focus-visible {
+  filter: brightness(1.08) drop-shadow(0 0 8px rgba(217, 164, 65, 0.26)) !important;
+  outline: 0 !important;
+}
+
+.quest-topbar__right .quest-player {
+  align-items: center !important;
+  align-self: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: grid !important;
+  gap: clamp(16px, 1.35vw, 24px) !important;
+  grid-template-columns: clamp(72px, 5.7vw, 98px) minmax(0, 1fr) !important;
+  height: clamp(124px, 9.4vw, 164px) !important;
+  justify-self: center !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding:
+    clamp(34px, 2.65vw, 46px)
+    clamp(92px, 7vw, 128px)
+    clamp(28px, 2.25vw, 40px)
+    clamp(84px, 6.4vw, 118px) !important;
+  position: relative !important;
+  width: clamp(520px, 38vw, 690px) !important;
+}
+
+.quest-topbar__right .quest-player__frame {
+  display: block !important;
+  filter: drop-shadow(0 5px 0 rgba(0, 0, 0, 0.56)) !important;
+  height: 100% !important;
+  image-rendering: pixelated !important;
+  inset: 0 !important;
+  object-fit: fill !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  width: 100% !important;
+  z-index: 0 !important;
+}
+
+.quest-topbar__right .quest-avatar,
+.quest-topbar__right .quest-player__stats {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.quest-topbar__right .quest-avatar {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+  height: clamp(70px, 5.4vw, 92px) !important;
+  overflow: visible !important;
+  width: clamp(70px, 5.4vw, 92px) !important;
+}
+
+.quest-topbar__right .quest-avatar img {
+  display: block !important;
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.55)) !important;
+  height: 112% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  transform: translate(-6px, -6px) !important;
+  width: 112% !important;
+}
+
+.quest-topbar__right .quest-player__stats {
+  align-self: center !important;
+  display: grid !important;
+  gap: clamp(7px, 0.55vw, 10px) !important;
+  justify-items: start !important;
+  min-width: 0 !important;
+}
+
+.quest-topbar__right .quest-player__stats strong {
+  color: #78dc55 !important;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace !important;
+  font-size: clamp(0.86rem, 1vw, 1.16rem) !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 #0b1409 !important;
+}
+
+.quest-topbar__right .quest-player__stats small {
+  color: #f5df91 !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.58rem, 0.64vw, 0.78rem) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 #0b0804 !important;
+}
+
+.quest-topbar__right .quest-xp {
+  background: #080806 !important;
+  border: 2px solid #3a2416 !important;
+  box-shadow: inset 0 0 0 1px rgba(217, 164, 65, 0.24) !important;
+  display: block !important;
+  height: clamp(12px, 1vw, 16px) !important;
+  overflow: hidden !important;
+  width: clamp(160px, 13vw, 220px) !important;
+}
+
+.quest-topbar__right .quest-xp i {
+  background: linear-gradient(90deg, #4fd14d, #96e65b) !important;
+  display: block !important;
+  height: 100% !important;
+}
+
+@media (max-width: 1180px) {
+  .quest-topbar {
+    border-radius: 28px !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    min-height: 0 !important;
+  }
+
+  .quest-brand,
+  .quest-nav,
+  .quest-topbar__right {
+    justify-self: center !important;
+  }
+}
+
+/* Absolute final navbar placement: 4 columns locked to match reference. */
+.quest-topbar {
+  align-items: center !important;
+  background: linear-gradient(180deg, rgba(36, 21, 13, 0.04), rgba(36, 21, 13, 0.04)) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55) !important;
+  column-gap: clamp(24px, 1.8vw, 40px) !important;
+  display: grid !important;
+  grid-auto-flow: column !important;
+  grid-template-columns:
+    clamp(240px, 21vw, 320px)
+    minmax(480px, 1fr)
+    clamp(112px, 10vw, 145px)
+    clamp(270px, 23vw, 330px) !important;
+  height: 110px !important;
+  margin: clamp(18px, 1.8vw, 32px) auto clamp(12px, 1vw, 18px) !important;
+  max-height: 110px !important;
+  max-width: min(calc(100vw - 32px), 2020px) !important;
+  min-height: 110px !important;
+  overflow: visible !important;
+  padding: 0 clamp(48px, 3.4vw, 72px) !important;
+  position: relative !important;
+  width: min(calc(100vw - 32px), 2020px) !important;
+}
+
+.quest-topbar::before,
+.quest-topbar::after,
+.quest-topbar__city {
+  display: none !important;
+}
+
+.quest-topbar > .quest-brand {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  justify-self: start !important;
+  width: clamp(225px, 18vw, 295px) !important;
+}
+
+.quest-topbar > .quest-nav {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  justify-self: center !important;
+  width: 100% !important;
+}
+
+.quest-topbar > .quest-inventory-shortcut {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+  width: clamp(112px, 9vw, 138px) !important;
+}
+
+.quest-topbar > .quest-player {
+  grid-column: 4 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+}
+
+.quest-topbar > .quest-brand,
+.quest-topbar > .quest-nav,
+.quest-topbar > .quest-inventory-shortcut,
+.quest-topbar > .quest-player {
+  align-self: center !important;
+  margin: 0 !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.quest-topbar > .quest-brand img,
+.quest-topbar > .quest-inventory-shortcut img {
+  display: block !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-topbar > .quest-nav {
+  align-items: center !important;
+  display: flex !important;
+  gap: clamp(38px, 3vw, 56px) !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  transform: none !important;
+}
+
+.quest-topbar > .quest-nav a {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #f3d89a !important;
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.9rem, 0.92vw, 1.08rem) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  position: relative !important;
+  text-shadow: 2px 2px 0 #1a1208 !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+}
+
+.quest-topbar > .quest-nav a::before {
+  background: rgba(217, 164, 65, 0.55) !important;
+  content: "" !important;
+  display: block !important;
+  height: 22px !important;
+  left: calc(clamp(38px, 3vw, 56px) * -0.5) !important;
+  position: absolute !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 2px !important;
+}
+
+.quest-topbar > .quest-nav a:first-child::before,
+.quest-topbar > .quest-nav a.is-active::before,
+.quest-topbar > .quest-nav a.is-active + a::before {
+  display: none !important;
+}
+
+.quest-topbar > .quest-nav a::after {
+  background: linear-gradient(180deg, rgba(53, 94, 59, 0.96), rgba(23, 48, 28, 0.96)) !important;
+  border: 2px solid #d9a441 !important;
+  box-shadow:
+    inset 0 0 0 2px #0a0603,
+    inset 0 0 0 4px rgba(73, 117, 61, 0.42),
+    3px 3px 0 rgba(5, 3, 2, 0.55) !important;
+  content: "" !important;
+  height: 48px !important;
+  left: 50% !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: clamp(150px, 10vw, 180px) !important;
+  z-index: -1 !important;
+}
+
+.quest-topbar > .quest-nav a:hover,
+.quest-topbar > .quest-nav a:focus-visible,
+.quest-topbar > .quest-nav a.is-active {
+  color: #7cff5b !important;
+  outline: 0 !important;
+}
+
+.quest-topbar > .quest-nav a:hover::after,
+.quest-topbar > .quest-nav a:focus-visible::after,
+.quest-topbar > .quest-nav a.is-active::after {
+  opacity: 1 !important;
+}
+
+.quest-topbar > .quest-player {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: grid !important;
+  gap: 10px !important;
+  grid-template-columns: 56px minmax(0, 1fr) !important;
+  height: 72px !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 16px 56px 12px 52px !important;
+  width: clamp(270px, 22vw, 325px) !important;
+}
+
+.quest-topbar > .quest-player .quest-player__frame {
+  display: block !important;
+  height: 100% !important;
+  image-rendering: pixelated !important;
+  inset: 0 !important;
+  object-fit: fill !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  width: 100% !important;
+  z-index: 0 !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar,
+.quest-topbar > .quest-player .quest-player__stats {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  height: 58px !important;
+  overflow: visible !important;
+  width: 58px !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar img {
+  display: block !important;
+  height: 122% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  transform: translate(-7px, -9px) !important;
+  width: 122% !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats {
+  display: grid !important;
+  gap: 3px !important;
+  justify-items: start !important;
+  min-width: 0 !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats strong {
+  color: #78dc55 !important;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace !important;
+  font-size: clamp(0.62rem, 0.68vw, 0.8rem) !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 #0b1409 !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats small {
+  color: #f5df91 !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.34rem, 0.42vw, 0.5rem) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 #0b0804 !important;
+}
+
+.quest-topbar > .quest-player .quest-xp {
+  background: #080806 !important;
+  border: 2px solid #6e441d !important;
+  display: block !important;
+  height: 9px !important;
+  overflow: hidden !important;
+  width: clamp(98px, 8vw, 130px) !important;
+}
+
+.quest-topbar > .quest-player .quest-xp i {
+  background: linear-gradient(90deg, #4fad3a, #8ed95b) !important;
+  display: block !important;
+  height: 100% !important;
+}
+
+/* Navbar vertical alignment refinement: all assets centered on the same baseline. */
+.quest-topbar {
+  align-items: center !important;
+  grid-template-columns:
+    clamp(250px, 21vw, 330px)
+    minmax(500px, 1fr)
+    clamp(118px, 10vw, 148px)
+    clamp(300px, 24vw, 370px) !important;
+  height: 126px !important;
+  max-height: 126px !important;
+  min-height: 126px !important;
+  padding: 0 clamp(56px, 3.8vw, 82px) !important;
+}
+
+.quest-topbar > .quest-brand,
+.quest-topbar > .quest-nav,
+.quest-topbar > .quest-inventory-shortcut,
+.quest-topbar > .quest-player {
+  align-self: center !important;
+  transform: translateY(0) !important;
+}
+
+.quest-topbar > .quest-brand {
+  display: flex !important;
+  align-items: center !important;
+  height: 86px !important;
+  width: clamp(250px, 18vw, 315px) !important;
+}
+
+.quest-topbar > .quest-brand img {
+  max-height: 86px !important;
+  object-fit: contain !important;
+}
+
+.quest-topbar > .quest-nav {
+  height: 64px !important;
+}
+
+.quest-topbar > .quest-nav a {
+  align-items: center !important;
+  height: 52px !important;
+}
+
+.quest-topbar > .quest-nav a::after {
+  height: 52px !important;
+  width: clamp(156px, 10.4vw, 186px) !important;
+}
+
+.quest-topbar > .quest-inventory-shortcut {
+  display: flex !important;
+  align-items: center !important;
+  height: 52px !important;
+  width: clamp(120px, 9.4vw, 146px) !important;
+}
+
+.quest-topbar > .quest-inventory-shortcut img {
+  max-height: 52px !important;
+  object-fit: contain !important;
+}
+
+.quest-topbar > .quest-player {
+  align-items: center !important;
+  gap: 12px !important;
+  grid-template-columns: 64px minmax(0, 1fr) !important;
+  height: 88px !important;
+  padding: 20px 64px 16px 60px !important;
+  width: clamp(300px, 24vw, 370px) !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar {
+  height: 64px !important;
+  width: 64px !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar img {
+  height: 124% !important;
+  transform: translate(-8px, -10px) !important;
+  width: 124% !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats {
+  gap: 4px !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats strong {
+  font-size: clamp(0.66rem, 0.72vw, 0.86rem) !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats small {
+  font-size: clamp(0.36rem, 0.44vw, 0.54rem) !important;
+}
+
+.quest-topbar > .quest-player .quest-xp {
+  height: 10px !important;
+  width: clamp(108px, 8.4vw, 142px) !important;
+}
+
+/* Simplified navbar: no long wood background, only logo, wooden buttons, inventory, profile. */
+.quest-topbar {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  column-gap: clamp(22px, 2vw, 44px) !important;
+  display: grid !important;
+  grid-template-columns:
+    clamp(260px, 18vw, 340px)
+    minmax(470px, 1fr)
+    clamp(145px, 10vw, 190px)
+    clamp(390px, 27vw, 500px) !important;
+  height: 148px !important;
+  margin: clamp(12px, 1.4vw, 24px) auto clamp(12px, 1vw, 18px) !important;
+  max-height: 148px !important;
+  max-width: min(calc(100vw - 42px), 1880px) !important;
+  min-height: 148px !important;
+  overflow: visible !important;
+  padding: 0 clamp(42px, 3vw, 68px) !important;
+  width: min(calc(100vw - 42px), 1880px) !important;
+}
+
+.quest-topbar::before,
+.quest-topbar::after,
+.quest-topbar__city {
+  display: none !important;
+}
+
+.quest-topbar > .quest-brand,
+.quest-topbar > .quest-nav,
+.quest-topbar > .quest-inventory-shortcut,
+.quest-topbar > .quest-player {
+  align-self: center !important;
+  grid-row: 1 !important;
+  margin: 0 !important;
+  position: relative !important;
+  transform: none !important;
+  z-index: 2 !important;
+}
+
+.quest-topbar > .quest-brand {
+  grid-column: 1 !important;
+  justify-self: start !important;
+  width: clamp(250px, 17vw, 330px) !important;
+}
+
+.quest-topbar > .quest-brand img {
+  display: block !important;
+  filter: drop-shadow(0 5px 0 rgba(0, 0, 0, 0.6)) !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  width: 100% !important;
+}
+
+.quest-topbar > .quest-nav {
+  align-items: center !important;
+  display: flex !important;
+  gap: clamp(16px, 1.25vw, 26px) !important;
+  grid-column: 2 !important;
+  justify-content: center !important;
+  justify-self: center !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+.quest-topbar > .quest-nav a {
+  align-items: center !important;
+  background:
+    linear-gradient(180deg, rgba(69, 43, 22, 0.96), rgba(32, 19, 10, 0.98)) !important;
+  border: 2px solid #d9a441 !important;
+  box-shadow:
+    inset 0 0 0 2px #0a0603,
+    inset 0 0 0 4px rgba(79, 50, 24, 0.72),
+    4px 4px 0 rgba(0, 0, 0, 0.42) !important;
+  color: #f3d89a !important;
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.86rem, 0.86vw, 1rem) !important;
+  font-weight: 900 !important;
+  height: 52px !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  min-height: 52px !important;
+  min-width: clamp(136px, 9vw, 166px) !important;
+  padding: 0 18px !important;
+  position: relative !important;
+  text-shadow: 2px 2px 0 #1a1208 !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+}
+
+.quest-topbar > .quest-nav a::before,
+.quest-topbar > .quest-nav a::after {
+  display: none !important;
+}
+
+.quest-topbar > .quest-nav a:hover,
+.quest-topbar > .quest-nav a:focus-visible,
+.quest-topbar > .quest-nav a.is-active {
+  background:
+    linear-gradient(180deg, rgba(53, 94, 59, 0.98), rgba(24, 52, 29, 0.98)) !important;
+  color: #7cff5b !important;
+  outline: 0 !important;
+}
+
+.quest-topbar > .quest-inventory-shortcut {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+  grid-column: 3 !important;
+  justify-self: end !important;
+  padding: 0 !important;
+  width: clamp(138px, 9vw, 178px) !important;
+}
+
+.quest-topbar > .quest-inventory-shortcut img {
+  display: block !important;
+  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.54)) !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  width: 100% !important;
+}
+
+.quest-topbar > .quest-player {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: grid !important;
+  gap: 14px !important;
+  grid-column: 4 !important;
+  grid-template-columns: 86px minmax(0, 1fr) !important;
+  height: 118px !important;
+  justify-self: end !important;
+  min-height: 118px !important;
+  overflow: visible !important;
+  padding: 27px 82px 22px 78px !important;
+  width: clamp(390px, 27vw, 500px) !important;
+}
+
+.quest-topbar > .quest-player .quest-player__frame {
+  display: block !important;
+  filter: drop-shadow(0 5px 0 rgba(0, 0, 0, 0.58)) !important;
+  height: 100% !important;
+  image-rendering: pixelated !important;
+  inset: 0 !important;
+  object-fit: fill !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  width: 100% !important;
+  z-index: 0 !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar,
+.quest-topbar > .quest-player .quest-player__stats {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  height: 86px !important;
+  overflow: visible !important;
+  width: 86px !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar img {
+  display: block !important;
+  filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.55)) !important;
+  height: 124% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  transform: translate(-10px, -13px) !important;
+  width: 124% !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats {
+  display: grid !important;
+  gap: 7px !important;
+  justify-items: start !important;
+  min-width: 0 !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats strong {
+  color: #78dc55 !important;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace !important;
+  font-size: clamp(0.88rem, 0.95vw, 1.1rem) !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 #0b1409 !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats small {
+  color: #f5df91 !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.48rem, 0.56vw, 0.68rem) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 #0b0804 !important;
+}
+
+.quest-topbar > .quest-player .quest-xp {
+  background: #080806 !important;
+  border: 2px solid #6e441d !important;
+  display: block !important;
+  height: 14px !important;
+  overflow: hidden !important;
+  width: clamp(150px, 10vw, 190px) !important;
+}
+
+.quest-topbar > .quest-player .quest-xp i {
+  background: linear-gradient(90deg, #4fad3a, #8ed95b) !important;
+  display: block !important;
+  height: 100% !important;
+}
+
+/* Prompt-perfect 4-column navbar legacy block. */
+.quest-topbar {
+  align-items: center !important;
+  background: linear-gradient(180deg, rgba(36, 21, 13, 0.04), rgba(36, 21, 13, 0.04)) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(217, 164, 65, 0.22) !important;
+  column-gap: clamp(24px, 1.8vw, 40px) !important;
+  display: grid !important;
+  grid-template-columns:
+    clamp(240px, 22vw, 330px)
+    minmax(420px, 1fr)
+    clamp(118px, 12vw, 165px)
+    clamp(260px, 24vw, 330px) !important;
+  height: 110px !important;
+  margin: clamp(18px, 1.8vw, 32px) auto clamp(12px, 1vw, 18px) !important;
+  max-height: 110px !important;
+  max-width: none !important;
+  min-height: 110px !important;
+  overflow: visible !important;
+  padding: 0 clamp(48px, 3.4vw, 72px) !important;
+  position: relative !important;
+  width: min(calc(100vw - 32px), 2020px) !important;
+}
+
+.quest-topbar::before,
+.quest-topbar::after,
+.quest-topbar__city {
+  display: none !important;
+}
+
+.quest-topbar > .quest-brand,
+.quest-topbar > .quest-nav,
+.quest-topbar > .quest-inventory-shortcut,
+.quest-topbar > .quest-player {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.quest-topbar > .quest-brand {
+  align-self: center !important;
+  filter: none !important;
+  justify-self: start !important;
+  margin: 0 !important;
+  width: clamp(220px, 18vw, 295px) !important;
+}
+
+.quest-topbar > .quest-brand img {
+  display: block !important;
+  filter:
+    drop-shadow(0 3px 0 rgba(0, 0, 0, 0.7))
+    drop-shadow(0 0 8px rgba(217, 164, 65, 0.12)) !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-topbar > .quest-nav {
+  align-items: center !important;
+  align-self: center !important;
+  display: flex !important;
+  gap: clamp(36px, 3vw, 56px) !important;
+  justify-content: center !important;
+  justify-self: center !important;
+  padding: 0 !important;
+  transform: none !important;
+  width: 100% !important;
+}
+
+.quest-topbar > .quest-nav a {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #f3d89a !important;
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.9rem, 0.92vw, 1.08rem) !important;
+  font-weight: 900 !important;
+  justify-content: center !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  position: relative !important;
+  text-shadow: 2px 2px 0 #1a1208 !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+}
+
+.quest-topbar > .quest-nav a::before {
+  background: rgba(217, 164, 65, 0.55) !important;
+  content: "" !important;
+  display: block !important;
+  height: 22px !important;
+  left: calc(clamp(36px, 3vw, 56px) * -0.5) !important;
+  position: absolute !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 2px !important;
+}
+
+.quest-topbar > .quest-nav a:first-child::before,
+.quest-topbar > .quest-nav a.is-active::before,
+.quest-topbar > .quest-nav a.is-active + a::before {
+  display: none !important;
+}
+
+.quest-topbar > .quest-nav a::after {
+  background:
+    linear-gradient(180deg, rgba(53, 94, 59, 0.96), rgba(23, 48, 28, 0.96)) !important;
+  border: 2px solid #d9a441 !important;
+  box-shadow:
+    inset 0 0 0 2px #0a0603,
+    inset 0 0 0 4px rgba(73, 117, 61, 0.42),
+    3px 3px 0 rgba(5, 3, 2, 0.55) !important;
+  content: "" !important;
+  height: 48px !important;
+  left: 50% !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: clamp(150px, 10vw, 180px) !important;
+  z-index: -1 !important;
+}
+
+.quest-topbar > .quest-nav a:hover,
+.quest-topbar > .quest-nav a:focus-visible,
+.quest-topbar > .quest-nav a.is-active {
+  color: #7cff5b !important;
+  outline: 0 !important;
+}
+
+.quest-topbar > .quest-nav a:hover::after,
+.quest-topbar > .quest-nav a:focus-visible::after,
+.quest-topbar > .quest-nav a.is-active::after {
+  opacity: 1 !important;
+}
+
+.quest-topbar > .quest-inventory-shortcut {
+  align-self: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+  height: auto !important;
+  justify-self: center !important;
+  padding: 0 !important;
+  text-decoration: none !important;
+  transform: none !important;
+  width: clamp(112px, 9vw, 140px) !important;
+}
+
+.quest-topbar > .quest-inventory-shortcut img {
+  display: block !important;
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.56)) !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-topbar > .quest-inventory-shortcut:hover,
+.quest-topbar > .quest-inventory-shortcut:focus-visible {
+  filter: brightness(1.08) drop-shadow(0 0 9px rgba(217, 164, 65, 0.32)) !important;
+  outline: 0 !important;
+}
+
+.quest-topbar > .quest-player {
+  align-items: center !important;
+  align-self: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: grid !important;
+  gap: 10px !important;
+  grid-template-columns: 52px minmax(0, 1fr) !important;
+  height: 68px !important;
+  justify-self: end !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 15px 54px 12px 50px !important;
+  position: relative !important;
+  width: clamp(260px, 22vw, 315px) !important;
+}
+
+.quest-topbar > .quest-player .quest-player__frame {
+  display: block !important;
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.62)) !important;
+  height: 100% !important;
+  image-rendering: pixelated !important;
+  inset: 0 !important;
+  object-fit: fill !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  width: 100% !important;
+  z-index: 0 !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar,
+.quest-topbar > .quest-player .quest-player__stats {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  height: 54px !important;
+  overflow: visible !important;
+  width: 54px !important;
+}
+
+.quest-topbar > .quest-player .quest-avatar img {
+  display: block !important;
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.6)) !important;
+  height: 122% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  transform: translate(-6px, -8px) !important;
+  width: 122% !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats {
+  display: grid !important;
+  gap: 3px !important;
+  justify-items: start !important;
+  min-width: 0 !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats strong {
+  color: #78dc55 !important;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace !important;
+  font-size: clamp(0.6rem, 0.66vw, 0.78rem) !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 #0b1409 !important;
+}
+
+.quest-topbar > .quest-player .quest-player__stats small {
+  color: #f5df91 !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.34rem, 0.42vw, 0.5rem) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 #0b0804 !important;
+}
+
+.quest-topbar > .quest-player .quest-xp {
+  background: #080806 !important;
+  border: 2px solid #6e441d !important;
+  display: block !important;
+  height: 9px !important;
+  overflow: hidden !important;
+  width: clamp(96px, 8vw, 128px) !important;
+}
+
+.quest-topbar > .quest-player .quest-xp i {
+  background: linear-gradient(90deg, #4fad3a, #8ed95b) !important;
+  display: block !important;
+  height: 100% !important;
+}
+
+@media (max-width: 1180px) {
+  .quest-topbar {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    padding-block: 18px !important;
+    row-gap: 14px !important;
+  }
+
+  .quest-topbar > .quest-brand,
+  .quest-topbar > .quest-nav,
+  .quest-topbar > .quest-inventory-shortcut,
+  .quest-topbar > .quest-player {
+    justify-self: center !important;
+  }
+}
+
+/* Slim full-width antique navigation override. */
+.quest-topbar {
+  align-items: center !important;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(217, 164, 65, 0.12), transparent 48%),
+    linear-gradient(180deg, rgba(53, 94, 59, 0.18), rgba(36, 21, 13, 0.16)),
+    rgba(36, 21, 13, 0.34) !important;
+  backdrop-filter: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(217, 164, 65, 0.42) !important;
+  border-radius: 0 !important;
+  border-top: 1px solid rgba(217, 164, 65, 0.22) !important;
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.22),
+    inset 0 -1px 0 rgba(58, 36, 22, 0.72) !important;
+  column-gap: clamp(18px, 2.1vw, 44px) !important;
+  display: grid !important;
+  grid-template-columns: clamp(190px, 16vw, 270px) minmax(340px, 1fr) clamp(310px, 27vw, 460px) !important;
+  height: clamp(56px, 5vw, 72px) !important;
+  margin: 0 calc(50% - 50vw) clamp(10px, 1vw, 16px) !important;
+  max-height: clamp(56px, 5vw, 72px) !important;
+  max-width: none !important;
+  min-height: clamp(56px, 5vw, 72px) !important;
+  overflow: visible !important;
+  padding: 5px clamp(18px, 2.2vw, 48px) !important;
+  width: 100vw !important;
+}
+
+.quest-brand {
+  width: clamp(170px, 14vw, 245px) !important;
+}
+
+.quest-brand img {
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.5)) !important;
+}
+
+.quest-nav {
+  gap: clamp(22px, 2.25vw, 48px) !important;
+}
+
+.quest-nav a {
+  color: #e8d49c !important;
+  font-size: clamp(0.66rem, 0.72vw, 0.88rem) !important;
+  padding: 7px 0 9px !important;
+}
+
+.quest-topbar__right {
+  align-items: center !important;
+  display: grid !important;
+  gap: clamp(8px, 0.7vw, 12px) !important;
+  grid-template-columns: clamp(118px, 9vw, 160px) clamp(235px, 17vw, 300px) !important;
+  justify-content: end !important;
+  justify-items: center !important;
+  width: clamp(310px, 27vw, 460px) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut {
+  transform: none !important;
+  width: clamp(118px, 9vw, 160px) !important;
+}
+
+.quest-topbar__right .quest-player {
+  gap: clamp(7px, 0.55vw, 10px) !important;
+  grid-template-columns: clamp(34px, 2.7vw, 46px) minmax(0, 1fr) !important;
+  height: clamp(48px, 4vw, 60px) !important;
+  padding:
+    clamp(11px, 0.95vw, 15px)
+    clamp(42px, 3.2vw, 58px)
+    clamp(9px, 0.78vw, 13px)
+    clamp(38px, 2.9vw, 52px) !important;
+  width: clamp(235px, 17vw, 300px) !important;
+}
+
+.quest-topbar__right .quest-avatar {
+  height: clamp(34px, 2.75vw, 46px) !important;
+  width: clamp(34px, 2.75vw, 46px) !important;
+}
+
+.quest-topbar__right .quest-avatar img {
+  height: 116% !important;
+  transform: translate(-5px, -5px) !important;
+  width: 116% !important;
+}
+
+.quest-topbar__right .quest-player__stats {
+  gap: 3px !important;
+}
+
+.quest-topbar__right .quest-player__stats strong {
+  font-size: clamp(0.48rem, 0.58vw, 0.68rem) !important;
+}
+
+.quest-topbar__right .quest-player__stats small {
+  font-size: clamp(0.34rem, 0.42vw, 0.5rem) !important;
+}
+
+.quest-topbar__right .quest-xp {
+  height: clamp(6px, 0.52vw, 8px) !important;
+  width: clamp(74px, 6.5vw, 108px) !important;
+}
+
+@media (max-width: 1180px) {
+  .quest-topbar {
+    border-radius: 0 !important;
+    grid-template-columns: minmax(150px, 1fr) !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    padding-block: 10px !important;
+    row-gap: 8px !important;
+  }
+}
+
+/* Reference-style long wooden RPG navbar. */
+.quest-topbar {
+  align-items: center !important;
+  background:
+    linear-gradient(90deg, rgba(20, 12, 7, 0.82), rgba(58, 36, 22, 0.9) 10%, rgba(36, 21, 13, 0.92) 50%, rgba(58, 36, 22, 0.9) 90%, rgba(20, 12, 7, 0.82)),
+    repeating-linear-gradient(0deg, rgba(217, 164, 65, 0.05) 0 1px, transparent 1px 8px),
+    #24150d !important;
+  border: 2px solid #6e441d !important;
+  border-radius: 0 !important;
+  box-shadow:
+    inset 0 0 0 2px #0b0704,
+    inset 0 0 0 4px rgba(217, 164, 65, 0.35),
+    inset 0 12px 0 rgba(255, 220, 128, 0.04),
+    0 8px 0 rgba(5, 3, 2, 0.54),
+    0 18px 34px rgba(0, 0, 0, 0.42) !important;
+  column-gap: clamp(20px, 2.3vw, 54px) !important;
+  display: grid !important;
+  grid-template-columns: clamp(230px, 18vw, 350px) minmax(520px, 1fr) clamp(430px, 30vw, 610px) !important;
+  height: clamp(78px, 6vw, 106px) !important;
+  margin: clamp(18px, 2vw, 36px) auto clamp(14px, 1.2vw, 22px) !important;
+  max-height: clamp(78px, 6vw, 106px) !important;
+  max-width: none !important;
+  min-height: clamp(78px, 6vw, 106px) !important;
+  overflow: visible !important;
+  padding: clamp(10px, 0.85vw, 16px) clamp(28px, 2.4vw, 54px) !important;
+  position: relative !important;
+  width: min(calc(100vw - 48px), 1900px) !important;
+}
+
+.quest-topbar::before,
+.quest-topbar::after {
+  content: "" !important;
+  display: block !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  z-index: 1 !important;
+}
+
+.quest-topbar::before {
+  border: 1px solid rgba(217, 164, 65, 0.55) !important;
+  inset: 8px !important;
+  box-shadow: inset 0 0 0 1px rgba(5, 3, 2, 0.72) !important;
+}
+
+.quest-topbar::after {
+  background:
+    linear-gradient(90deg, #d9a441 0 6px, transparent 6px calc(100% - 6px), #d9a441 calc(100% - 6px)),
+    linear-gradient(#d9a441 0 6px, transparent 6px calc(100% - 6px), #d9a441 calc(100% - 6px)) !important;
+  inset: 5px !important;
+  opacity: 0.58 !important;
+}
+
+.quest-brand,
+.quest-nav,
+.quest-topbar__right {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.quest-brand {
+  align-self: center !important;
+  justify-self: start !important;
+  margin: 0 !important;
+  width: clamp(220px, 17vw, 330px) !important;
+}
+
+.quest-brand img {
+  display: block !important;
+  filter:
+    drop-shadow(0 3px 0 rgba(0, 0, 0, 0.7))
+    drop-shadow(0 0 8px rgba(217, 164, 65, 0.14)) !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  width: 100% !important;
+}
+
+.quest-nav {
+  align-items: center !important;
+  align-self: center !important;
+  display: flex !important;
+  gap: clamp(26px, 2.8vw, 64px) !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  transform: none !important;
+  width: 100% !important;
+}
+
+.quest-nav a {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #f0d897 !important;
+  display: inline-grid !important;
+  flex: 0 0 auto !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.88rem, 1vw, 1.2rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  place-items: center !important;
+  position: relative !important;
+  text-shadow: 0 3px 0 #0a0603 !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+}
+
+.quest-nav a::before {
+  display: none !important;
+}
+
+.quest-nav a::after {
+  background: #315a33 !important;
+  border: 2px solid #d9a441 !important;
+  box-shadow:
+    inset 0 0 0 2px #0a0603,
+    0 0 0 1px rgba(217, 164, 65, 0.55),
+    4px 4px 0 rgba(5, 3, 2, 0.48) !important;
+  content: "" !important;
+  inset: -14px -34px !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  transform: none !important;
+  transition: opacity 140ms ease, filter 140ms ease !important;
+  z-index: -1 !important;
+}
+
+.quest-nav a:hover,
+.quest-nav a:focus-visible,
+.quest-nav a.is-active {
+  color: #78d165 !important;
+  outline: 0 !important;
+}
+
+.quest-nav a:hover::after,
+.quest-nav a:focus-visible::after,
+.quest-nav a.is-active::after {
+  opacity: 1 !important;
+}
+
+.quest-topbar__right {
+  align-items: center !important;
+  align-self: center !important;
+  display: grid !important;
+  gap: clamp(14px, 1.3vw, 24px) !important;
+  grid-template-columns: clamp(170px, 11vw, 230px) clamp(245px, 17vw, 340px) !important;
+  justify-content: end !important;
+  justify-items: end !important;
+  justify-self: end !important;
+  width: clamp(430px, 30vw, 610px) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+  height: auto !important;
+  padding: 0 !important;
+  transform: none !important;
+  width: clamp(170px, 11vw, 230px) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut img {
+  display: block !important;
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.58)) !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-topbar__right .quest-player {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: grid !important;
+  gap: clamp(8px, 0.7vw, 13px) !important;
+  grid-template-columns: clamp(46px, 3.4vw, 64px) minmax(0, 1fr) !important;
+  height: clamp(58px, 4.5vw, 78px) !important;
+  justify-self: end !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding:
+    clamp(13px, 1.1vw, 18px)
+    clamp(46px, 3.4vw, 68px)
+    clamp(10px, 0.85vw, 15px)
+    clamp(44px, 3.2vw, 62px) !important;
+  position: relative !important;
+  width: clamp(245px, 17vw, 340px) !important;
+}
+
+.quest-topbar__right .quest-player__frame {
+  display: block !important;
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.62)) !important;
+  height: 100% !important;
+  image-rendering: pixelated !important;
+  inset: 0 !important;
+  object-fit: fill !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  width: 100% !important;
+  z-index: 0 !important;
+}
+
+.quest-topbar__right .quest-avatar {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  height: clamp(46px, 3.4vw, 64px) !important;
+  overflow: visible !important;
+  position: relative !important;
+  width: clamp(46px, 3.4vw, 64px) !important;
+  z-index: 1 !important;
+}
+
+.quest-topbar__right .quest-avatar img {
+  display: block !important;
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.58)) !important;
+  height: 118% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  transform: translate(-5px, -7px) !important;
+  width: 118% !important;
+}
+
+.quest-topbar__right .quest-player__stats {
+  display: grid !important;
+  gap: 3px !important;
+  justify-items: start !important;
+  min-width: 0 !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.quest-topbar__right .quest-player__stats strong {
+  color: #78dc55 !important;
+  font-family: "Press Start 2P", "Pixelify Sans", monospace !important;
+  font-size: clamp(0.58rem, 0.66vw, 0.78rem) !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 #0b1409 !important;
+}
+
+.quest-topbar__right .quest-player__stats small {
+  color: #f5df91 !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.36rem, 0.44vw, 0.54rem) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 #0b0804 !important;
+}
+
+.quest-topbar__right .quest-xp {
+  background: #080806 !important;
+  border: 2px solid #6e441d !important;
+  display: block !important;
+  height: clamp(8px, 0.58vw, 10px) !important;
+  overflow: hidden !important;
+  width: clamp(92px, 7.2vw, 136px) !important;
+}
+
+.quest-topbar__right .quest-xp i {
+  background: linear-gradient(90deg, #4fad3a, #8ed95b) !important;
+  display: block !important;
+  height: 100% !important;
+}
+
+@media (max-width: 1180px) {
+  .quest-topbar {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    row-gap: 14px !important;
+  }
+}
+
+/* Navbar proportion polish: tighter spacing, larger readable assets. */
+.quest-topbar {
+  column-gap: clamp(14px, 1.45vw, 30px) !important;
+  grid-template-columns: clamp(250px, 17vw, 335px) minmax(420px, 1fr) clamp(430px, 27vw, 540px) !important;
+  height: clamp(82px, 5.4vw, 100px) !important;
+  max-height: clamp(82px, 5.4vw, 100px) !important;
+  min-height: clamp(82px, 5.4vw, 100px) !important;
+  padding: clamp(9px, 0.7vw, 13px) clamp(30px, 2vw, 44px) !important;
+  width: min(calc(100vw - 28px), 1940px) !important;
+}
+
+.quest-brand {
+  width: clamp(245px, 16.5vw, 325px) !important;
+}
+
+.quest-nav {
+  gap: clamp(20px, 1.85vw, 42px) !important;
+}
+
+.quest-nav a {
+  font-size: clamp(0.82rem, 0.88vw, 1.08rem) !important;
+}
+
+.quest-nav a::after {
+  inset: -12px -26px !important;
+}
+
+.quest-topbar__right {
+  gap: clamp(8px, 0.7vw, 14px) !important;
+  grid-template-columns: clamp(155px, 9.6vw, 205px) clamp(260px, 16.6vw, 325px) !important;
+  width: clamp(430px, 27vw, 540px) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut {
+  width: clamp(155px, 9.6vw, 205px) !important;
+}
+
+.quest-topbar__right .quest-player {
+  gap: clamp(9px, 0.68vw, 12px) !important;
+  grid-template-columns: clamp(50px, 3.55vw, 66px) minmax(0, 1fr) !important;
+  height: clamp(64px, 4.25vw, 82px) !important;
+  padding:
+    clamp(14px, 1vw, 19px)
+    clamp(48px, 3.05vw, 64px)
+    clamp(11px, 0.78vw, 15px)
+    clamp(48px, 3vw, 64px) !important;
+  width: clamp(260px, 16.6vw, 325px) !important;
+}
+
+.quest-topbar__right .quest-avatar {
+  height: clamp(50px, 3.55vw, 66px) !important;
+  width: clamp(50px, 3.55vw, 66px) !important;
+}
+
+.quest-topbar__right .quest-avatar img {
+  transform: translate(-5px, -8px) !important;
+}
+
+.quest-topbar__right .quest-player__stats strong {
+  font-size: clamp(0.62rem, 0.66vw, 0.78rem) !important;
+}
+
+.quest-topbar__right .quest-player__stats small {
+  font-size: clamp(0.38rem, 0.42vw, 0.5rem) !important;
+}
+
+.quest-topbar__right .quest-xp {
+  width: clamp(100px, 6.8vw, 132px) !important;
+}
+
+/* Legacy full-width navbar block. */
+.quest-topbar {
+  align-items: center !important;
+  background: linear-gradient(180deg, rgba(36, 21, 13, 0.08), rgba(36, 21, 13, 0.08)) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.34),
+    0 2px 0 rgba(217, 164, 65, 0.12) !important;
+  column-gap: clamp(12px, 1.35vw, 28px) !important;
+  display: grid !important;
+  grid-template-columns: clamp(250px, 17vw, 340px) minmax(470px, 1fr) clamp(510px, 31vw, 650px) !important;
+  height: clamp(92px, 5.9vw, 118px) !important;
+  margin:
+    clamp(16px, 1.7vw, 28px)
+    calc(50% - 50vw)
+    clamp(10px, 1vw, 18px) !important;
+  max-height: clamp(92px, 5.9vw, 118px) !important;
+  max-width: none !important;
+  min-height: clamp(92px, 5.9vw, 118px) !important;
+  overflow: visible !important;
+  padding:
+    clamp(12px, 0.9vw, 18px)
+    clamp(46px, 3.4vw, 74px) !important;
+  width: 100vw !important;
+}
+
+.quest-topbar::before,
+.quest-topbar::after {
+  display: none !important;
+}
+
+.quest-brand {
+  width: clamp(265px, 17vw, 340px) !important;
+}
+
+.quest-brand img {
+  filter:
+    drop-shadow(0 4px 0 rgba(0, 0, 0, 0.64))
+    drop-shadow(0 0 8px rgba(217, 164, 65, 0.12)) !important;
+}
+
+.quest-nav {
+  gap: clamp(20px, 2vw, 48px) !important;
+}
+
+.quest-nav a {
+  color: #edd89e !important;
+  font-size: clamp(0.9rem, 0.98vw, 1.18rem) !important;
+}
+
+.quest-nav a::after {
+  border-color: #d9a441 !important;
+  inset: -13px -30px !important;
+}
+
+.quest-topbar__right {
+  gap: clamp(8px, 0.72vw, 14px) !important;
+  grid-template-columns: clamp(160px, 9.5vw, 210px) clamp(335px, 20vw, 430px) !important;
+  width: clamp(510px, 31vw, 650px) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut {
+  justify-self: end !important;
+  width: clamp(160px, 9.5vw, 210px) !important;
+}
+
+.quest-topbar__right .quest-player {
+  gap: clamp(12px, 0.86vw, 17px) !important;
+  grid-template-columns: clamp(64px, 4.2vw, 86px) minmax(0, 1fr) !important;
+  height: clamp(78px, 5vw, 102px) !important;
+  padding:
+    clamp(18px, 1.3vw, 26px)
+    clamp(64px, 4.1vw, 86px)
+    clamp(14px, 1vw, 21px)
+    clamp(60px, 3.8vw, 80px) !important;
+  width: clamp(335px, 20vw, 430px) !important;
+}
+
+.quest-topbar__right .quest-avatar {
+  height: clamp(64px, 4.2vw, 86px) !important;
+  width: clamp(64px, 4.2vw, 86px) !important;
+}
+
+.quest-topbar__right .quest-avatar img {
+  height: 120% !important;
+  transform: translate(-7px, -10px) !important;
+  width: 120% !important;
+}
+
+.quest-topbar__right .quest-player__stats {
+  gap: clamp(4px, 0.34vw, 7px) !important;
+}
+
+.quest-topbar__right .quest-player__stats strong {
+  font-size: clamp(0.78rem, 0.82vw, 1rem) !important;
+}
+
+.quest-topbar__right .quest-player__stats small {
+  font-size: clamp(0.44rem, 0.5vw, 0.62rem) !important;
+}
+
+.quest-topbar__right .quest-xp {
+  height: clamp(9px, 0.68vw, 12px) !important;
+  width: clamp(126px, 8.1vw, 170px) !important;
+}
+
+@media (max-width: 1180px) {
+  .quest-topbar {
+    background: linear-gradient(180deg, rgba(36, 21, 13, 0.18), rgba(36, 21, 13, 0.18)) !important;
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    padding-block: 18px !important;
+    row-gap: 12px !important;
+  }
+
+  .quest-topbar__right {
+    justify-self: center !important;
+  }
+}
+
+/* Refero-style floating pill navbar override. */
+.quest-topbar {
+  align-items: center !important;
+  background: rgba(40, 40, 52, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15), 0 16px 34px rgba(16, 18, 24, 0.18) !important;
+  column-gap: clamp(14px, 2vw, 34px) !important;
+  display: grid !important;
+  grid-template-areas: "brand nav right" !important;
+  grid-template-columns: minmax(132px, 190px) minmax(280px, 1fr) minmax(190px, auto) !important;
+  height: auto !important;
+  margin: clamp(16px, 2.1vw, 28px) auto clamp(12px, 1.5vw, 20px) !important;
+  max-height: none !important;
+  max-width: 1120px !important;
+  min-height: 72px !important;
+  overflow: visible !important;
+  padding: 8px 12px !important;
+  position: sticky !important;
+  top: 14px !important;
+  width: min(calc(100vw - 32px), 1120px) !important;
+  z-index: 50 !important;
+}
+
+.quest-topbar::before,
+.quest-topbar::after,
+.quest-topbar__city {
+  display: none !important;
+}
+
+.quest-brand {
+  align-items: center !important;
+  align-self: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  filter: none !important;
+  grid-area: brand !important;
+  justify-self: start !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  width: clamp(132px, 15vw, 190px) !important;
+}
+
+.quest-brand img {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.24)) !important;
+  height: auto !important;
+  image-rendering: auto !important;
+  margin: 0 !important;
+  max-height: 54px !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-brand__text {
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  width: 1px !important;
+}
+
+.quest-nav {
+  align-items: center !important;
+  align-self: center !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: clamp(8px, 1vw, 16px) !important;
+  grid-area: nav !important;
+  justify-content: center !important;
+  justify-self: center !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+.quest-nav a {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  display: inline-flex !important;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif !important;
+  font-size: clamp(0.82rem, 0.86vw, 0.94rem) !important;
+  font-weight: 500 !important;
+  justify-content: center !important;
+  letter-spacing: 0 !important;
+  line-height: 1.2 !important;
+  min-height: 38px !important;
+  padding: 0 14px !important;
+  position: relative !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  white-space: nowrap !important;
+}
+
+.quest-nav a::before,
+.quest-nav a::after {
+  display: none !important;
+}
+
+.quest-nav a:hover,
+.quest-nav a:focus-visible,
+.quest-nav a.is-active {
+  background: rgba(31, 31, 41, 0.92) !important;
+  color: #ffffff !important;
+  outline: 0 !important;
+}
+
+.quest-nav a:focus-visible {
+  box-shadow: 0 0 0 2px rgba(65, 161, 207, 0.72) !important;
+}
+
+.quest-topbar__right {
+  align-items: center !important;
+  align-self: center !important;
+  display: flex !important;
+  gap: clamp(8px, 1vw, 14px) !important;
+  grid-area: right !important;
+  justify-content: flex-end !important;
+  justify-self: end !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut {
+  align-items: center !important;
+  background: rgba(31, 31, 41, 0.78) !important;
+  border: 1px solid rgba(222, 226, 222, 0.18) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  height: 48px !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 6px 10px !important;
+  width: 64px !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut img {
+  display: block !important;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.32)) !important;
+  height: 100% !important;
+  image-rendering: auto !important;
+  object-fit: contain !important;
+  transform: none !important;
+  width: 100% !important;
+}
+
+.quest-topbar__right .quest-player {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: grid !important;
+  flex: 0 1 auto !important;
+  gap: 8px !important;
+  grid-template-columns: 42px minmax(74px, 1fr) !important;
+  height: 56px !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+  padding: 7px 16px 7px 10px !important;
+  position: relative !important;
+  width: clamp(148px, 16vw, 198px) !important;
+}
+
+.quest-topbar__right .quest-player__frame {
+  display: block !important;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.28)) !important;
+  height: 100% !important;
+  image-rendering: auto !important;
+  inset: 0 !important;
+  object-fit: contain !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  transform: none !important;
+  width: 100% !important;
+  z-index: 0 !important;
+}
+
+.quest-topbar__right .quest-avatar {
+  align-items: center !important;
+  align-self: center !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  border: 1px solid rgba(23, 23, 23, 0.18) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  height: 38px !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  position: relative !important;
+  width: 38px !important;
+  z-index: 1 !important;
+}
+
+.quest-topbar__right .quest-avatar img {
+  display: block !important;
+  filter: none !important;
+  height: 118% !important;
+  image-rendering: auto !important;
+  object-fit: contain !important;
+  transform: translateY(3px) !important;
+  width: 118% !important;
+}
+
+.quest-topbar__right .quest-player__stats {
+  align-self: center !important;
+  display: grid !important;
+  gap: 3px !important;
+  justify-items: start !important;
+  min-width: 0 !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.quest-topbar__right .quest-player__stats strong,
+.quest-topbar__right .quest-player__stats small {
+  color: #ffffff !important;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-shadow: none !important;
+  white-space: nowrap !important;
+}
+
+.quest-topbar__right .quest-player__stats strong {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+}
+
+.quest-topbar__right .quest-player__stats small {
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 0.55rem !important;
+  font-weight: 600 !important;
+}
+
+.quest-topbar__right .quest-xp {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  display: block !important;
+  height: 5px !important;
+  overflow: hidden !important;
+  width: min(100%, 86px) !important;
+}
+
+.quest-topbar__right .quest-xp i {
+  background: #41a1cf !important;
+  border-radius: inherit !important;
+  display: block !important;
+  height: 100% !important;
+}
+
+@media (max-width: 820px) {
+  .quest-topbar {
+    grid-template-areas:
+      "brand right"
+      "nav nav" !important;
+    grid-template-columns: minmax(120px, 1fr) auto !important;
+    min-height: 0 !important;
+    padding: 10px 12px !important;
+    row-gap: 8px !important;
+    top: 10px !important;
+  }
+
+  .quest-brand {
+    width: clamp(120px, 34vw, 170px) !important;
+  }
+
+  .quest-brand img {
+    max-height: 46px !important;
+  }
+
+  .quest-nav {
+    justify-content: center !important;
+    overflow-x: auto !important;
+    padding-bottom: 2px !important;
+    scrollbar-width: none !important;
+  }
+
+  .quest-nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .quest-nav a {
+    flex: 0 0 auto !important;
+    min-height: 34px !important;
+    padding-inline: 12px !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .quest-topbar {
+    border-radius: 24px !important;
+    grid-template-areas:
+      "brand"
+      "nav"
+      "right" !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    justify-items: center !important;
+    width: min(calc(100vw - 20px), 1120px) !important;
+  }
+
+  .quest-brand,
+  .quest-topbar__right {
+    justify-self: center !important;
+  }
+
+  .quest-topbar__right .quest-inventory-shortcut {
+    height: 44px !important;
+    width: 56px !important;
+  }
+
+  .quest-topbar__right .quest-player {
+    height: 52px !important;
+    width: 172px !important;
+  }
+}
+
+/* Inventory-triggered profile module. */
+.quest-topbar {
+  grid-template-columns: minmax(132px, 190px) minmax(280px, 1fr) auto !important;
+}
+
+.quest-topbar__right {
+  width: auto !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut {
+  appearance: none !important;
+  cursor: pointer !important;
+  height: 52px !important;
+  padding: 7px 12px !important;
+  width: 78px !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut[aria-expanded="true"] {
+  background: rgba(65, 161, 207, 0.18) !important;
+  border-color: rgba(65, 161, 207, 0.5) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut img {
+  height: 100% !important;
+  max-height: 34px !important;
+  max-width: 54px !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-drawer-trigger {
+  display: none !important;
+}
+
+.quest-inventory-backdrop {
+  background: rgba(8, 10, 14, 0.32) !important;
+  border: 0 !important;
+  cursor: pointer !important;
+  inset: 0 !important;
+  position: fixed !important;
+  z-index: 58 !important;
+}
+
+.quest-sidebar.quest-inventory-module {
+  background: transparent !important;
+  bottom: auto !important;
+  box-shadow: none !important;
+  display: block !important;
+  left: auto !important;
+  max-height: min(680px, calc(100vh - 120px)) !important;
+  max-width: none !important;
+  opacity: 0 !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+  position: fixed !important;
+  right: clamp(12px, 3vw, 36px) !important;
+  top: clamp(92px, 8vw, 116px) !important;
+  transform: translateX(24px) scale(0.98) !important;
+  transition: opacity 180ms ease, transform 200ms ease !important;
+  width: min(360px, calc(100vw - 24px)) !important;
+  z-index: 60 !important;
+}
+
+.quest-sidebar.quest-inventory-module.is-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateX(0) scale(1) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-side-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 42%),
+    rgba(34, 34, 45, 0.98) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38), 0 2px 8px rgba(0, 0, 0, 0.18) !important;
+  color: #ffffff !important;
+  display: grid !important;
+  gap: 14px !important;
+  max-height: inherit !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  padding: 18px !important;
+}
+
+.quest-sidebar.quest-inventory-module h2,
+.quest-sidebar.quest-inventory-module h3 {
+  border: 0 !important;
+  color: #ffffff !important;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif !important;
+  font-size: 0.9rem !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  text-align: left !important;
+  text-transform: none !important;
+}
+
+.quest-inventory-close {
+  align-items: center !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 999px !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  height: 30px !important;
+  justify-content: center !important;
+  justify-self: end !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  right: 14px !important;
+  top: 14px !important;
+  width: 30px !important;
+}
+
+.quest-inventory-profile {
+  align-items: center !important;
+  display: grid !important;
+  gap: 12px !important;
+  grid-template-columns: 56px minmax(0, 1fr) !important;
+  min-height: 86px !important;
+  overflow: visible !important;
+  padding: 14px 20px 14px 14px !important;
+  position: relative !important;
+}
+
+.quest-inventory-profile .quest-player__frame {
+  display: block !important;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.32)) !important;
+  height: 100% !important;
+  image-rendering: auto !important;
+  inset: 0 !important;
+  object-fit: contain !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  transform: none !important;
+  width: 100% !important;
+  z-index: 0 !important;
+}
+
+.quest-inventory-profile .quest-avatar,
+.quest-inventory-profile .quest-player__stats {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.quest-inventory-profile .quest-avatar {
+  align-items: center !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(23, 23, 23, 0.18) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18) !important;
+  display: inline-flex !important;
+  height: 56px !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  width: 56px !important;
+}
+
+.quest-inventory-profile .quest-avatar img {
+  display: block !important;
+  filter: none !important;
+  height: 112% !important;
+  image-rendering: auto !important;
+  object-fit: contain !important;
+  transform: translateY(3px) !important;
+  width: 112% !important;
+}
+
+.quest-inventory-profile .quest-player__stats {
+  display: grid !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+}
+
+.quest-inventory-profile .quest-player__stats strong,
+.quest-inventory-profile .quest-player__stats small {
+  color: #ffffff !important;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-shadow: none !important;
+  white-space: nowrap !important;
+}
+
+.quest-inventory-profile .quest-player__stats strong {
+  font-size: 0.95rem !important;
+  font-weight: 850 !important;
+}
+
+.quest-inventory-profile .quest-player__stats small {
+  color: rgba(255, 255, 255, 0.74) !important;
+  font-size: 0.66rem !important;
+  font-weight: 700 !important;
+}
+
+.quest-inventory-profile .quest-xp {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  display: block !important;
+  height: 6px !important;
+  overflow: hidden !important;
+  width: min(100%, 140px) !important;
+}
+
+.quest-inventory-profile .quest-xp i {
+  background: #41a1cf !important;
+  border-radius: inherit !important;
+  display: block !important;
+  height: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  display: grid !important;
+  gap: 10px !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  align-items: center !important;
+  aspect-ratio: 1 / 1 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.11) !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  display: grid !important;
+  gap: 6px !important;
+  grid-template-rows: minmax(0, 1fr) auto !important;
+  justify-items: center !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  padding: 9px !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button.is-locked {
+  opacity: 0.46 !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button::after {
+  display: none !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid img {
+  display: block !important;
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.24)) !important;
+  height: 100% !important;
+  image-rendering: auto !important;
+  max-height: 54px !important;
+  max-width: 64px !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid span {
+  color: rgba(255, 255, 255, 0.84) !important;
+  display: block !important;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif !important;
+  font-size: 0.62rem !important;
+  font-weight: 700 !important;
+  line-height: 1.05 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-align: center !important;
+  text-overflow: ellipsis !important;
+  text-shadow: none !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 820px) {
+  .quest-topbar {
+    grid-template-columns: minmax(120px, 1fr) auto !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .quest-sidebar.quest-inventory-module {
+    left: 10px !important;
+    right: 10px !important;
+    top: 148px !important;
+    width: auto !important;
+  }
+
+  .quest-sidebar.quest-inventory-module .quest-inventory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Antique book navbar tone pass. */
+.quest-topbar {
+  background:
+    linear-gradient(180deg, rgba(84, 49, 24, 0.64), rgba(43, 28, 16, 0.58)),
+    rgba(48, 31, 18, 0.52) !important;
+  border: 1px solid rgba(217, 164, 65, 0.24) !important;
+  box-shadow: 0 8px 18px rgba(39, 23, 10, 0.16), inset 0 1px 0 rgba(255, 238, 184, 0.1) !important;
+  min-height: 62px !important;
+  opacity: 0.94 !important;
+  padding: 7px 14px !important;
+}
+
+.quest-nav a {
+  color: #f2dba8 !important;
+  min-height: 34px !important;
+  padding: 0 13px !important;
+  text-shadow: 0 1px 0 rgba(43, 29, 14, 0.55) !important;
+}
+
+.quest-nav a:hover,
+.quest-nav a:focus-visible,
+.quest-nav a.is-active {
+  background: rgba(217, 164, 65, 0.16) !important;
+  color: #fff1c4 !important;
+}
+
+.quest-nav a:focus-visible {
+  box-shadow: 0 0 0 2px rgba(217, 164, 65, 0.42) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut,
+.quest-topbar__right .quest-inventory-shortcut[aria-expanded="true"] {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut:hover,
+.quest-topbar__right .quest-inventory-shortcut:focus-visible {
+  filter: brightness(1.08) drop-shadow(0 2px 3px rgba(43, 29, 14, 0.35)) !important;
+  outline: 0 !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut:focus-visible {
+  box-shadow: 0 0 0 2px rgba(217, 164, 65, 0.42) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut img {
+  display: block !important;
+  filter: drop-shadow(0 2px 2px rgba(43, 29, 14, 0.3)) !important;
+  height: auto !important;
+  max-height: none !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  width: clamp(72px, 6.4vw, 112px) !important;
+}
+
+@media (max-width: 540px) {
+  .quest-topbar__right .quest-inventory-shortcut img {
+    width: clamp(68px, 24vw, 96px) !important;
+  }
+}
+
+/* Final compact navbar and inventmain inventory frame. */
+.quest-topbar {
+  background: rgba(252, 249, 241, 0.88) !important;
+  border: 1px solid rgba(92, 78, 58, 0.09) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 16px rgba(43, 29, 14, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+  column-gap: 16px !important;
+  grid-template-columns: 24px minmax(0, 1fr) auto !important;
+  max-width: 620px !important;
+  min-height: 44px !important;
+  opacity: 0.93 !important;
+  padding: 5px 6px 5px 12px !important;
+  width: min(calc(100vw - 32px), 620px) !important;
+}
+
+.quest-brand {
+  height: 20px !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  width: 20px !important;
+}
+
+.quest-brand img {
+  display: none !important;
+}
+
+.quest-brand::before {
+  background:
+    linear-gradient(#2c241b, #2c241b) 0 4px / 13px 1px no-repeat,
+    linear-gradient(#2c241b, #2c241b) 3px 9px / 10px 1px no-repeat,
+    linear-gradient(#2c241b, #2c241b) 0 14px / 13px 1px no-repeat;
+  content: "" !important;
+  display: block !important;
+  height: 20px !important;
+  opacity: 0.9 !important;
+  width: 16px !important;
+}
+
+.quest-nav {
+  gap: 22px !important;
+  justify-content: start !important;
+}
+
+.quest-nav a {
+  background: transparent !important;
+  color: #2f281f !important;
+  font-size: 0.76rem !important;
+  font-weight: 650 !important;
+  min-height: 28px !important;
+  padding: 0 !important;
+  text-shadow: none !important;
+}
+
+.quest-nav a:hover,
+.quest-nav a:focus-visible,
+.quest-nav a.is-active {
+  background: transparent !important;
+  color: #11100e !important;
+}
+
+.quest-nav a:focus-visible {
+  box-shadow: 0 0 0 2px rgba(43, 29, 14, 0.16) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut,
+.quest-topbar__right .quest-inventory-shortcut[aria-expanded="true"] {
+  align-items: center !important;
+  background: #1f1e1d !important;
+  border: 1px solid rgba(0, 0, 0, 0.72) !important;
+  border-radius: 7px !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset, 0 2px 5px rgba(43, 29, 14, 0.16) !important;
+  display: inline-flex !important;
+  height: 34px !important;
+  justify-content: center !important;
+  padding: 4px 10px !important;
+  width: auto !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut:hover,
+.quest-topbar__right .quest-inventory-shortcut:focus-visible {
+  background: #11100f !important;
+  filter: none !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut:focus-visible {
+  box-shadow: 0 0 0 2px rgba(43, 29, 14, 0.18), 0 1px 0 rgba(255, 255, 255, 0.12) inset !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut img {
+  filter: none !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  max-height: 25px !important;
+  object-fit: contain !important;
+  width: clamp(97px, 8.2vw, 137px) !important;
+}
+
+/* +25px enlargement for the invent.png navbar asset. */
+.quest-topbar__right .quest-inventory-shortcut img {
+  width: clamp(122px, 9.8vw, 162px) !important;
+}
+
+.quest-sidebar.quest-inventory-module {
+  max-height: min(88vh, 780px) !important;
+  right: clamp(12px, 3.6vw, 54px) !important;
+  top: clamp(72px, 6.4vw, 98px) !important;
+  width: min(500px, calc(100vw - 24px)) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-side-panel {
+  aspect-ratio: 1024 / 1535 !important;
+  background: var(--inventory-panel-art) center / contain no-repeat !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.46) !important;
+  display: block !important;
+  max-height: min(88vh, 780px) !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.quest-inventory-close {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  height: 7.8% !important;
+  right: 9.8% !important;
+  top: 4.3% !important;
+  width: 11.2% !important;
+}
+
+.quest-inventory-close:focus-visible {
+  box-shadow: 0 0 0 2px rgba(246, 213, 128, 0.65) !important;
+  outline: 0 !important;
+}
+
+.quest-inventory-profile {
+  display: block !important;
+  height: 18.6% !important;
+  left: 12.8% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  top: 17.7% !important;
+  width: 74.6% !important;
+}
+
+.quest-inventory-profile .quest-avatar {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  height: 46% !important;
+  left: 7.2% !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  top: 27.5% !important;
+  width: 18% !important;
+}
+
+.quest-inventory-profile .quest-avatar img {
+  height: 118% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  transform: translateY(4%) !important;
+  width: 118% !important;
+}
+
+.quest-inventory-profile .quest-player__stats {
+  display: grid !important;
+  gap: 6% !important;
+  left: 33% !important;
+  min-width: 0 !important;
+  position: absolute !important;
+  top: 25.5% !important;
+  width: 42% !important;
+}
+
+.quest-inventory-profile .quest-player__stats strong,
+.quest-inventory-profile .quest-player__stats small {
+  color: #f7e7bb !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.76) !important;
+}
+
+.quest-inventory-profile .quest-player__stats strong {
+  font-size: clamp(0.86rem, 1.8vw, 1.18rem) !important;
+  font-weight: 900 !important;
+}
+
+.quest-inventory-profile .quest-player__stats small {
+  color: #d9a441 !important;
+  font-size: clamp(0.52rem, 1.1vw, 0.72rem) !important;
+  font-weight: 900 !important;
+}
+
+.quest-inventory-profile .quest-xp {
+  background: rgba(11, 8, 5, 0.9) !important;
+  border: 1px solid rgba(217, 164, 65, 0.6) !important;
+  border-radius: 999px !important;
+  height: clamp(5px, 0.7vw, 7px) !important;
+  width: min(100%, 150px) !important;
+}
+
+.quest-inventory-profile .quest-xp i {
+  background: linear-gradient(90deg, #4f8f38, #b8d96b) !important;
+}
+
+.quest-inventory-badges {
+  display: flex !important;
+  gap: 3.2% !important;
+  left: 33% !important;
+  position: absolute !important;
+  top: 56% !important;
+  width: 42% !important;
+}
+
+.quest-inventory-badges span {
+  align-items: center !important;
+  aspect-ratio: 1 / 1 !important;
+  background: rgba(10, 8, 5, 0.72) !important;
+  border: 1px solid rgba(217, 164, 65, 0.48) !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  padding: 2px !important;
+  width: 21% !important;
+}
+
+.quest-inventory-badges span.is-locked {
+  filter: grayscale(1) brightness(0.48) !important;
+  opacity: 0.55 !important;
+}
+
+.quest-inventory-badges img {
+  display: block !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  display: grid !important;
+  gap: 4.6% 4.2% !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+  height: 52.2% !important;
+  left: 14.6% !important;
+  position: absolute !important;
+  top: 42.6% !important;
+  width: 70.8% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  aspect-ratio: auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  height: 100% !important;
+  justify-content: center !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 14% !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button.is-locked {
+  opacity: 0.33 !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid img {
+  align-self: center !important;
+  display: block !important;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.48)) !important;
+  height: 100% !important;
+  image-rendering: pixelated !important;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid span {
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  width: 1px !important;
+}
+
+@media (max-width: 640px) {
+  .quest-topbar {
+    column-gap: 10px !important;
+    max-width: calc(100vw - 18px) !important;
+    width: calc(100vw - 18px) !important;
+  }
+
+  .quest-nav {
+    gap: 12px !important;
+    overflow-x: auto !important;
+  }
+
+  .quest-topbar__right .quest-inventory-shortcut img {
+    width: clamp(117px, 30vw, 147px) !important;
+  }
+
+  .quest-sidebar.quest-inventory-module {
+    left: 10px !important;
+    right: 10px !important;
+    top: 82px !important;
+    width: auto !important;
+  }
+}
+
+/* Final repair: stable navbar and reference-style profile HUD. */
+.quest-topbar {
+  align-items: center !important;
+  background: rgba(252, 249, 241, 0.94) !important;
+  border: 1px solid rgba(92, 78, 58, 0.12) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 20px rgba(43, 29, 14, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.76) !important;
+  column-gap: clamp(12px, 2vw, 24px) !important;
+  grid-template-columns: 22px minmax(260px, 1fr) auto !important;
+  max-width: 760px !important;
+  min-height: 48px !important;
+  opacity: 1 !important;
+  padding: 6px 8px 6px 14px !important;
+  width: min(calc(100vw - 32px), 760px) !important;
+}
+
+.quest-nav {
+  gap: clamp(14px, 2.3vw, 30px) !important;
+  justify-content: start !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.quest-nav a {
+  color: #2b241b !important;
+  font-size: 0.76rem !important;
+  font-weight: 700 !important;
+  min-height: 30px !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+}
+
+.quest-nav a:hover,
+.quest-nav a:focus-visible,
+.quest-nav a.is-active {
+  background: transparent !important;
+  color: #0f0d0b !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut,
+.quest-topbar__right .quest-inventory-shortcut[aria-expanded="true"] {
+  background: #1f1e1d !important;
+  border: 1px solid rgba(0, 0, 0, 0.72) !important;
+  border-radius: 8px !important;
+  height: 36px !important;
+  padding: 4px 12px !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut img {
+  display: block !important;
+  filter: none !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  max-height: 26px !important;
+  object-fit: contain !important;
+  width: clamp(122px, 9.6vw, 162px) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-side-panel {
+  background: var(--inventory-panel-art) center / contain no-repeat !important;
+}
+
+.quest-inventory-profile .quest-avatar {
+  background: transparent !important;
+  height: 48% !important;
+  left: 6.7% !important;
+  top: 25% !important;
+  width: 18.8% !important;
+}
+
+.quest-inventory-profile .quest-avatar img {
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.45)) !important;
+  height: 106% !important;
+  object-fit: contain !important;
+  transform: translateY(1%) !important;
+  width: 106% !important;
+}
+
+.quest-inventory-profile .quest-player__stats {
+  gap: 7% !important;
+  left: 30.5% !important;
+  top: 23% !important;
+  width: 42% !important;
+}
+
+.quest-inventory-profile .quest-player__stats strong {
+  color: #f8e9be !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(1rem, 2.25vw, 1.48rem) !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.72) !important;
+}
+
+.quest-inventory-profile .quest-player__stats small {
+  color: #e3c16d !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.5rem, 1.05vw, 0.72rem) !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.68) !important;
+}
+
+.quest-progress-line {
+  align-items: center !important;
+  display: flex !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+}
+
+.quest-progress-line em {
+  color: #f5e7ba !important;
+  display: block !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.48rem, 0.92vw, 0.66rem) !important;
+  font-style: normal !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.72) !important;
+  white-space: nowrap !important;
+}
+
+.quest-inventory-profile .quest-xp {
+  background: #050706 !important;
+  border: 2px solid #18130a !important;
+  border-radius: 999px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 238, 184, 0.1), 0 1px 0 rgba(217, 164, 65, 0.35) !important;
+  flex: 1 1 auto !important;
+  height: clamp(8px, 1.1vw, 11px) !important;
+  min-width: 112px !important;
+  overflow: hidden !important;
+  width: auto !important;
+}
+
+.quest-inventory-profile .quest-xp i {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 22px, rgba(39, 58, 19, 0.55) 22px 24px),
+    linear-gradient(180deg, #9fca43, #4e8f32) !important;
+  border-radius: inherit !important;
+  box-shadow: inset 0 1px 0 rgba(255, 246, 165, 0.42) !important;
+}
+
+.quest-inventory-badge-feature {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  display: flex !important;
+  height: 42% !important;
+  justify-content: center !important;
+  position: absolute !important;
+  right: 7.8% !important;
+  top: 22% !important;
+  width: 15.5% !important;
+}
+
+.quest-inventory-badge-feature.is-locked {
+  filter: grayscale(1) brightness(0.52) !important;
+  opacity: 0.62 !important;
+}
+
+.quest-inventory-badge-feature img {
+  display: block !important;
+  filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.52)) !important;
+  height: 100% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+@media (max-width: 640px) {
+  .quest-topbar {
+    grid-template-columns: 22px minmax(150px, 1fr) auto !important;
+    max-width: calc(100vw - 18px) !important;
+    width: calc(100vw - 18px) !important;
+  }
+
+  .quest-nav {
+    gap: 12px !important;
+    overflow-x: auto !important;
+  }
+
+  .quest-topbar__right .quest-inventory-shortcut img {
+    width: clamp(116px, 30vw, 146px) !important;
+  }
+}
+
+/* Final brown navbar restore and tighter inventory placement. */
+.quest-topbar {
+  align-items: center !important;
+  background:
+    linear-gradient(180deg, rgba(93, 55, 28, 0.92), rgba(48, 29, 17, 0.9)),
+    rgba(54, 33, 20, 0.9) !important;
+  border: 1px solid rgba(217, 164, 65, 0.26) !important;
+  border-radius: 999px !important;
+  box-shadow:
+    0 10px 24px rgba(37, 22, 11, 0.22),
+    inset 0 1px 0 rgba(255, 238, 184, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28) !important;
+  column-gap: clamp(16px, 2.2vw, 34px) !important;
+  grid-template-areas: "brand nav right" !important;
+  grid-template-columns: clamp(150px, 17vw, 230px) minmax(280px, 1fr) auto !important;
+  max-width: 1120px !important;
+  min-height: 68px !important;
+  opacity: 0.96 !important;
+  padding: 8px 18px !important;
+  width: min(calc(100vw - 32px), 1120px) !important;
+}
+
+.quest-brand {
+  align-items: center !important;
+  display: flex !important;
+  height: auto !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+  width: clamp(150px, 17vw, 230px) !important;
+}
+
+.quest-brand::before {
+  content: none !important;
+  display: none !important;
+}
+
+.quest-brand img {
+  display: block !important;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.34)) !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  max-height: 56px !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-nav {
+  gap: clamp(18px, 2.5vw, 42px) !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+
+.quest-nav a {
+  color: #f4dca2 !important;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif !important;
+  font-size: clamp(0.88rem, 1vw, 1.06rem) !important;
+  font-weight: 850 !important;
+  min-height: 36px !important;
+  padding: 0 6px !important;
+  text-shadow: 0 2px 0 rgba(35, 21, 10, 0.72) !important;
+}
+
+.quest-nav a:hover,
+.quest-nav a:focus-visible,
+.quest-nav a.is-active {
+  background: rgba(217, 164, 65, 0.14) !important;
+  border-radius: 999px !important;
+  color: #fff2c9 !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut,
+.quest-topbar__right .quest-inventory-shortcut[aria-expanded="true"] {
+  background:
+    linear-gradient(180deg, rgba(255, 238, 184, 0.08), transparent 42%),
+    rgba(17, 13, 9, 0.62) !important;
+  border: 1px solid rgba(217, 164, 65, 0.22) !important;
+  border-radius: 14px !important;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.32), 0 3px 8px rgba(0, 0, 0, 0.22) !important;
+  height: 48px !important;
+  padding: 4px 12px !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut:hover,
+.quest-topbar__right .quest-inventory-shortcut:focus-visible {
+  background:
+    linear-gradient(180deg, rgba(255, 238, 184, 0.14), transparent 42%),
+    rgba(20, 15, 10, 0.78) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut img {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.42)) !important;
+  max-height: 40px !important;
+  width: clamp(138px, 11vw, 178px) !important;
+}
+
+.quest-sidebar.quest-inventory-module {
+  max-height: min(90vh, 820px) !important;
+  width: min(520px, calc(100vw - 24px)) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-side-panel {
+  background: var(--inventory-panel-art) center / contain no-repeat !important;
+  max-height: min(90vh, 820px) !important;
+}
+
+.quest-inventory-profile {
+  height: 17.8% !important;
+  left: 12.4% !important;
+  top: 18.4% !important;
+  width: 75.6% !important;
+}
+
+.quest-inventory-profile .quest-avatar {
+  height: 49% !important;
+  left: 6.9% !important;
+  top: 23.5% !important;
+  width: 18.2% !important;
+}
+
+.quest-inventory-profile .quest-avatar img {
+  height: 102% !important;
+  transform: translateY(1%) !important;
+  width: 102% !important;
+}
+
+.quest-inventory-profile .quest-player__stats {
+  left: 30.2% !important;
+  top: 22.4% !important;
+  width: 45.5% !important;
+}
+
+.quest-inventory-profile .quest-player__stats strong {
+  font-size: clamp(0.94rem, 2.05vw, 1.34rem) !important;
+}
+
+.quest-inventory-profile .quest-player__stats small {
+  font-size: clamp(0.46rem, 0.98vw, 0.68rem) !important;
+}
+
+.quest-progress-line {
+  gap: 7px !important;
+}
+
+.quest-inventory-profile .quest-xp {
+  height: clamp(7px, 0.95vw, 10px) !important;
+  min-width: 108px !important;
+}
+
+.quest-progress-line em {
+  font-size: clamp(0.45rem, 0.85vw, 0.62rem) !important;
+}
+
+.quest-inventory-badge-feature {
+  height: 42% !important;
+  right: 6.6% !important;
+  top: 23% !important;
+  width: 14.8% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  gap: 3.9% 4.35% !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+  height: 51.5% !important;
+  left: 14.55% !important;
+  top: 42.7% !important;
+  width: 70.25% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  align-items: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  padding: 19% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid img {
+  height: 100% !important;
+  max-height: 78px !important;
+  max-width: 78px !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+@media (max-width: 780px) {
+  .quest-topbar {
+    border-radius: 24px !important;
+    grid-template-columns: minmax(118px, 0.8fr) minmax(190px, 1fr) auto !important;
+    padding: 8px 12px !important;
+  }
+
+  .quest-brand {
+    width: clamp(118px, 22vw, 170px) !important;
+  }
+
+  .quest-nav {
+    gap: 14px !important;
+    overflow-x: auto !important;
+  }
+
+  .quest-nav a {
+    font-size: 0.78rem !important;
+  }
+
+  .quest-topbar__right .quest-inventory-shortcut img {
+    width: clamp(118px, 24vw, 150px) !important;
+  }
+}
+
+/* Screenshot alignment pass: profile and inventory slots. */
+.quest-inventory-profile {
+  height: 17.2% !important;
+  left: 12.9% !important;
+  top: 18.75% !important;
+  width: 74.2% !important;
+}
+
+.quest-inventory-profile .quest-avatar {
+  height: 50.5% !important;
+  left: 7.35% !important;
+  top: 24.5% !important;
+  width: 18.5% !important;
+}
+
+.quest-inventory-profile .quest-avatar img {
+  height: 112% !important;
+  object-fit: contain !important;
+  transform: translate(-1%, 1%) !important;
+  width: 112% !important;
+}
+
+.quest-inventory-profile .quest-player__stats {
+  gap: 7px !important;
+  left: 29.2% !important;
+  top: 28.2% !important;
+  width: 49% !important;
+}
+
+.quest-inventory-profile .quest-player__stats strong {
+  font-size: clamp(1.06rem, 2.15vw, 1.42rem) !important;
+  line-height: 1 !important;
+}
+
+.quest-inventory-profile .quest-player__stats small {
+  font-size: clamp(0.52rem, 0.98vw, 0.68rem) !important;
+  line-height: 1 !important;
+}
+
+.quest-progress-line {
+  gap: 8px !important;
+  width: 100% !important;
+}
+
+.quest-inventory-profile .quest-xp {
+  height: clamp(8px, 1vw, 11px) !important;
+  min-width: 0 !important;
+  width: 72% !important;
+}
+
+.quest-progress-line em {
+  font-size: clamp(0.48rem, 0.82vw, 0.62rem) !important;
+  min-width: 32px !important;
+}
+
+.quest-inventory-badge-feature {
+  height: 39.5% !important;
+  right: 6.4% !important;
+  top: 28% !important;
+  width: 13.5% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  gap: 3.8% 4.3% !important;
+  height: 51.8% !important;
+  left: 14.35% !important;
+  top: 42.85% !important;
+  width: 70.9% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 12% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button.is-locked {
+  opacity: 0.58 !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button.is-unlocked {
+  opacity: 1 !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid img {
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.5)) saturate(1.05) !important;
+  height: 100% !important;
+  max-height: 92px !important;
+  max-width: 92px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: scale(1.14) !important;
+  transform-origin: center !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(1) img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(2) img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(8) img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(10) img {
+  transform: scale(1.02) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(5) img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(6) img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(13) img {
+  transform: scale(1.24) !important;
+}
+
+/* Hard reset for the current inventory art: align to inventmain.png coordinates. */
+.quest-topbar {
+  align-items: center !important;
+  background:
+    linear-gradient(180deg, rgba(92, 55, 29, 0.9), rgba(43, 26, 15, 0.88)),
+    rgba(50, 31, 19, 0.9) !important;
+  border: 1px solid rgba(219, 164, 70, 0.24) !important;
+  border-radius: 999px !important;
+  box-shadow:
+    0 10px 24px rgba(20, 11, 5, 0.2),
+    inset 0 1px 0 rgba(255, 229, 163, 0.17),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.32) !important;
+  display: grid !important;
+  grid-template-areas: "brand nav right" !important;
+  grid-template-columns: clamp(148px, 16vw, 224px) minmax(300px, 1fr) auto !important;
+  min-height: 66px !important;
+  opacity: 0.94 !important;
+  padding: 8px 18px !important;
+  width: min(calc(100vw - 32px), 1100px) !important;
+}
+
+.quest-brand {
+  grid-area: brand !important;
+  width: clamp(148px, 16vw, 224px) !important;
+}
+
+.quest-brand img {
+  display: block !important;
+  height: auto !important;
+  max-height: 54px !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-nav {
+  display: flex !important;
+  gap: clamp(20px, 2.4vw, 42px) !important;
+  grid-area: nav !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+}
+
+.quest-nav a {
+  align-items: center !important;
+  color: #f2d89d !important;
+  display: inline-flex !important;
+  font-size: clamp(0.86rem, 0.95vw, 1.02rem) !important;
+  font-weight: 800 !important;
+  justify-content: center !important;
+  min-height: 34px !important;
+  padding: 0 8px !important;
+  text-shadow: 0 2px 0 rgba(31, 18, 9, 0.72) !important;
+}
+
+.quest-nav a:hover,
+.quest-nav a:focus-visible,
+.quest-nav a.is-active {
+  background: rgba(216, 163, 69, 0.15) !important;
+  border-radius: 999px !important;
+  color: #fff0c2 !important;
+}
+
+.quest-topbar__right {
+  grid-area: right !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut,
+.quest-topbar__right .quest-inventory-shortcut[aria-expanded="true"] {
+  background: rgba(15, 11, 7, 0.58) !important;
+  border: 1px solid rgba(216, 163, 69, 0.22) !important;
+  border-radius: 12px !important;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.34), 0 3px 8px rgba(0, 0, 0, 0.22) !important;
+  height: 46px !important;
+  padding: 3px 12px !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut img {
+  display: block !important;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.44)) !important;
+  height: auto !important;
+  max-height: 40px !important;
+  object-fit: contain !important;
+  width: clamp(140px, 10.8vw, 178px) !important;
+}
+
+.quest-sidebar.quest-inventory-module {
+  max-height: min(90vh, 820px) !important;
+  right: clamp(12px, 3.6vw, 54px) !important;
+  top: clamp(78px, 6.5vw, 104px) !important;
+  width: min(500px, calc(100vw - 24px)) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-side-panel {
+  aspect-ratio: 1024 / 1535 !important;
+  background: var(--inventory-panel-art) center / contain no-repeat !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.46) !important;
+  display: block !important;
+  max-height: min(90vh, 820px) !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.quest-inventory-close {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  height: 7.7% !important;
+  padding: 0 !important;
+  position: absolute !important;
+  right: 9.7% !important;
+  top: 4.2% !important;
+  width: 11.2% !important;
+}
+
+.quest-inventory-profile {
+  background: var(--profile-panel-art) center / 100% 100% no-repeat !important;
+  display: block !important;
+  height: 15.8% !important;
+  left: 14.2% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  top: 20.2% !important;
+  width: 71.8% !important;
+}
+
+.quest-inventory-profile .quest-avatar {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  display: flex !important;
+  height: 54% !important;
+  justify-content: center !important;
+  left: 7.1% !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  top: 24% !important;
+  width: 17.1% !important;
+}
+
+.quest-inventory-profile .quest-avatar img {
+  display: block !important;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.48)) !important;
+  height: 116% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  transform: translateY(5%) !important;
+  width: 116% !important;
+}
+
+.quest-inventory-profile .quest-player__stats {
+  display: grid !important;
+  gap: 8px !important;
+  left: 31.4% !important;
+  min-width: 0 !important;
+  position: absolute !important;
+  top: 27% !important;
+  width: 43% !important;
+}
+
+.quest-inventory-profile .quest-player__stats strong,
+.quest-inventory-profile .quest-player__stats small,
+.quest-progress-line em {
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.76) !important;
+  white-space: nowrap !important;
+}
+
+.quest-inventory-profile .quest-player__stats strong {
+  color: #f8e9be !important;
+  font-size: clamp(1.1rem, 1.55vw, 1.44rem) !important;
+  font-weight: 900 !important;
+}
+
+.quest-inventory-profile .quest-player__stats small {
+  color: #d9b862 !important;
+  font-size: clamp(0.58rem, 0.72vw, 0.72rem) !important;
+  font-weight: 900 !important;
+}
+
+.quest-progress-line {
+  align-items: center !important;
+  display: flex !important;
+  gap: 9px !important;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+.quest-inventory-profile .quest-xp {
+  background: #050706 !important;
+  border: 2px solid #19130b !important;
+  border-radius: 999px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 238, 184, 0.1), 0 1px 0 rgba(217, 164, 65, 0.38) !important;
+  flex: 1 1 auto !important;
+  height: clamp(8px, 0.62vw, 11px) !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  width: auto !important;
+}
+
+.quest-inventory-profile .quest-xp i {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 22px, rgba(35, 53, 17, 0.55) 22px 24px),
+    linear-gradient(180deg, #a6cf48, #4c8e31) !important;
+  border-radius: inherit !important;
+  box-shadow: inset 0 1px 0 rgba(255, 246, 165, 0.42) !important;
+  display: block !important;
+  height: 100% !important;
+}
+
+.quest-progress-line em {
+  color: #f5e7ba !important;
+  display: block !important;
+  font-size: clamp(0.52rem, 0.58vw, 0.66rem) !important;
+  font-style: normal !important;
+  font-weight: 900 !important;
+  min-width: 34px !important;
+}
+
+.quest-inventory-badge-feature {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  height: 49% !important;
+  justify-content: center !important;
+  position: absolute !important;
+  right: 8.9% !important;
+  top: 25.2% !important;
+  width: 14.5% !important;
+}
+
+.quest-inventory-badge-feature img {
+  display: block !important;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.5)) !important;
+  height: 100% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-inventory-badge-feature.is-locked {
+  filter: grayscale(1) brightness(0.56) !important;
+  opacity: 0.72 !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  display: grid !important;
+  gap: 3.9% 4.2% !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+  height: 51.8% !important;
+  left: 14.5% !important;
+  position: absolute !important;
+  top: 42.65% !important;
+  width: 70.3% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  align-items: center !important;
+  aspect-ratio: auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  height: 100% !important;
+  justify-content: center !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 8% !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button.is-locked {
+  filter: grayscale(0.15) brightness(0.78) !important;
+  opacity: 0.68 !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button.is-unlocked {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid img {
+  display: block !important;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.48)) saturate(1.05) !important;
+  height: 100% !important;
+  image-rendering: pixelated !important;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: scale(1.08) !important;
+  transform-origin: center !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="senter"] img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="baterai"] img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="kartu-identitas"] img {
+  transform: scale(0.98) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="air"] img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="obat"] img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="antibiotik"] img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="paspor"] img {
+  transform: scale(1.02) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid span {
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  width: 1px !important;
+}
+
+@media (max-width: 780px) {
+  .quest-topbar {
+    grid-template-columns: minmax(126px, 0.8fr) minmax(170px, 1fr) auto !important;
+    max-width: calc(100vw - 18px) !important;
+    padding: 8px 12px !important;
+    width: calc(100vw - 18px) !important;
+  }
+
+  .quest-brand {
+    width: clamp(126px, 24vw, 170px) !important;
+  }
+
+  .quest-nav {
+    gap: 14px !important;
+    overflow-x: auto !important;
+  }
+
+  .quest-nav a {
+    font-size: 0.78rem !important;
+  }
+
+  .quest-topbar__right .quest-inventory-shortcut img {
+    width: clamp(118px, 27vw, 148px) !important;
+  }
+
+  .quest-sidebar.quest-inventory-module {
+    left: 10px !important;
+    right: 10px !important;
+    top: 82px !important;
+    width: auto !important;
+  }
+}
+
+/* Corrected inventmain placement: use the built-in profile frame and slots. */
+.quest-inventory-profile {
+  background: transparent !important;
+  display: block !important;
+  height: 23.1% !important;
+  left: 11.6% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  top: 11.55% !important;
+  width: 77% !important;
+}
+
+.quest-inventory-profile .quest-avatar {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  display: flex !important;
+  height: 56.5% !important;
+  justify-content: center !important;
+  left: 6.1% !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  top: 32.2% !important;
+  width: 25.5% !important;
+}
+
+.quest-inventory-profile .quest-avatar img {
+  display: block !important;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.5)) !important;
+  height: 122% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  transform: translateY(5%) !important;
+  width: 122% !important;
+}
+
+.quest-inventory-profile .quest-player__stats {
+  display: grid !important;
+  gap: clamp(4px, 0.38vw, 8px) !important;
+  left: 36.1% !important;
+  min-width: 0 !important;
+  position: absolute !important;
+  top: 38.5% !important;
+  width: 39.6% !important;
+}
+
+.quest-inventory-profile .quest-player__stats strong {
+  color: #f8e6b4 !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(1.05rem, 1.5vw, 1.42rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.76) !important;
+  white-space: nowrap !important;
+}
+
+.quest-inventory-profile .quest-player__stats small {
+  color: #d9b862 !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.5rem, 0.68vw, 0.68rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.72) !important;
+  white-space: nowrap !important;
+}
+
+.quest-progress-line {
+  align-items: center !important;
+  display: flex !important;
+  gap: clamp(5px, 0.52vw, 9px) !important;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+.quest-inventory-profile .quest-xp {
+  background: #050706 !important;
+  border: 2px solid #181209 !important;
+  border-radius: 999px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 238, 184, 0.12), 0 1px 0 rgba(217, 164, 65, 0.36) !important;
+  flex: 1 1 auto !important;
+  height: clamp(8px, 0.6vw, 11px) !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  width: auto !important;
+}
+
+.quest-inventory-profile .quest-xp i {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 22px, rgba(34, 55, 17, 0.58) 22px 24px),
+    linear-gradient(180deg, #a7cf47, #4b8c31) !important;
+  border-radius: inherit !important;
+  box-shadow: inset 0 1px 0 rgba(255, 246, 165, 0.42) !important;
+  display: block !important;
+  height: 100% !important;
+}
+
+.quest-progress-line em {
+  color: #f4e2ae !important;
+  display: block !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.5rem, 0.55vw, 0.62rem) !important;
+  font-style: normal !important;
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  min-width: 31px !important;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.72) !important;
+  white-space: nowrap !important;
+}
+
+.quest-inventory-badge-feature {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  height: 31% !important;
+  justify-content: center !important;
+  position: absolute !important;
+  right: 3.8% !important;
+  top: 42% !important;
+  width: 11.6% !important;
+}
+
+.quest-inventory-badge-feature img {
+  display: block !important;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.54)) !important;
+  height: 112% !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  width: 112% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  display: grid !important;
+  gap: 3.65% 4.1% !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+  height: 51.9% !important;
+  left: 14.6% !important;
+  position: absolute !important;
+  top: 42.55% !important;
+  width: 70.2% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  height: 100% !important;
+  justify-content: center !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 6% !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid img {
+  display: block !important;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.5)) saturate(1.06) !important;
+  height: 100% !important;
+  image-rendering: pixelated !important;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: scale(1.1) !important;
+  transform-origin: center !important;
+  width: 100% !important;
+}
+
+/* Navbar-only fix: show inventory asset like the EduQuake logo, no extra frame. */
+.quest-topbar {
+  grid-template-columns: clamp(150px, 17vw, 230px) minmax(280px, 1fr) clamp(150px, 17vw, 230px) !important;
+}
+
+.quest-brand,
+.quest-topbar__right {
+  width: clamp(150px, 17vw, 230px) !important;
+}
+
+.quest-brand {
+  justify-content: flex-start !important;
+}
+
+.quest-brand img,
+.quest-topbar__right .quest-inventory-shortcut img {
+  display: block !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  width: 100% !important;
+}
+
+.quest-topbar__right {
+  align-items: center !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut,
+.quest-topbar__right .quest-inventory-shortcut[aria-expanded="true"],
+.quest-topbar__right .quest-inventory-shortcut:hover,
+.quest-topbar__right .quest-inventory-shortcut:focus-visible {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  height: auto !important;
+  max-height: none !important;
+  outline: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  width: clamp(150px, 17vw, 230px) !important;
+}
+
+.quest-topbar__right .quest-inventory-shortcut img {
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.34)) !important;
+  max-height: 90px !important;
+}
+
+.quest-nav a,
+.quest-nav a.is-active {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: #f4dca2 !important;
+}
+
+.quest-nav a:hover,
+.quest-nav a:focus-visible,
+.quest-nav a:active {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: #65bd58 !important;
+  transform: none !important;
+}
+
+/* Final navbar cleanup: no green badges, only text changes color. */
+header.quest-topbar .quest-nav a,
+header.quest-topbar .quest-nav a.is-active,
+header.quest-topbar .quest-nav a.is-active:hover,
+header.quest-topbar .quest-nav a.is-active:focus-visible {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #f4dca2 !important;
+  outline: 0 !important;
+  transform: none !important;
+}
+
+header.quest-topbar .quest-nav a:hover,
+header.quest-topbar .quest-nav a:focus-visible,
+header.quest-topbar .quest-nav a:active {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #65bd58 !important;
+  outline: 0 !important;
+  transform: none !important;
+}
+
+header.quest-topbar .quest-topbar__right .quest-inventory-shortcut img {
+  max-height: 56px !important;
+  width: 100% !important;
+}
+
+/* Inventory item alignment: use the existing inventmain slots only. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  column-gap: 4.15% !important;
+  row-gap: 2.25% !important;
+  height: 54.8% !important;
+  left: 14.35% !important;
+  top: 42.58% !important;
+  width: 70.85% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  height: 100% !important;
+  justify-content: center !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid img {
+  display: block !important;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.5)) saturate(1.04) !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  margin: auto !important;
+  max-height: 74% !important;
+  max-width: 74% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+  width: auto !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="paspor"] img {
+  max-height: 72% !important;
+  max-width: 72% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="kartu-identitas"] img {
+  max-height: 58% !important;
+  max-width: 72% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="senter"] img {
+  max-height: 62% !important;
+  max-width: 76% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="gunting"] img {
+  max-height: 74% !important;
+  max-width: 74% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="air"] img {
+  max-height: 70% !important;
+  max-width: 52% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="makanan-instan"] img {
+  max-height: 78% !important;
+  max-width: 78% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="alat-tulis"] img {
+  max-height: 80% !important;
+  max-width: 82% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="dokpenting"] img {
+  max-height: 70% !important;
+  max-width: 74% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="radio"] img {
+  max-height: 80% !important;
+  max-width: 84% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="baterai"] img {
+  max-height: 76% !important;
+  max-width: 78% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="masker"] img {
+  max-height: 78% !important;
+  max-width: 84% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="obat"] img {
+  max-height: 66% !important;
+  max-width: 58% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="medkit"] img {
+  max-height: 82% !important;
+  max-width: 84% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key="antibiotik"] img {
+  max-height: 68% !important;
+  max-width: 56% !important;
+}
+
+/* Precise slot placement over inventmain.png: no extra boxes, only item centering. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  display: block !important;
+  height: 100% !important;
+  left: 0 !important;
+  position: absolute !important;
+  top: 0 !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  height: 9.85% !important;
+  position: absolute !important;
+  width: 15.15% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 1) {
+  left: 14.35% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 2) {
+  left: 32.05% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 3) {
+  left: 50.45% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n) {
+  left: 68.75% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(-n + 4) {
+  top: 42.65% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 5):nth-child(-n + 8) {
+  top: 53.95% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 9):nth-child(-n + 12) {
+  top: 65.1% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 13):nth-child(-n + 16) {
+  top: 76.25% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 17):nth-child(-n + 20) {
+  top: 87.35% !important;
+}
+
+/* Final slot centering: place each item by the center of the printed boxes. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  display: block !important;
+  height: 100% !important;
+  inset: 0 !important;
+  position: absolute !important;
+  width: 100% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  height: 9.65% !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  position: absolute !important;
+  transform: translate(-50%, -50%) !important;
+  width: 15.1% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 1) {
+  left: 21.97% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 2) {
+  left: 39.94% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 3) {
+  left: 58.15% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n) {
+  left: 76.46% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(-n + 4) {
+  top: 47.43% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 5):nth-child(-n + 8) {
+  top: 58.66% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 9):nth-child(-n + 12) {
+  top: 69.8% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 13):nth-child(-n + 16) {
+  top: 80.88% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 17):nth-child(-n + 20) {
+  top: 90.84% !important;
+  height: 7.55% !important;
+}
+
+/* Restore inventory grid to the exact printed slot area. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+  column-gap: 3.9% !important;
+  row-gap: 2.62% !important;
+  height: 52.18% !important;
+  left: 14.45% !important;
+  position: absolute !important;
+  top: 42.48% !important;
+  width: 69.73% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 1),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 2),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 3),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(-n + 4),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 5):nth-child(-n + 8),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 9):nth-child(-n + 12),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 13):nth-child(-n + 16),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 17):nth-child(-n + 20) {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  height: 100% !important;
+  justify-content: center !important;
+  left: auto !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  position: relative !important;
+  top: auto !important;
+  transform: none !important;
+  width: 100% !important;
+}
+
+/* Exact inventory slot rows from inventmain asset; rows are not equal height. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  column-gap: 4.05% !important;
+  display: grid !important;
+  grid-template-columns: 21.6% 22.16% 22.02% 21.88% !important;
+  grid-template-rows: 18.98% 18.85% 18.6% 18.6% 14.61% !important;
+  height: 52.18% !important;
+  left: 14.45% !important;
+  row-gap: 2.62% !important;
+  top: 42.48% !important;
+  width: 69.63% !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  align-items: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  place-self: stretch !important;
+}
+
+/* Inventory alignment refactor: fixed slots, centered fixed images. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 64px) !important;
+  grid-auto-rows: 64px !important;
+  grid-template-rows: none !important;
+  gap: 8px !important;
+  height: auto !important;
+  left: 36px !important;
+  position: absolute !important;
+  top: 184px !important;
+  width: auto !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot:nth-child(4n + 1),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot:nth-child(4n + 2),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot:nth-child(4n + 3),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot:nth-child(4n),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot:nth-child(-n + 4),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot:nth-child(n + 5):nth-child(-n + 8),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot:nth-child(n + 9):nth-child(-n + 12),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot:nth-child(n + 13):nth-child(-n + 16),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot:nth-child(n + 17):nth-child(-n + 20) {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  height: 64px !important;
+  justify-content: center !important;
+  left: auto !important;
+  margin: 0 !important;
+  min-height: 64px !important;
+  overflow: hidden !important;
+  padding: 8px !important;
+  position: relative !important;
+  top: auto !important;
+  transform: none !important;
+  width: 64px !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-item-img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot[data-item-key] .inventory-item-img {
+  display: block !important;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.48)) !important;
+  flex: 0 0 auto !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  margin: 0 !important;
+  max-height: 42px !important;
+  max-width: 42px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  position: static !important;
+  transform: none !important;
+  width: auto !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid .inventory-slot span {
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  width: 1px !important;
+}
+
+/* Inventory bug fix: fixed slots + centered images, no legacy positioning. */
+.quest-sidebar.quest-inventory-module .inventory-section {
+  box-sizing: border-box !important;
+  left: 36px !important;
+  padding: 10px 12px 14px !important;
+  position: absolute !important;
+  top: 172px !important;
+  width: calc(100% - 72px) !important;
+}
+
+.quest-sidebar.quest-inventory-module .inventory-section-title {
+  align-items: center !important;
+  color: #f4d38a !important;
+  display: flex !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  height: 24px !important;
+  line-height: 1 !important;
+  margin-bottom: 10px !important;
+  padding-left: 6px !important;
+  position: relative !important;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.72) !important;
+  z-index: 2 !important;
+}
+
+.quest-sidebar.quest-inventory-module .inventory-grid {
+  align-items: center !important;
+  display: grid !important;
+  gap: 8px !important;
+  grid-auto-rows: 64px !important;
+  grid-template-columns: repeat(4, 64px) !important;
+  justify-content: center !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.quest-sidebar.quest-inventory-module .inventory-slot,
+.quest-sidebar.quest-inventory-module .inventory-slot:nth-child(4n + 1),
+.quest-sidebar.quest-inventory-module .inventory-slot:nth-child(4n + 2),
+.quest-sidebar.quest-inventory-module .inventory-slot:nth-child(4n + 3),
+.quest-sidebar.quest-inventory-module .inventory-slot:nth-child(4n),
+.quest-sidebar.quest-inventory-module .inventory-slot:nth-child(-n + 4),
+.quest-sidebar.quest-inventory-module .inventory-slot:nth-child(n + 5):nth-child(-n + 8),
+.quest-sidebar.quest-inventory-module .inventory-slot:nth-child(n + 9):nth-child(-n + 12),
+.quest-sidebar.quest-inventory-module .inventory-slot:nth-child(n + 13):nth-child(-n + 16),
+.quest-sidebar.quest-inventory-module .inventory-slot:nth-child(n + 17):nth-child(-n + 20) {
+  align-items: center !important;
+  background: transparent !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  height: 64px !important;
+  justify-content: center !important;
+  left: auto !important;
+  margin: 0 !important;
+  min-height: 64px !important;
+  overflow: hidden !important;
+  padding: 8px !important;
+  position: relative !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 64px !important;
+  z-index: auto !important;
+}
+
+.quest-sidebar.quest-inventory-module .inventory-item-img,
+.quest-sidebar.quest-inventory-module .inventory-slot img,
+.quest-sidebar.quest-inventory-module .inventory-slot[data-item-key] .inventory-item-img {
+  bottom: auto !important;
+  display: block !important;
+  flex: 0 0 auto !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  inset: auto !important;
+  left: auto !important;
+  margin: 0 !important;
+  max-height: 42px !important;
+  max-width: 42px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  pointer-events: none !important;
+  position: static !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  width: auto !important;
+  z-index: auto !important;
+}
+
+/* Restore original inventmain format: use the asset title/frame, center items only. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(5, minmax(0, 1fr)) !important;
+  column-gap: 4.1% !important;
+  row-gap: 3.35% !important;
+  height: 51.9% !important;
+  left: 14.5% !important;
+  position: absolute !important;
+  top: 42.65% !important;
+  width: 70.3% !important;
+  z-index: 1 !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 1),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 2),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 3),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(-n + 4),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 5):nth-child(-n + 8),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 9):nth-child(-n + 12),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 13):nth-child(-n + 16),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 17):nth-child(-n + 20) {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  height: 100% !important;
+  justify-content: center !important;
+  left: auto !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  padding: 8px !important;
+  position: relative !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  z-index: auto !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key] img {
+  bottom: auto !important;
+  display: block !important;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.48)) !important;
+  height: auto !important;
+  image-rendering: pixelated !important;
+  inset: auto !important;
+  left: auto !important;
+  margin: 0 !important;
+  max-height: 42px !important;
+  max-width: 42px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  pointer-events: none !important;
+  position: static !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  width: auto !important;
+  z-index: auto !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid span {
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  width: 1px !important;
+}
+
+/* Keep every inventory item centered in its own slot. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 5) img {
+  transform: none !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  overflow: visible !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 1),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 2),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n + 3),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(4n),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 5):nth-child(-n + 8),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 9):nth-child(-n + 12),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 13):nth-child(-n + 16),
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 17):nth-child(-n + 20) {
+  overflow: visible !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button[data-item-key] img {
+  filter: none !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button.is-locked img {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button.is-locked {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button.is-locked img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button.is-unlocked img {
+  filter: none !important;
+}
+
+/* Show all inventory item images normally, matching slots 1-4. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 5) img,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button img {
+  display: block !important;
+  filter: none !important;
+  height: auto !important;
+  max-height: 42px !important;
+  max-width: 42px !important;
+  object-fit: contain !important;
+  opacity: 1 !important;
+  position: static !important;
+  transform: none !important;
+  visibility: visible !important;
+  width: auto !important;
+}
+
+/* Final inventory reset: never push row 2+ item images outside their slots. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid,
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button {
+  overflow: visible !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 5) img {
+  transform: translateY(50px) !important;
+  display: block !important;
+  filter: none !important;
+  height: auto !important;
+  max-height: 42px !important;
+  max-width: 42px !important;
+  object-fit: contain !important;
+  opacity: 1 !important;
+  position: static !important;
+  visibility: visible !important;
+  width: auto !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 5):nth-child(-n + 8) img {
+  transform: translateY(30px) !important;
+}
+
+/* Inventory module placement: sit below navbar and don't block the book behind it. */
+.quest-sidebar.quest-inventory-module {
+  pointer-events: none !important;
+  top: clamp(118px, 8.8vw, 146px) !important;
+}
+
+.quest-sidebar.quest-inventory-module.is-open {
+  pointer-events: none !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-side-panel,
+.quest-sidebar.quest-inventory-module .quest-side-panel *,
+.quest-sidebar.quest-inventory-module .quest-inventory-close {
+  pointer-events: auto !important;
+}
+
+@media (max-width: 540px) {
+  .quest-sidebar.quest-inventory-module {
+    top: 112px !important;
+  }
+}
+
+/* Inventory as a summoned left popover, not a blocking modal overlay. */
+.quest-inventory-backdrop {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.quest-sidebar.quest-inventory-module {
+  left: clamp(10px, 1.8vw, 32px) !important;
+  max-height: min(72vh, 620px) !important;
+  pointer-events: none !important;
+  right: auto !important;
+  top: clamp(126px, 10vh, 156px) !important;
+  transform: translateX(-18px) scale(0.98) !important;
+  width: min(330px, calc(100vw - 24px)) !important;
+  z-index: 59 !important;
+}
+
+.quest-sidebar.quest-inventory-module.is-open {
+  pointer-events: none !important;
+  transform: translateX(0) scale(1) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-side-panel {
+  max-height: min(72vh, 620px) !important;
+  pointer-events: auto !important;
+  width: 100% !important;
+}
+
+@media (max-width: 900px) {
+  .quest-sidebar.quest-inventory-module {
+    max-height: min(68vh, 560px) !important;
+    top: 112px !important;
+    width: min(300px, calc(100vw - 20px)) !important;
+  }
+}
+
+/* Match the requested white-box guide position on desktop. */
+@media (min-width: 901px) {
+  .quest-sidebar.quest-inventory-module {
+    left: 16px !important;
+    max-height: 610px !important;
+    right: auto !important;
+    top: 255px !important;
+    width: 430px !important;
+  }
+
+  .quest-sidebar.quest-inventory-module .quest-side-panel {
+    aspect-ratio: auto !important;
+    background-size: 100% 100% !important;
+    box-shadow: none !important;
+    filter: none !important;
+    height: 610px !important;
+    max-height: 610px !important;
+    width: 430px !important;
+  }
+}
+
+/* Final navbar dropdown + transparent old-book tone. */
+header.quest-topbar {
+  background: rgba(34, 18, 6, 0.2) !important;
+  border-color: rgba(217, 164, 65, 0.22) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 218, 133, 0.06), 0 8px 24px rgba(0, 0, 0, 0.18) !important;
+  overflow: visible !important;
+}
+
+header.quest-topbar .quest-nav {
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 8 !important;
+}
+
+header.quest-topbar .quest-nav__module {
+  align-items: center !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  position: relative !important;
+}
+
+header.quest-topbar .quest-nav a,
+header.quest-topbar .quest-nav button,
+header.quest-topbar .quest-nav__trigger,
+header.quest-topbar .quest-nav a.is-active,
+header.quest-topbar .quest-nav__trigger.is-active {
+  appearance: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #f4dca2 !important;
+  cursor: pointer !important;
+  font: inherit !important;
+  min-height: 36px !important;
+  padding: 0 6px !important;
+  text-decoration: none !important;
+  transform: none !important;
+}
+
+header.quest-topbar .quest-nav a::before,
+header.quest-topbar .quest-nav a::after,
+header.quest-topbar .quest-nav button::before,
+header.quest-topbar .quest-nav button::after {
+  content: none !important;
+  display: none !important;
+}
+
+header.quest-topbar .quest-nav a:hover,
+header.quest-topbar .quest-nav a:focus-visible,
+header.quest-topbar .quest-nav button:hover,
+header.quest-topbar .quest-nav button:focus-visible,
+header.quest-topbar .quest-nav__trigger.is-active {
+  background: transparent !important;
+  color: #65bd58 !important;
+  outline: 0 !important;
+}
+
+header.quest-topbar .quest-module-dropdown {
+  background: rgba(34, 18, 6, 0.88) !important;
+  border: 1px solid rgba(217, 164, 65, 0.38) !important;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.42), 0 14px 24px rgba(0, 0, 0, 0.28) !important;
+  display: grid !important;
+  gap: 4px !important;
+  left: 50% !important;
+  min-width: 230px !important;
+  padding: 8px !important;
+  position: absolute !important;
+  top: calc(100% + 10px) !important;
+  transform: translateX(-50%) !important;
+  z-index: 40 !important;
+}
+
+header.quest-topbar .quest-module-dropdown button {
+  align-items: center !important;
+  color: #f4dca2 !important;
+  display: grid !important;
+  gap: 8px !important;
+  grid-template-columns: 34px 1fr !important;
+  justify-items: start !important;
+  min-height: 34px !important;
+  padding: 4px 8px !important;
+  text-align: left !important;
+  width: 100% !important;
+}
+
+header.quest-topbar .quest-module-dropdown button small {
+  color: #d9a441 !important;
+  font-size: 0.72em !important;
+}
+
+header.quest-topbar .quest-module-dropdown button:hover,
+header.quest-topbar .quest-module-dropdown button:focus-visible,
+header.quest-topbar .quest-module-dropdown button.is-active {
+  background: rgba(101, 189, 88, 0.14) !important;
+  color: #65bd58 !important;
+}
+
+/* Restore navbar text font after dropdown refactor. */
+header.quest-topbar .quest-nav a,
+header.quest-topbar .quest-nav button,
+header.quest-topbar .quest-nav__trigger {
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif !important;
+  font-size: clamp(0.86rem, 0.95vw, 1.02rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0 !important;
+}
+
+/* Center reward notification panel using nott.png cutout. */
+.quest-reward-popup {
+  animation: questRewardPanelPop 380ms steps(4, end) both !important;
+  aspect-ratio: 1122 / 1402 !important;
+  background: var(--reward-panel-art) center / contain no-repeat !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #2b1708 !important;
+  display: block !important;
+  filter: none !important;
+  bottom: 0 !important;
+  height: auto !important;
+  left: 0 !important;
+  margin: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  pointer-events: auto !important;
+  position: fixed !important;
+  right: 0 !important;
+  top: 0 !important;
+  transform: none !important;
+  width: min(560px, 84vw, 62vh) !important;
+  z-index: 120 !important;
+}
+
+.quest-reward-reopen {
+  align-items: center !important;
+  background:
+    linear-gradient(180deg, rgba(255, 237, 176, 0.26), rgba(92, 47, 12, 0.12)),
+    linear-gradient(180deg, #315b35 0%, #1e3f26 100%) !important;
+  border: 2px solid #132713 !important;
+  box-shadow:
+    0 3px 0 #0d170c,
+    inset 0 0 0 2px #d9a441,
+    inset 0 -4px 0 rgba(0, 0, 0, 0.22) !important;
+  color: #f9e3a9 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif !important;
+  font-size: clamp(0.78rem, 0.82vw, 0.92rem) !important;
+  font-weight: 900 !important;
+  gap: 8px !important;
+  justify-content: center !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  min-height: 40px !important;
+  padding: 8px 14px !important;
+  position: absolute !important;
+  right: 8.7% !important;
+  text-shadow: 1px 1px 0 #142513 !important;
+  text-transform: uppercase !important;
+  top: 7.8% !important;
+  z-index: 18 !important;
+}
+
+.quest-reward-reopen:hover,
+.quest-reward-reopen:focus-visible {
+  filter: brightness(1.08) saturate(1.08) !important;
+  transform: translateY(-1px) !important;
+}
+
+.quest-reward-reopen:active {
+  box-shadow:
+    0 1px 0 #0d170c,
+    inset 0 0 0 2px #d9a441,
+    inset 0 -2px 0 rgba(0, 0, 0, 0.22) !important;
+  transform: translateY(2px) !important;
+}
+
+.quest-reward-reopen__gift {
+  background:
+    linear-gradient(#f9e3a9, #f9e3a9) center 8px / 4px 10px no-repeat,
+    linear-gradient(#132713, #132713) center 8px / 8px 4px no-repeat,
+    linear-gradient(180deg, #f4c84f 0 34%, #9a5c1d 34% 100%) center / 100% 100% no-repeat !important;
+  border: 2px solid #132713 !important;
+  border-radius: 3px 3px 2px 2px !important;
+  box-shadow:
+    2px 2px 0 #132713,
+    inset 0 2px 0 rgba(255, 239, 177, 0.72),
+    inset 0 -3px 0 rgba(43, 29, 14, 0.38) !important;
+  display: inline-block !important;
+  height: 18px !important;
+  position: relative !important;
+  width: 24px !important;
+}
+
+.quest-reward-reopen__gift::before {
+  background:
+    linear-gradient(#132713, #132713) center / 100% 2px no-repeat,
+    linear-gradient(90deg, #d9a441 0%, #f7d96a 52%, #b87322 100%) !important;
+  border: 2px solid #132713 !important;
+  border-radius: 12px 12px 2px 2px !important;
+  content: "" !important;
+  height: 10px !important;
+  left: -3px !important;
+  position: absolute !important;
+  right: -3px !important;
+  top: -10px !important;
+}
+
+.quest-reward-reopen__gift::after {
+  background:
+    radial-gradient(circle, #f9e3a9 0 28%, transparent 30%) center / 100% 100% no-repeat !important;
+  border: 2px solid #132713 !important;
+  content: "" !important;
+  height: 8px !important;
+  left: 50% !important;
+  position: absolute !important;
+  top: 4px !important;
+  transform: translateX(-50%) !important;
+  width: 8px !important;
+}
+
+.quest-reward-popup::before,
+.quest-reward-popup::after {
+  content: none !important;
+  display: none !important;
+}
+
+@keyframes questRewardPanelPop {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 620px) {
+  .quest-reward-popup {
+    width: min(430px, 92vw) !important;
+  }
+
+  .quest-reward-reopen {
+    min-height: 34px !important;
+    padding: 7px 10px !important;
+    right: 6.5% !important;
+    top: 5.5% !important;
+  }
+}
+
+/* Profile badge upgrade: show the latest earned badge larger. */
+.quest-inventory-badge-feature {
+  height: 48% !important;
+  right: 3.8% !important;
+  top: 21.5% !important;
+  width: 18.5% !important;
+}
+
+.quest-inventory-badge-feature img {
+  height: 126% !important;
+  max-height: none !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  width: 126% !important;
+}
+
+.quest-inventory-badge-feature {
+  height: 56% !important;
+  right: 2.8% !important;
+  top: 17.5% !important;
+  width: 22% !important;
+}
+
+.quest-inventory-badge-feature img {
+  height: 140% !important;
+  width: 140% !important;
+}
+
+/* Lock navbar font across clicked/active states. */
+header.quest-topbar .quest-nav a,
+header.quest-topbar .quest-nav a:hover,
+header.quest-topbar .quest-nav a:focus-visible,
+header.quest-topbar .quest-nav a:active,
+header.quest-topbar .quest-nav a.is-active,
+header.quest-topbar .quest-nav button,
+header.quest-topbar .quest-nav button:hover,
+header.quest-topbar .quest-nav button:focus-visible,
+header.quest-topbar .quest-nav button:active,
+header.quest-topbar .quest-nav button.is-active,
+header.quest-topbar .quest-nav__trigger,
+header.quest-topbar .quest-nav__trigger:hover,
+header.quest-topbar .quest-nav__trigger:focus-visible,
+header.quest-topbar .quest-nav__trigger:active,
+header.quest-topbar .quest-nav__trigger.is-active,
+header.quest-topbar .quest-nav__trigger[aria-expanded="true"] {
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif !important;
+  font-size: clamp(0.86rem, 0.95vw, 1.02rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+}
+
+/* Final reward layout: panel rows + semantic item structure. */
+.quest-reward-popup.has-items-only,
+.quest-reward-popup.has-badge {
+  background: var(--reward-panel-art) center / contain no-repeat !important;
+  display: block !important;
+  justify-items: center !important;
+  padding: 0 12.4% !important;
+}
+
+.quest-reward-popup.has-items-only {
+  row-gap: 0 !important;
+}
+
+.quest-reward-popup.has-badge {
+  row-gap: 0 !important;
+}
+
+.quest-reward-popup > strong {
+  color: #5a3517 !important;
+  font-family: "Pixelify Sans", "Press Start 2P", monospace !important;
+  font-size: clamp(0.82rem, 1vw, 1.04rem) !important;
+  font-weight: 900 !important;
+  left: 16% !important;
+  line-height: 1.1 !important;
+  margin: 0 !important;
+  position: absolute !important;
+  right: 16% !important;
+  text-align: center !important;
+  text-shadow: none !important;
+  top: 22.8% !important;
+  width: auto !important;
+  z-index: 2 !important;
+}
+
+.quest-reward-popup.has-badge > strong {
+  top: 16.2% !important;
+}
+
+.quest-reward-popup > p {
+  display: none !important;
+}
+
+.quest-reward-popup__items {
+  align-self: stretch !important;
+  align-content: stretch !important;
+  box-sizing: border-box !important;
+  display: grid !important;
+  gap: 13px !important;
+  height: 100% !important;
+  margin: 0 auto !important;
+  min-height: 0 !important;
+  position: absolute !important;
+  z-index: 2 !important;
+}
+
+.quest-reward-popup.has-items-only .quest-reward-popup__items {
+  bottom: 13.2% !important;
+  grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+  height: auto !important;
+  left: 12.4% !important;
+  top: 28.8% !important;
+  width: 75.2% !important;
+}
+
+.quest-reward-popup.has-badge .quest-reward-popup__items {
+  bottom: auto !important;
+  gap: 2.6% !important;
+  height: 28.4% !important;
+  grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+  left: 13.1% !important;
+  top: 23.2% !important;
+  width: 73.8% !important;
+}
+
+.quest-reward-popup__item {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  column-gap: 18px !important;
+  display: grid !important;
+  grid-template-columns: 72px minmax(0, 1fr) !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 0 9% !important;
+}
+
+.quest-reward-popup.has-items-only .quest-reward-popup__item {
+  padding-inline: 12% !important;
+}
+
+.quest-reward-popup.has-badge .quest-reward-popup__item {
+  align-items: center !important;
+  column-gap: 15px !important;
+  grid-template-columns: 64px minmax(0, 1fr) !important;
+  padding: 0 14.8% !important;
+}
+
+.quest-reward-popup__icon {
+  align-items: center !important;
+  display: flex !important;
+  height: 64px !important;
+  justify-content: center !important;
+  width: 64px !important;
+}
+
+.quest-reward-popup__icon img {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+  filter: drop-shadow(0 4px 2px rgba(71, 43, 14, 0.35)) !important;
+  height: 64px !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  padding: 0 !important;
+  width: 64px !important;
+}
+
+.quest-reward-popup.has-items-only .quest-reward-popup__icon,
+.quest-reward-popup.has-items-only .quest-reward-popup__icon img {
+  height: 68px !important;
+  width: 68px !important;
+}
+
+.quest-reward-popup.has-badge .quest-reward-popup__icon,
+.quest-reward-popup.has-badge .quest-reward-popup__icon img {
+  height: 58px !important;
+  width: 58px !important;
+}
+
+.quest-reward-popup__content {
+  color: #4a250e !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+  text-align: left !important;
+}
+
+.quest-reward-popup.has-badge .quest-reward-popup__content {
+  gap: 2px !important;
+  justify-content: center !important;
+  max-width: 235px !important;
+  transform: translateY(-2px) !important;
+}
+
+.quest-reward-popup__title {
+  display: block !important;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif !important;
+  font-size: clamp(1rem, 1.12vw, 1.2rem) !important;
+  font-weight: 950 !important;
+  line-height: 1.1 !important;
+  overflow-wrap: anywhere !important;
+}
+
+.quest-reward-popup.has-badge .quest-reward-popup__title {
+  font-size: clamp(0.9rem, 0.96vw, 1.04rem) !important;
+  line-height: 1 !important;
+  max-width: 235px !important;
+  overflow-wrap: normal !important;
+  white-space: nowrap !important;
+}
+
+.quest-reward-popup__description {
+  display: block !important;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif !important;
+  font-size: clamp(0.66rem, 0.76vw, 0.82rem) !important;
+  font-style: normal !important;
+  font-weight: 850 !important;
+  line-height: 1.25 !important;
+  max-width: 270px !important;
+  overflow-wrap: anywhere !important;
+}
+
+.quest-reward-popup.has-badge .quest-reward-popup__description {
+  font-size: clamp(0.54rem, 0.62vw, 0.68rem) !important;
+  line-height: 1.08 !important;
+  max-width: 235px !important;
+  overflow-wrap: normal !important;
+}
+
+.quest-reward-popup__badges {
+  align-items: center !important;
+  align-self: stretch !important;
+  display: flex !important;
+  grid-row: 5 !important;
+  height: 100% !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  position: static !important;
+  width: 100% !important;
+}
+
+.quest-reward-popup.has-badge .quest-reward-popup__badges {
+  bottom: 6.4% !important;
+  height: auto !important;
+  left: 14% !important;
+  margin: 0 !important;
+  position: absolute !important;
+  right: 14% !important;
+  top: 59.8% !important;
+  width: auto !important;
+  z-index: 2 !important;
+}
+
+.quest-reward-popup__badges span {
+  align-items: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  justify-content: center !important;
+}
+
+.quest-reward-popup__badges img {
+  display: block !important;
+  filter: drop-shadow(0 4px 2px rgba(71, 43, 14, 0.35)) !important;
+  height: min(180px, 19vh) !important;
+  image-rendering: pixelated !important;
+  object-fit: contain !important;
+  width: min(180px, 19vh) !important;
+}
+
+.quest-reward-popup.has-badge .quest-reward-popup__badges img {
+  height: clamp(126px, 22vh, 178px) !important;
+  width: clamp(126px, 22vh, 178px) !important;
+}
+
+.quest-reward-popup__badges small {
+  display: none !important;
+}
+
+.quest-reward-popup.has-badge .quest-reward-popup__badges small {
+  color: #5a3517 !important;
+  display: none !important;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif !important;
+  font-size: clamp(0.72rem, 0.84vw, 0.92rem) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  order: -1 !important;
+  text-align: center !important;
+  text-shadow: none !important;
+}
+
+/* Raise inventory item images 5-14 by 20px more from their current offsets. */
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 5):nth-child(-n + 8) img {
+  transform: translateY(-5px) !important;
+}
+
+.quest-sidebar.quest-inventory-module .quest-inventory-grid button:nth-child(n + 9):nth-child(-n + 14) img {
+  transform: translateY(15px) !important;
+}
+

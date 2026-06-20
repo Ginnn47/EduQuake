@@ -40,7 +40,7 @@ export const moduleMeta = {
       },
     ],
   },
-  rewards: [rewardItems.senter, rewardItems.gunting, rewardItems.badge1],
+  rewards: [rewardItems.senter, rewardItems.gunting],
   tip: "Kenali bahaya sebelum memilih tindakan. Informasi risiko membuat keputusanmu lebih cepat saat guncangan datang.",
   leftPosterOnly: true,
   hideTip: true,

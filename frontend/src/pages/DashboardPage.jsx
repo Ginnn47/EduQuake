@@ -1,5 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import armyGuide from "../assets/npc/army-fr-cutout.png";
+import rewardPanelFull from "../assets/pixel-down/nottFull-cutout.png";
+import rewardPanelItemsOnly from "../assets/pixel-down/nottOnle-cutout.png";
 import AdventureBookHomePage from "./AdventureBookHomePage";
 import { modules } from "./bookModules";
 import { inventoryItems } from "./bookRewards";
@@ -12,6 +14,8 @@ const DashboardPage = () => {
   const [quizIndexByModule, setQuizIndexByModule] = useState({});
   const [posterIndexByModule, setPosterIndexByModule] = useState({});
   const [bagItemKeys, setBagItemKeys] = useState([]);
+  const [dismissedRewardModuleIds, setDismissedRewardModuleIds] = useState([]);
+  const rewardPopupRef = useRef(null);
 
   const activeModule = useMemo(
     () => modules.find((module) => module.id === activeModuleId) ?? modules[0],
@@ -91,6 +95,11 @@ const DashboardPage = () => {
     ),
   );
   const rewardUnlocked = !isFinalLocked && progress === 100 && activeModule.rewards.length > 0;
+  const rewardDismissed = rewardUnlocked && dismissedRewardModuleIds.includes(activeModule.id);
+  const rewardVisible = rewardUnlocked && !rewardDismissed;
+  const rewardItemsOnly = activeModule.rewards.filter((reward) => reward.inventory !== false);
+  const rewardBadges = activeModule.rewards.filter((reward) => reward.inventory === false);
+  const rewardPanel = rewardBadges.length ? rewardPanelFull : rewardPanelItemsOnly;
   const canAdvanceToNext = Boolean(nextModule) && progress === 100 && (nextModule.id !== "simulasi-akhir" || finalUnlocked);
   const nextButtonLabel = "Continue";
   const bagWeight = getBagWeight();
@@ -98,6 +107,28 @@ const DashboardPage = () => {
   const showBookFooter = Boolean(nextModule);
   const isSplitComicLayout = activeModule.bookLayout === "split-comic";
   const isFinalSimulationLayout = activeModule.bookLayout === "final-simulation";
+
+  useEffect(() => {
+    if (!rewardVisible) {
+      return undefined;
+    }
+
+    const dismissRewardOnOutsideClick = (event) => {
+      if (rewardPopupRef.current?.contains(event.target)) {
+        return;
+      }
+
+      setDismissedRewardModuleIds((current) =>
+        current.includes(activeModule.id) ? current : [...current, activeModule.id],
+      );
+    };
+
+    document.addEventListener("pointerdown", dismissRewardOnOutsideClick);
+
+    return () => {
+      document.removeEventListener("pointerdown", dismissRewardOnOutsideClick);
+    };
+  }, [activeModule.id, rewardVisible]);
 
   const setActiveDetail = (moduleId, detailId) => {
     setActiveDetailByModule((current) => ({
@@ -160,6 +191,10 @@ const DashboardPage = () => {
       current.includes(slot.key) ? current.filter((key) => key !== slot.key) : [...current, slot.key],
     );
     setActiveDetail(activeModule.id, slot.key);
+  };
+
+  const reopenReward = () => {
+    setDismissedRewardModuleIds((current) => current.filter((moduleId) => moduleId !== activeModule.id));
   };
 
   const goToNextModule = () => {
@@ -367,17 +402,49 @@ const DashboardPage = () => {
           </footer>
         ) : null}
 
-        {rewardUnlocked ? (
-          <aside className="quest-reward-popup" role="status" aria-label="Reward item terbuka">
-            <strong>Reward Unlocked</strong>
-            <div className="quest-reward-popup__items">
-              {activeModule.rewards.map((reward) => (
-                <span key={reward.key}>
-                  <img src={reward.icon} alt="" />
-                  <small>{reward.label}</small>
-                </span>
-              ))}
-            </div>
+        {rewardDismissed ? (
+          <button className="quest-reward-reopen" type="button" aria-label="Tampilkan reward yang didapat" onClick={reopenReward}>
+            <span>Reward</span>
+            <span className="quest-reward-reopen__gift" aria-hidden="true" />
+          </button>
+        ) : null}
+
+        {rewardVisible ? (
+          <aside
+            ref={rewardPopupRef}
+            className={`quest-reward-popup${rewardBadges.length ? " has-badge" : " has-items-only"}`}
+            role="status"
+            aria-label="Reward item terbuka"
+            style={{ "--reward-panel-art": `url(${rewardPanel})` }}
+          >
+            <strong>Mission Completed</strong>
+
+            {rewardItemsOnly.length ? (
+              <div className="quest-reward-popup__items" aria-label="Item reward">
+                {rewardItemsOnly.map((reward) => (
+                  <div className="quest-reward-popup__item" key={reward.key}>
+                    <span className="quest-reward-popup__icon">
+                      <img src={reward.icon} alt="" />
+                    </span>
+                    <span className="quest-reward-popup__content">
+                      <span className="quest-reward-popup__title">{reward.label}</span>
+                      <span className="quest-reward-popup__description">{reward.description}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+
+            {rewardBadges.length ? (
+              <div className="quest-reward-popup__badges" aria-label="Badge reward">
+                {rewardBadges.map((reward) => (
+                  <span key={reward.key}>
+                    <img src={reward.icon} alt="" />
+                    <small>{reward.label}</small>
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </aside>
         ) : null}
       </section>

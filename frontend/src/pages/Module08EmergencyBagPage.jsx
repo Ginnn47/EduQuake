@@ -70,7 +70,7 @@ const inventorySlots = [
 export const moduleMeta = {
   id: "tas-siaga-72-jam",
   number: "08",
-  navLabel: "Preparation Phase",
+  navLabel: "Preparation",
   title: "72 Hours Emergency Bag",
   icon: tasItem,
   image: bagBoard,

@@ -95,7 +95,7 @@ export const moduleMeta = {
   description: "Kenali isi P3K, fungsi antiseptik, dan perlengkapan kecil yang membantu menangani luka ringan setelah gempa.",
   leftPosterOnly: true,
   hideTip: true,
-  rewards: [rewardItems.medkit, rewardItems.antibiotik],
+  rewards: [rewardItems.medkit, rewardItems.antibiotik, rewardItems.badge3],
   tip: "Pisahkan perlengkapan luka dari makanan dan dokumen agar mudah diambil saat tangan sedang terburu-buru.",
   gameplay: {
     type: "crafting",

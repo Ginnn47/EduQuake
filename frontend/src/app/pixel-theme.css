@@ -145,17 +145,27 @@
 
 .pixel-hud {
   display: grid;
-  grid-template-columns: minmax(190px, 1.2fr) auto minmax(220px, 1fr) auto auto auto;
+  grid-template-columns: minmax(190px, 1.2fr) auto minmax(120px, 1fr) minmax(120px, 1fr) minmax(120px, 1fr) auto;
+  gap: 12px;
   margin: 0 auto;
   max-width: 1680px;
   min-height: 72px;
-  padding: 10px 14px;
+  padding: 12px 14px;
+  align-items: center;
 }
 
 .pixel-hud__brand {
   align-items: center;
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.pixel-hud__brand > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   min-width: 0;
 }
 
@@ -163,6 +173,8 @@
   color: #ffffff;
   display: block;
   font-size: 1.24rem;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .pixel-hud__brand span,
@@ -172,22 +184,34 @@
   display: block;
   font-size: 0.76rem;
   font-weight: 800;
+  line-height: 1.2;
 }
 
 .pixel-hud__logo {
   background: #fff4d8;
   border: 2px solid #111922;
   border-radius: 6px;
-  height: 44px;
+  height: 52px;
+  width: 52px;
   object-fit: contain;
-  width: 44px;
+  flex-shrink: 0;
+  padding: 4px;
 }
 
 .pixel-hud__stat {
   background: var(--eq-panel-dark);
   border: 2px solid #111922;
   border-radius: 6px;
-  padding: 8px 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 52px;
+}
+
+.pixel-hud__stat span {
+  line-height: 1;
+  margin-bottom: 2px;
 }
 
 .pixel-hud__stat strong {
@@ -195,6 +219,8 @@
   display: block;
   max-width: 170px;
   overflow-wrap: anywhere;
+  line-height: 1.2;
+  font-size: 1.1rem;
 }
 
 .pixel-hud__coins strong {
@@ -994,7 +1020,13 @@
   }
 
   .pixel-hud {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .pixel-hud__brand {
+    grid-column: 1 / -1;
   }
 }
 
@@ -1004,7 +1036,33 @@
   }
 
   .pixel-hud {
-    grid-template-columns: 1fr;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    min-height: auto;
+    padding: 8px 10px;
+  }
+
+  .pixel-hud__brand {
+    grid-column: 1 / 2;
+  }
+
+  .pixel-hud__stat {
+    min-height: auto;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+
+  .pixel-hud__stat span {
+    font-size: 0.65rem;
+  }
+
+  .pixel-hud__stat strong {
+    font-size: 0.95rem;
+  }
+
+  .pixel-hud__logo {
+    height: 44px;
+    width: 44px;
   }
 
   .world-map {

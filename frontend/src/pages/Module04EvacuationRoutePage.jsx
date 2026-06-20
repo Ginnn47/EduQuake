@@ -35,7 +35,7 @@ export const moduleMeta = {
   description: "Pelajari titik kumpul, jalur alternatif, dan area terbuka agar keluarga punya arah yang jelas setelah gempa berhenti.",
   leftPosterOnly: true,
   hideTip: true,
-  rewards: [rewardItems.alatTulis, rewardItems.dokpenting, rewardItems.badge2],
+  rewards: [rewardItems.alatTulis, rewardItems.dokpenting],
   tip: "Rute terbaik bukan selalu yang paling pendek. Pilih yang paling terbuka, jelas, dan mudah diikuti rombongan.",
   gameplay: {
     type: "map",

@@ -32,7 +32,7 @@ export const moduleMeta = {
     answer: "Cari area terbuka dan tetap tenang",
     options: ["Masuk ke bangunan yang bergoyang", "Cari area terbuka dan tetap tenang", "Menangis dan Panik"],
   },
-  rewards: [rewardItems.air, rewardItems.makananInstan],
+  rewards: [rewardItems.air, rewardItems.makananInstan, rewardItems.badge1],
   tip: "Jauhi kaca, lemari tinggi, dan benda gantung. Keputusan beberapa detik pertama sangat menentukan.",
   gameplay: {
     type: "comic",

@@ -1,8 +1,8 @@
 import plesterItem from "../assets/items/plester-cutout.png";
 import headDaily from "../assets/ui/head_daily.png";
 import homePoster from "../assets/ui/06-home-clean.png";
-import inspectionBoard from "../assets/ui/06-inspeksi-clean.png";
-import dangerScale from "../assets/ui/06-skala3-clean.png";
+import inspectionBoard from "../assets/ui/06-inspeksi-crop-cutout.png";
+import dangerScale from "../assets/ui/06-skala3-crop-cutout.png";
 import mejaIllustration from "../assets/npc/mejaa-cutout.png";
 import aquariumItem from "../assets/items/aquarium-cutout.png";
 import bupetItem from "../assets/items/bupet-cutout.png";
@@ -156,11 +156,11 @@ const inspectionObjects = [
 const requiredDangerIds = ["gas", "kabel", "tv", "kaca", "rak-buku"];
 
 const inspectionSlotPositions = [
-  { x: 5.3, y: 15.8, w: 28.8, h: 38 },
-  { x: 36.3, y: 15.8, w: 28.8, h: 38 },
-  { x: 67.5, y: 15.8, w: 28.8, h: 38 },
-  { x: 18.4, y: 59.1, w: 30.5, h: 36.2 },
-  { x: 54.6, y: 59.1, w: 30.5, h: 36.2 },
+  { x: 3.01, y: 10.93, w: 30.31, h: 42.64 },
+  { x: 35.63, y: 10.93, w: 30.31, h: 42.64 },
+  { x: 68.47, y: 10.93, w: 30.31, h: 42.64 },
+  { x: 16.8, y: 59.52, w: 32.1, h: 40.62 },
+  { x: 54.89, y: 59.52, w: 32.1, h: 40.62 },
 ];
 
 export const moduleMeta = {
@@ -183,7 +183,7 @@ export const moduleMeta = {
   bookLayout: "split-comic",
   leftPosterOnly: true,
   hideTip: true,
-  rewards: [rewardItems.masker, rewardItems.obat, rewardItems.badge3],
+  rewards: [rewardItems.masker, rewardItems.obat],
   tip: "Mitigasi terbaik terasa membosankan karena dilakukan sebelum bahaya muncul, tapi efeknya besar saat keadaan berubah.",
   gameplay: {
     type: "inspection",
