@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduQuake Object Selector</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #12100d;
+        --panel: #201912;
+        --line: #7a4b22;
+        --gold: #d9a441;
+        --cream: #f4df9d;
+        --muted: #b99d6c;
+        --danger: #ffb347;
+        --ok: #9ff0a8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--cream);
+        font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        margin: 0;
+      }
+
+      header {
+        background: #18130e;
+        border-bottom: 3px solid var(--line);
+        display: grid;
+        gap: 10px;
+        padding: 16px;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+
+      h1 {
+        font-size: 1rem;
+        margin: 0;
+      }
+
+      .toolbar {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      button,
+      input[type="file"]::file-selector-button {
+        background: var(--gold);
+        border: 0;
+        color: #1b120c;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 700;
+        padding: 8px 10px;
+      }
+
+      input[type="search"],
+      select {
+        background: #2b2118;
+        border: 1px solid var(--line);
+        color: var(--cream);
+        font: inherit;
+        padding: 8px;
+      }
+
+      input[type="search"] {
+        min-width: min(420px, 100%);
+      }
+
+      .status {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .warning {
+        color: var(--danger);
+      }
+
+      .ok {
+        color: var(--ok);
+      }
+
+      main {
+        padding: 16px;
+      }
+
+      .grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        display: grid;
+        gap: 8px;
+        min-width: 0;
+        padding: 10px;
+      }
+
+      .preview {
+        align-items: center;
+        background:
+          linear-gradient(45deg, rgba(255, 255, 255, 0.06) 25%, transparent 25%),
+          linear-gradient(-45deg, rgba(255, 255, 255, 0.06) 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.06) 75%),
+          linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.06) 75%),
+          #100d0a;
+        background-position:
+          0 0,
+          0 8px,
+          8px -8px,
+          -8px 0;
+        background-size: 16px 16px;
+        border: 1px solid rgba(217, 164, 65, 0.35);
+        display: flex;
+        height: 96px;
+        justify-content: center;
+      }
+
+      .preview img {
+        image-rendering: pixelated;
+        max-height: 88px;
+        max-width: 160px;
+        object-fit: contain;
+      }
+
+      .meta {
+        display: grid;
+        gap: 4px;
+        min-width: 0;
+      }
+
+      .name {
+        color: var(--cream);
+        font-size: 0.82rem;
+        overflow-wrap: anywhere;
+      }
+
+      .small {
+        color: var(--muted);
+        font-size: 0.72rem;
+        overflow-wrap: anywhere;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>EduQuake Object Selector</h1>
+      <div class="toolbar">
+        <button id="loadButton" type="button">Reload crop_report.json</button>
+        <input id="fileInput" type="file" accept="application/json,.json" />
+        <input id="searchInput" type="search" placeholder="Filter by name, path, method, role..." />
+        <button id="exportButton" type="button">Export selected_game_assets.json</button>
+      </div>
+      <div id="status" class="status">Loading crop report...</div>
+      <div id="warning" class="status warning"></div>
+    </header>
+
+    <main>
+      <section id="grid" class="grid" aria-label="Crop results"></section>
+    </main>
+
+    <script>
+      const REPORT_PATH = "../frontend/public/game/assets/objects/crop_report.json";
+      const PUBLIC_ROOT = "../frontend/public";
+      const EXPORT_PREFIX = "frontend/public";
+      const roles = [
+        "ignore",
+        "floor_tile",
+        "wall_tile",
+        "chalkboard",
+        "window",
+        "door",
+        "desk",
+        "chair",
+        "teacher_desk",
+        "cabinet",
+        "bookshelf",
+        "poster",
+        "plant",
+        "trash_bin",
+        "debris",
+        "crack",
+        "warning_icon",
+        "safe_marker",
+        "exit_marker",
+      ];
+
+      const state = {
+        records: [],
+        selected: new Map(),
+        changedAt: 0,
+      };
+
+      const grid = document.querySelector("#grid");
+      const statusEl = document.querySelector("#status");
+      const warningEl = document.querySelector("#warning");
+      const searchInput = document.querySelector("#searchInput");
+
+      const toPreviewPath = (assetPath) => `${PUBLIC_ROOT}${assetPath}`;
+      const toExportPath = (assetPath) => `${EXPORT_PREFIX}${assetPath}`;
+
+      const setStatus = (message, ok = false) => {
+        statusEl.textContent = message;
+        statusEl.className = ok ? "status ok" : "status";
+      };
+
+      const setWarning = (message) => {
+        warningEl.textContent = message;
+      };
+
+      const optionHtml = (currentRole) =>
+        roles.map((role) => `<option value="${role}"${role === currentRole ? " selected" : ""}>${role}</option>`).join("");
+
+      const render = () => {
+        const filter = searchInput.value.trim().toLowerCase();
+        const fragment = document.createDocumentFragment();
+        let shown = 0;
+
+        state.records.forEach((record, index) => {
+          const selection = state.selected.get(index);
+          const role = selection?.role || "ignore";
+          const text = `${record.name} ${record.path} ${record.method || ""} ${role}`.toLowerCase();
+          if (filter && !text.includes(filter)) {
+            return;
+          }
+
+          shown += 1;
+          const card = document.createElement("article");
+          card.className = "card";
+          card.innerHTML = `
+            <div class="preview">
+              <img src="${toPreviewPath(record.path)}" alt="${record.name}" loading="lazy" />
+            </div>
+            <div class="meta">
+              <strong class="name">${record.name}</strong>
+              <span class="small">${record.width} x ${record.height}</span>
+              <span class="small">${toExportPath(record.path)}</span>
+              <select data-index="${index}" aria-label="Role for ${record.name}">
+                ${optionHtml(role)}
+              </select>
+            </div>
+          `;
+          fragment.appendChild(card);
+        });
+
+        grid.replaceChildren(fragment);
+        setStatus(`Loaded ${state.records.length} crops. Showing ${shown}.`, true);
+        updateWarnings();
+      };
+
+      const updateWarnings = () => {
+        const byRole = new Map();
+        state.selected.forEach((selection, index) => {
+          if (selection.role === "ignore") {
+            return;
+          }
+          const entries = byRole.get(selection.role) || [];
+          entries.push({ index, changedAt: selection.changedAt });
+          byRole.set(selection.role, entries);
+        });
+
+        const duplicates = [];
+        byRole.forEach((entries, role) => {
+          if (entries.length > 1) {
+            duplicates.push(`${role} (${entries.length} selected, export uses latest)`);
+          }
+        });
+
+        setWarning(duplicates.length ? `Duplicate role warning: ${duplicates.join("; ")}` : "");
+      };
+
+      const loadRecords = async () => {
+        try {
+          const response = await fetch(REPORT_PATH);
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          state.records = await response.json();
+          state.selected.clear();
+          render();
+        } catch (error) {
+          setStatus(`Cannot auto-load ${REPORT_PATH}. Use the file picker to open crop_report.json. (${error.message})`);
+        }
+      };
+
+      document.querySelector("#loadButton").addEventListener("click", loadRecords);
+
+      document.querySelector("#fileInput").addEventListener("change", async (event) => {
+        const [file] = event.target.files;
+        if (!file) {
+          return;
+        }
+        const text = await file.text();
+        state.records = JSON.parse(text);
+        state.selected.clear();
+        render();
+      });
+
+      searchInput.addEventListener("input", render);
+
+      grid.addEventListener("change", (event) => {
+        if (event.target.tagName !== "SELECT") {
+          return;
+        }
+        const index = Number(event.target.dataset.index);
+        state.changedAt += 1;
+        state.selected.set(index, {
+          role: event.target.value,
+          changedAt: state.changedAt,
+        });
+        updateWarnings();
+      });
+
+      document.querySelector("#exportButton").addEventListener("click", () => {
+        const latestByRole = new Map();
+        state.selected.forEach((selection, index) => {
+          if (selection.role === "ignore") {
+            return;
+          }
+          const current = latestByRole.get(selection.role);
+          if (!current || selection.changedAt > current.changedAt) {
+            latestByRole.set(selection.role, {
+              changedAt: selection.changedAt,
+              path: toExportPath(state.records[index].path),
+            });
+          }
+        });
+
+        const output = {};
+        roles
+          .filter((role) => role !== "ignore")
+          .forEach((role) => {
+            const selected = latestByRole.get(role);
+            if (selected) {
+              output[role] = selected.path;
+            }
+          });
+
+        const blob = new Blob([`${JSON.stringify(output, null, 2)}\n`], {
+          type: "application/json",
+        });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "selected_game_assets.json";
+        link.click();
+        URL.revokeObjectURL(link.href);
+      });
+
+      loadRecords();
+    </script>
+  </body>
+</html>

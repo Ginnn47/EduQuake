@@ -24,3 +24,8 @@ __pycache__/
 *.njsproj
 *.sln
 *.sw?
+reference_assets/
+*.zip
+
+# Reference/prototype-only game asset extracts and crops
+frontend/public/game/assets/
