@@ -1,0 +1,257 @@
+[
+  {
+    "role": "floor_tile",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/floor_tile.png",
+    "status": "missing"
+  },
+  {
+    "role": "wall_tile",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/wall_tile.png",
+    "status": "missing"
+  },
+  {
+    "role": "wall_front",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/wall_front.png",
+    "status": "missing"
+  },
+  {
+    "role": "wall_border",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/wall_border.png",
+    "status": "missing"
+  },
+  {
+    "role": "chalkboard",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/chalkboard.png",
+    "status": "missing"
+  },
+  {
+    "role": "chalkboard_hazard",
+    "sourcePath": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_007.png",
+    "outputPath": "frontend/public/game/assets/objects/classroom/chalkboard_hazard.png",
+    "status": "copied"
+  },
+  {
+    "role": "window",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/window.png",
+    "status": "missing"
+  },
+  {
+    "role": "window_hazard",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/window_hazard.png",
+    "status": "missing"
+  },
+  {
+    "role": "door",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/door.png",
+    "status": "missing"
+  },
+  {
+    "role": "desk",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/desk.png",
+    "status": "missing"
+  },
+  {
+    "role": "chair",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/chair.png",
+    "status": "missing"
+  },
+  {
+    "role": "chair_hazard",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/chair_hazard.png",
+    "status": "missing"
+  },
+  {
+    "role": "teacher_desk",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/teacher_desk.png",
+    "status": "missing"
+  },
+  {
+    "role": "teacher_desk_hazard",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/teacher_desk_hazard.png",
+    "status": "missing"
+  },
+  {
+    "role": "cabinet",
+    "sourcePath": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_041.png",
+    "outputPath": "frontend/public/game/assets/objects/classroom/cabinet.png",
+    "status": "copied"
+  },
+  {
+    "role": "cabinet_hazard",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/cabinet_hazard.png",
+    "status": "missing"
+  },
+  {
+    "role": "cupboard",
+    "sourcePath": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_041.png",
+    "outputPath": "frontend/public/game/assets/objects/classroom/cupboard.png",
+    "status": "copied",
+    "fallbackRole": "cabinet"
+  },
+  {
+    "role": "cupboard_hazard",
+    "sourcePath": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_035.png",
+    "outputPath": "frontend/public/game/assets/objects/classroom/cupboard_hazard.png",
+    "status": "copied"
+  },
+  {
+    "role": "bookshelf",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/bookshelf.png",
+    "status": "missing"
+  },
+  {
+    "role": "bookshelf_hazard",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/bookshelf_hazard.png",
+    "status": "missing"
+  },
+  {
+    "role": "poster",
+    "sourcePath": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_046.png",
+    "outputPath": "frontend/public/game/assets/objects/classroom/poster.png",
+    "status": "copied"
+  },
+  {
+    "role": "poster_2",
+    "sourcePath": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_042.png",
+    "outputPath": "frontend/public/game/assets/objects/classroom/poster_2.png",
+    "status": "copied"
+  },
+  {
+    "role": "map",
+    "sourcePath": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_042.png",
+    "outputPath": "frontend/public/game/assets/objects/classroom/map.png",
+    "status": "copied",
+    "fallbackRole": "poster_2"
+  },
+  {
+    "role": "mading",
+    "sourcePath": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_042.png",
+    "outputPath": "frontend/public/game/assets/objects/classroom/mading.png",
+    "status": "copied",
+    "fallbackRole": "poster_2"
+  },
+  {
+    "role": "plant",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/plant.png",
+    "status": "missing"
+  },
+  {
+    "role": "plant_2",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/plant_2.png",
+    "status": "missing"
+  },
+  {
+    "role": "plant_hazard",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/plant_hazard.png",
+    "status": "missing"
+  },
+  {
+    "role": "trash_bin",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/trash_bin.png",
+    "status": "missing"
+  },
+  {
+    "role": "trash_bin_hazard",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/trash_bin_hazard.png",
+    "status": "missing"
+  },
+  {
+    "role": "bigtrash",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/bigtrash.png",
+    "status": "missing"
+  },
+  {
+    "role": "medic",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/medic.png",
+    "status": "missing"
+  },
+  {
+    "role": "alarm",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/alarm.png",
+    "status": "missing"
+  },
+  {
+    "role": "pemadam",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/pemadam.png",
+    "status": "missing"
+  },
+  {
+    "role": "debris",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/debris.png",
+    "status": "missing"
+  },
+  {
+    "role": "debris_1",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/debris_1.png",
+    "status": "missing"
+  },
+  {
+    "role": "debris_2",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/debris_2.png",
+    "status": "missing"
+  },
+  {
+    "role": "debris_3",
+    "sourcePath": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_054.png",
+    "outputPath": "frontend/public/game/assets/objects/classroom/debris_3.png",
+    "status": "copied"
+  },
+  {
+    "role": "debris_4",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/debris_4.png",
+    "status": "missing"
+  },
+  {
+    "role": "crack",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/crack.png",
+    "status": "missing"
+  },
+  {
+    "role": "warning_icon",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/warning_icon.png",
+    "status": "missing"
+  },
+  {
+    "role": "safe_marker",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/safe_marker.png",
+    "status": "missing"
+  },
+  {
+    "role": "exit_marker",
+    "sourcePath": "",
+    "outputPath": "frontend/public/game/assets/objects/classroom/exit_marker.png",
+    "status": "missing"
+  }
+]
