@@ -162,6 +162,10 @@
       <h1>EduQuake Object Selector</h1>
       <div class="toolbar">
         <button id="loadButton" type="button">Reload crop_report.json</button>
+        <select id="reportSelect" aria-label="Crop report source">
+          <option value="../frontend/public/game/assets/objects/crop_report.json">Existing classroom crop_report.json</option>
+          <option value="../frontend/public/game/assets/objects/simulation_selector_report.json">New simulation tileset selector report</option>
+        </select>
         <input id="fileInput" type="file" accept="application/json,.json" />
         <input id="searchInput" type="search" placeholder="Filter by name, path, method, role..." />
         <button id="exportButton" type="button">Export selected_game_assets.json</button>
@@ -175,25 +179,48 @@
     </main>
 
     <script>
-      const REPORT_PATH = "../frontend/public/game/assets/objects/crop_report.json";
       const PUBLIC_ROOT = "../frontend/public";
       const EXPORT_PREFIX = "frontend/public";
       const roles = [
         "ignore",
         "floor_tile",
         "wall_tile",
+        "wall_front",
+        "wall_border",
         "chalkboard",
+        "chalkboard_hazard",
         "window",
+        "window_hazard",
         "door",
         "desk",
         "chair",
+        "chair_hazard",
         "teacher_desk",
+        "teacher_desk_hazard",
         "cabinet",
+        "cabinet_hazard",
+        "cupboard",
+        "cupboard_hazard",
         "bookshelf",
+        "bookshelf_hazard",
         "poster",
+        "poster_2",
+        "map",
+        "mading",
         "plant",
+        "plant_2",
+        "plant_hazard",
         "trash_bin",
+        "trash_bin_hazard",
+        "bigtrash",
+        "medic",
+        "alarm",
+        "pemadam",
         "debris",
+        "debris_1",
+        "debris_2",
+        "debris_3",
+        "debris_4",
         "crack",
         "warning_icon",
         "safe_marker",
@@ -210,6 +237,7 @@
       const statusEl = document.querySelector("#status");
       const warningEl = document.querySelector("#warning");
       const searchInput = document.querySelector("#searchInput");
+      const reportSelect = document.querySelector("#reportSelect");
 
       const toPreviewPath = (assetPath) => `${PUBLIC_ROOT}${assetPath}`;
       const toExportPath = (assetPath) => `${EXPORT_PREFIX}${assetPath}`;
@@ -234,7 +262,7 @@
         state.records.forEach((record, index) => {
           const selection = state.selected.get(index);
           const role = selection?.role || "ignore";
-          const text = `${record.name} ${record.path} ${record.method || ""} ${role}`.toLowerCase();
+          const text = `${record.name} ${record.path} ${record.method || ""} ${record.source || ""} ${record.sourceKey || ""} ${record.likelyRole || ""} ${role}`.toLowerCase();
           if (filter && !text.includes(filter)) {
             return;
           }
@@ -249,6 +277,8 @@
             <div class="meta">
               <strong class="name">${record.name}</strong>
               <span class="small">${record.width} x ${record.height}</span>
+              <span class="small">${record.source || "unknown source"} · ${record.method || "unknown method"}</span>
+              <span class="small">hint: ${record.likelyRole || "-"}</span>
               <span class="small">${toExportPath(record.path)}</span>
               <select data-index="${index}" aria-label="Role for ${record.name}">
                 ${optionHtml(role)}
@@ -285,8 +315,9 @@
       };
 
       const loadRecords = async () => {
+        const reportPath = reportSelect.value;
         try {
-          const response = await fetch(REPORT_PATH);
+          const response = await fetch(reportPath);
           if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
           }
@@ -294,11 +325,12 @@
           state.selected.clear();
           render();
         } catch (error) {
-          setStatus(`Cannot auto-load ${REPORT_PATH}. Use the file picker to open crop_report.json. (${error.message})`);
+          setStatus(`Cannot auto-load ${reportPath}. Use the file picker to open a report JSON. (${error.message})`);
         }
       };
 
       document.querySelector("#loadButton").addEventListener("click", loadRecords);
+      reportSelect.addEventListener("change", loadRecords);
 
       document.querySelector("#fileInput").addEventListener("change", async (event) => {
         const [file] = event.target.files;

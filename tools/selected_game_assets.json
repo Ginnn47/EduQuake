@@ -1,20 +1,8 @@
 {
-  "floor_tile": "frontend/public/game/assets/objects/auto/object_036.png",
-  "wall_tile": "frontend/public/game/assets/objects/auto/object_104.png",
-  "chalkboard": "frontend/public/game/assets/objects/auto/object_303.png",
-  "window": "frontend/public/game/assets/objects/auto/object_046.png",
-  "door": "frontend/public/game/assets/objects/auto/object_133.png",
-  "desk": "frontend/public/game/assets/objects/auto/object_032.png",
-  "chair": "frontend/public/game/assets/objects/auto/object_015.png",
-  "teacher_desk": "frontend/public/game/assets/objects/auto/object_359.png",
-  "cabinet": "frontend/public/game/assets/objects/auto/object_362.png",
-  "bookshelf": "frontend/public/game/assets/objects/auto/object_145.png",
-  "poster": "frontend/public/game/assets/objects/auto/object_137.png",
-  "plant": "frontend/public/game/assets/objects/auto/object_132.png",
-  "trash_bin": "frontend/public/game/assets/objects/auto/object_138.png",
-  "debris": "frontend/public/game/assets/objects/auto/object_065.png",
-  "crack": "frontend/public/game/assets/objects/auto/object_256.png",
-  "warning_icon": "frontend/public/game/assets/objects/auto/object_356.png",
-  "safe_marker": "frontend/public/game/assets/objects/auto/object_252.png",
-  "exit_marker": "frontend/public/game/assets/objects/auto/object_317.png"
+  "chalkboard_hazard": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_007.png",
+  "cabinet": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_041.png",
+  "cupboard_hazard": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_035.png",
+  "poster": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_046.png",
+  "poster_2": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_042.png",
+  "debris_3": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_054.png"
 }

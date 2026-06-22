@@ -2,20 +2,28 @@ import { useEffect, useRef } from "react";
 import Phaser from "phaser";
 import ClassroomScene from "./scenes/ClassroomScene";
 
+const createEduQuakeKeyState = () => ({
+  left: false,
+  right: false,
+  up: false,
+  down: false,
+  actionQueued: false,
+});
+
 const normalizeMoveKey = (event) => {
-  const key = event.key.toLowerCase();
+  const key = String(event.key || "").toLowerCase();
   const code = event.code;
 
-  if (key === "arrowleft" || key === "a" || code === "ArrowLeft" || code === "KeyA") {
+  if (key === "a" || key === "arrowleft" || code === "KeyA" || code === "ArrowLeft") {
     return "left";
   }
-  if (key === "arrowright" || key === "d" || code === "ArrowRight" || code === "KeyD") {
+  if (key === "d" || key === "arrowright" || code === "KeyD" || code === "ArrowRight") {
     return "right";
   }
-  if (key === "arrowup" || key === "w" || code === "ArrowUp" || code === "KeyW") {
+  if (key === "w" || key === "arrowup" || code === "KeyW" || code === "ArrowUp") {
     return "up";
   }
-  if (key === "arrowdown" || key === "s" || code === "ArrowDown" || code === "KeyS") {
+  if (key === "s" || key === "arrowdown" || code === "KeyS" || code === "ArrowDown") {
     return "down";
   }
 
@@ -23,45 +31,29 @@ const normalizeMoveKey = (event) => {
 };
 
 const isActionKey = (event) => {
-  const key = event.key.toLowerCase();
+  const key = String(event.key || "").toLowerCase();
   return key === "e" || key === " " || key === "spacebar" || event.code === "KeyE" || event.code === "Space";
 };
 
 const PhaserGame = () => {
   const hostRef = useRef(null);
   const gameRef = useRef(null);
-  const pressedRef = useRef({
-    left: false,
-    right: false,
-    up: false,
-    down: false,
-  });
 
   useEffect(() => {
     if (!hostRef.current || gameRef.current) {
       return undefined;
     }
 
-    const getHostSize = () => ({
-      width: hostRef.current?.clientWidth || window.innerWidth,
-      height: hostRef.current?.clientHeight || window.innerHeight,
-    });
-    const initialSize = getHostSize();
+    window.__EDUQUAKE_KEYS = createEduQuakeKeyState();
 
-    gameRef.current = new Phaser.Game({
+    const config = {
       type: Phaser.AUTO,
-      width: initialSize.width,
-      height: initialSize.height,
       parent: hostRef.current,
-      backgroundColor: "#160f0a",
+      width: window.innerWidth,
+      height: window.innerHeight,
+      backgroundColor: "#0f0b08",
       pixelArt: true,
       roundPixels: true,
-      input: {
-        keyboard: {
-          target: window,
-          capture: true,
-        },
-      },
       physics: {
         default: "arcade",
         arcade: {
@@ -72,51 +64,39 @@ const PhaserGame = () => {
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
       },
+      input: {
+        keyboard: {
+          target: window,
+          capture: true,
+        },
+      },
       scene: [ClassroomScene],
-    });
-
-    const resizeObserver = new ResizeObserver(() => {
-      const size = getHostSize();
-      gameRef.current?.scale.resize(size.width, size.height);
-    });
-    resizeObserver.observe(hostRef.current);
-
-    return () => {
-      resizeObserver.disconnect();
-      gameRef.current?.destroy(true);
-      gameRef.current = null;
     };
-  }, []);
 
-  useEffect(() => {
-    const getScene = () => gameRef.current?.scene.getScene("ClassroomScene");
-    const syncSceneKey = (direction, pressed) => {
-      getScene()?.setExternalControl?.(direction, pressed);
+    gameRef.current = new Phaser.Game(config);
+
+    const focusGame = () => {
+      if (!gameRef.current?.canvas) {
+        return;
+      }
+
+      gameRef.current.canvas.setAttribute("tabindex", "0");
+      gameRef.current.canvas.focus();
     };
-    const refreshIdleState = () => {
-      Object.entries(pressedRef.current).forEach(([direction, pressed]) => {
-        syncSceneKey(direction, pressed);
-      });
-    };
+
+    window.setTimeout(focusGame, 100);
 
     const handleKeyDown = (event) => {
       const direction = normalizeMoveKey(event);
       if (direction) {
         event.preventDefault();
-        pressedRef.current[direction] = true;
-        syncSceneKey(direction, true);
+        window.__EDUQUAKE_KEYS[direction] = true;
         return;
       }
 
       if (isActionKey(event)) {
         event.preventDefault();
-        getScene()?.queueExternalAction?.();
-        return;
-      }
-
-      if (event.key === "Escape" || event.code === "Escape") {
-        event.preventDefault();
-        getScene()?.queueExternalEscape?.();
+        window.__EDUQUAKE_KEYS.actionQueued = true;
       }
     };
 
@@ -127,16 +107,15 @@ const PhaserGame = () => {
       }
 
       event.preventDefault();
-      pressedRef.current[direction] = false;
-      syncSceneKey(direction, false);
-      refreshIdleState();
+      window.__EDUQUAKE_KEYS[direction] = false;
     };
 
     const clearKeys = () => {
-      Object.keys(pressedRef.current).forEach((direction) => {
-        pressedRef.current[direction] = false;
-        syncSceneKey(direction, false);
-      });
+      Object.assign(window.__EDUQUAKE_KEYS, createEduQuakeKeyState());
+    };
+
+    const handleResize = () => {
+      gameRef.current?.scale.resize(window.innerWidth, window.innerHeight);
     };
 
     window.addEventListener("keydown", handleKeyDown, { capture: true, passive: false });
@@ -144,6 +123,7 @@ const PhaserGame = () => {
     document.addEventListener("keydown", handleKeyDown, { capture: true, passive: false });
     document.addEventListener("keyup", handleKeyUp, { capture: true, passive: false });
     window.addEventListener("blur", clearKeys);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown, { capture: true });
@@ -151,16 +131,29 @@ const PhaserGame = () => {
       document.removeEventListener("keydown", handleKeyDown, { capture: true });
       document.removeEventListener("keyup", handleKeyUp, { capture: true });
       window.removeEventListener("blur", clearKeys);
+      window.removeEventListener("resize", handleResize);
+      clearKeys();
+      gameRef.current?.destroy(true);
+      gameRef.current = null;
     };
   }, []);
 
   return (
-    <section className="final-simulation-game-shell" aria-label="Area game simulasi gempa">
+    <section
+      style={{
+        width: "100vw",
+        height: "100vh",
+        overflow: "hidden",
+        background: "#0f0b08",
+      }}
+    >
       <div
-        className="final-simulation-canvas"
         ref={hostRef}
-        tabIndex={0}
-        onPointerDown={() => hostRef.current?.focus()}
+        onPointerDown={() => gameRef.current?.canvas?.focus()}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
       />
     </section>
   );

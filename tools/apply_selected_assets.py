@@ -13,23 +13,65 @@ REPORT_FILE = OUTPUT_DIR / "selected_assets_report.json"
 ROLES = [
     "floor_tile",
     "wall_tile",
+    "wall_front",
+    "wall_border",
     "chalkboard",
+    "chalkboard_hazard",
     "window",
+    "window_hazard",
     "door",
     "desk",
     "chair",
+    "chair_hazard",
     "teacher_desk",
+    "teacher_desk_hazard",
     "cabinet",
+    "cabinet_hazard",
+    "cupboard",
+    "cupboard_hazard",
     "bookshelf",
+    "bookshelf_hazard",
     "poster",
+    "poster_2",
+    "map",
+    "mading",
     "plant",
+    "plant_2",
+    "plant_hazard",
     "trash_bin",
+    "trash_bin_hazard",
+    "bigtrash",
+    "medic",
+    "alarm",
+    "pemadam",
     "debris",
+    "debris_1",
+    "debris_2",
+    "debris_3",
+    "debris_4",
     "crack",
     "warning_icon",
     "safe_marker",
     "exit_marker",
 ]
+
+FALLBACK_SELECTION_ROLES = {
+    "wall_front": "wall_tile",
+    "wall_border": "wall_tile",
+    "chalkboard_hazard": "chalkboard",
+    "cupboard": "cabinet",
+    "cupboard_hazard": "cabinet_hazard",
+    "debris_1": "debris",
+    "debris_2": "debris",
+    "debris_3": "debris",
+    "debris_4": "debris",
+    "bigtrash": "trash_bin",
+    "map": "poster_2",
+    "mading": "poster_2",
+    "medic": "safe_marker",
+    "alarm": "warning_icon",
+    "pemadam": "warning_icon",
+}
 
 
 def source_path_from_selection(path_value: str | None) -> Path | None:
@@ -60,7 +102,8 @@ def apply_selected_assets() -> list[dict[str, str]]:
     report = []
 
     for role in ROLES:
-        source_value = selection.get(role)
+        fallback_role = FALLBACK_SELECTION_ROLES.get(role)
+        source_value = selection.get(role) or (selection.get(fallback_role) if fallback_role else None)
         output = OUTPUT_DIR / f"{role}.png"
         record = {
             "role": role,
@@ -73,6 +116,9 @@ def apply_selected_assets() -> list[dict[str, str]]:
             print(f"WARNING: Role not selected: {role}")
             report.append(record)
             continue
+
+        if fallback_role and role not in selection and fallback_role in selection:
+            record["fallbackRole"] = fallback_role
 
         source = source_path_from_selection(source_value)
         if source is None or not source.exists():
