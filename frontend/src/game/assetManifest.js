@@ -1,3 +1,5 @@
+import timsarCutout from "../assets/npc/timsar-cutout.png";
+
 export const ASSETS = {
   tilesets: {
     classroom: "/game/assets/tilesets/classroom_interior.png",
@@ -13,6 +15,9 @@ export const ASSETS = {
     muridmc: "/game/assets/sprites/muridmc.png",
     timsar: "/game/assets/sprites/timsar.png",
     prof: "/game/assets/sprites/prof.png",
+  },
+  npcs: {
+    timsar: timsarCutout,
   },
   ui: {
     dialogBox: "/game/assets/ui/dialog_box.png",

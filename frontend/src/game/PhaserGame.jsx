@@ -1,6 +1,14 @@
 import { useEffect, useRef } from "react";
 import Phaser from "phaser";
 import ClassroomScene from "./scenes/ClassroomScene";
+import EduQuakeHudOverlay from "./hud/EduQuakeHudOverlay";
+
+const TOUCH_DIRECTIONS = [
+  { direction: "up", label: "Atas", symbol: "^" },
+  { direction: "left", label: "Kiri", symbol: "<" },
+  { direction: "right", label: "Kanan", symbol: ">" },
+  { direction: "down", label: "Bawah", symbol: "v" },
+];
 
 const createEduQuakeKeyState = () => ({
   left: false,
@@ -35,22 +43,81 @@ const isActionKey = (event) => {
   return key === "e" || key === " " || key === "spacebar" || event.code === "KeyE" || event.code === "Space";
 };
 
+const getViewportSize = () => {
+  if (typeof window === "undefined") {
+    return { width: 1280, height: 720 };
+  }
+
+  const viewport = window.visualViewport;
+  const width = viewport?.width ?? window.innerWidth ?? document.documentElement.clientWidth;
+  const height = viewport?.height ?? window.innerHeight ?? document.documentElement.clientHeight;
+
+  return {
+    width: Math.max(320, Math.round(width)),
+    height: Math.max(320, Math.round(height)),
+  };
+};
+
+const ensureEduQuakeKeyState = () => {
+  if (typeof window === "undefined") {
+    return createEduQuakeKeyState();
+  }
+
+  if (!window.__EDUQUAKE_KEYS) {
+    window.__EDUQUAKE_KEYS = createEduQuakeKeyState();
+  }
+
+  return window.__EDUQUAKE_KEYS;
+};
+
 const PhaserGame = () => {
   const hostRef = useRef(null);
   const gameRef = useRef(null);
+
+  const focusGame = () => {
+    if (!gameRef.current?.canvas) {
+      return;
+    }
+
+    gameRef.current.canvas.setAttribute("tabindex", "0");
+    gameRef.current.canvas.focus();
+  };
+
+  const setTouchDirection = (direction, isPressed) => (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (isPressed && typeof event.currentTarget.setPointerCapture === "function" && event.pointerId !== undefined) {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+
+    const keys = ensureEduQuakeKeyState();
+    keys[direction] = isPressed;
+    focusGame();
+  };
+
+  const queueTouchAction = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const keys = ensureEduQuakeKeyState();
+    keys.actionQueued = true;
+    focusGame();
+  };
 
   useEffect(() => {
     if (!hostRef.current || gameRef.current) {
       return undefined;
     }
 
-    window.__EDUQUAKE_KEYS = createEduQuakeKeyState();
+    Object.assign(ensureEduQuakeKeyState(), createEduQuakeKeyState());
+    const viewportSize = getViewportSize();
 
     const config = {
       type: Phaser.AUTO,
       parent: hostRef.current,
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: viewportSize.width,
+      height: viewportSize.height,
       backgroundColor: "#0f0b08",
       pixelArt: true,
       roundPixels: true,
@@ -74,15 +141,6 @@ const PhaserGame = () => {
     };
 
     gameRef.current = new Phaser.Game(config);
-
-    const focusGame = () => {
-      if (!gameRef.current?.canvas) {
-        return;
-      }
-
-      gameRef.current.canvas.setAttribute("tabindex", "0");
-      gameRef.current.canvas.focus();
-    };
 
     window.setTimeout(focusGame, 100);
 
@@ -115,8 +173,11 @@ const PhaserGame = () => {
     };
 
     const handleResize = () => {
-      gameRef.current?.scale.resize(window.innerWidth, window.innerHeight);
+      const size = getViewportSize();
+      gameRef.current?.scale.resize(size.width, size.height);
     };
+
+    const visualViewport = window.visualViewport;
 
     window.addEventListener("keydown", handleKeyDown, { capture: true, passive: false });
     window.addEventListener("keyup", handleKeyUp, { capture: true, passive: false });
@@ -124,6 +185,9 @@ const PhaserGame = () => {
     document.addEventListener("keyup", handleKeyUp, { capture: true, passive: false });
     window.addEventListener("blur", clearKeys);
     window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+    visualViewport?.addEventListener("resize", handleResize);
+    visualViewport?.addEventListener("scroll", handleResize);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown, { capture: true });
@@ -132,6 +196,9 @@ const PhaserGame = () => {
       document.removeEventListener("keyup", handleKeyUp, { capture: true });
       window.removeEventListener("blur", clearKeys);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+      visualViewport?.removeEventListener("resize", handleResize);
+      visualViewport?.removeEventListener("scroll", handleResize);
       clearKeys();
       gameRef.current?.destroy(true);
       gameRef.current = null;
@@ -140,21 +207,41 @@ const PhaserGame = () => {
 
   return (
     <section
-      style={{
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-        background: "#0f0b08",
-      }}
+      className="final-simulation-game-shell final-simulation-game-shell--runtime"
+      onContextMenu={(event) => event.preventDefault()}
     >
       <div
         ref={hostRef}
         onPointerDown={() => gameRef.current?.canvas?.focus()}
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
+        className="final-simulation-canvas"
       />
+      <EduQuakeHudOverlay />
+      <div className="eduquake-touch-controls" aria-label="Kontrol sentuh simulasi">
+        <div className="eduquake-touch-dpad" aria-label="Kontrol arah">
+          {TOUCH_DIRECTIONS.map(({ direction, label, symbol }) => (
+            <button
+              key={direction}
+              type="button"
+              className={`eduquake-touch-control eduquake-touch-control--${direction}`}
+              aria-label={`Gerak ${label}`}
+              onPointerDown={setTouchDirection(direction, true)}
+              onPointerUp={setTouchDirection(direction, false)}
+              onPointerCancel={setTouchDirection(direction, false)}
+              onPointerLeave={setTouchDirection(direction, false)}
+            >
+              {symbol}
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          className="eduquake-touch-control eduquake-touch-action"
+          aria-label="Aksi"
+          onPointerDown={queueTouchAction}
+        >
+          E
+        </button>
+      </div>
     </section>
   );
 };

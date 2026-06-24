@@ -15,6 +15,11 @@ const AdventureBookHomePage = ({ navigationProps, playerHud, children }) => {
   const [activePixelFrame, setActivePixelFrame] = useState(0);
   const [isInventoryOpen, setIsInventoryOpen] = useState(false);
 
+  const closeInventory = () => {
+    blurInventoryFocus();
+    setIsInventoryOpen(false);
+  };
+
   return (
     <div id="beranda" className="quest-dashboard" style={{ "--quest-bg-main": `url(${bgMain})` }}>
       <BookTopbar
@@ -23,7 +28,15 @@ const AdventureBookHomePage = ({ navigationProps, playerHud, children }) => {
         activeModule={navigationProps.activeModule}
         setActiveModuleId={navigationProps.setActiveModuleId}
         inventoryOpen={isInventoryOpen}
-        onInventoryClick={() => setIsInventoryOpen((current) => !current)}
+        onInventoryClick={() =>
+          setIsInventoryOpen((current) => {
+            if (current) {
+              blurInventoryFocus();
+            }
+
+            return !current;
+          })
+        }
       />
 
       <main id="modul-belajar" className="quest-stage">
@@ -35,14 +48,14 @@ const AdventureBookHomePage = ({ navigationProps, playerHud, children }) => {
             className="quest-inventory-backdrop"
             type="button"
             aria-label="Tutup inventory"
-            onClick={() => setIsInventoryOpen(false)}
+            onClick={closeInventory}
           />
         ) : null}
         <BookSidebar
           {...navigationProps}
           {...playerHud}
           isInventoryOpen={isInventoryOpen}
-          onCloseInventory={() => setIsInventoryOpen(false)}
+          onCloseInventory={closeInventory}
         />
         {children}
       </main>

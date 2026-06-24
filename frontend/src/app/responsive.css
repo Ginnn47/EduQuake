@@ -1,0 +1,1062 @@
+/* Final responsive layer.
+   Desktop remains owned by quest-book.css and book-fidelity.css.
+   Phone landscape uses one uniform transform scale for the full desktop book spread. */
+
+:root {
+  --quest-design-width: 1448px;
+  --quest-design-height: 1086px;
+  --quest-landscape-scale: 1;
+  --quest-landscape-stage-width: var(--quest-design-width);
+  --quest-landscape-stage-height: var(--quest-design-height);
+  --quest-topbar-bottom: 0px;
+  --quest-topbar-height: 0px;
+  --quest-visual-viewport-width: 100vw;
+  --quest-visual-viewport-height: 100vh;
+}
+
+.final-simulation-game-shell--runtime {
+  background: #0f0b08 !important;
+  overflow: hidden !important;
+}
+
+.final-simulation-game-shell--runtime .final-simulation-canvas {
+  height: 100% !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.eduquake-touch-controls {
+  display: none;
+}
+
+.eduquake-hud-overlay {
+  color: #fff1bf;
+  font-family: "Trebuchet MS", "Pixelify Sans", Verdana, sans-serif;
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  text-align: left;
+  z-index: 45;
+}
+
+.eduquake-hud-overlay * {
+  box-sizing: border-box;
+}
+
+.eduquake-objective-panel,
+.eduquake-comic-card,
+.eduquake-objective-restore,
+.eduquake-completion-panel,
+.eduquake-interaction-prompt,
+.eduquake-toast-stack p {
+  background:
+    linear-gradient(180deg, rgba(255, 232, 169, 0.08), rgba(0, 0, 0, 0)),
+    rgba(19, 11, 7, 0.88);
+  border: 2px solid rgba(244, 198, 104, 0.82);
+  box-shadow:
+    0 8px 0 rgba(0, 0, 0, 0.32),
+    inset 0 0 0 2px rgba(55, 31, 17, 0.82),
+    0 16px 38px rgba(0, 0, 0, 0.34);
+}
+
+.eduquake-objective-panel {
+  display: grid;
+  gap: 9px;
+  max-width: min(390px, 30vw);
+  padding: 16px 18px;
+  position: absolute;
+  left: auto;
+  right: clamp(16px, 2vw, 28px);
+  top: clamp(16px, 2vw, 28px);
+  width: min(390px, 30vw);
+}
+
+.eduquake-objective-panel header {
+  align-items: start;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.eduquake-objective-panel button,
+.eduquake-objective-restore {
+  background: #355e3b;
+  border: 2px solid rgba(244, 198, 104, 0.86);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.45), inset 0 0 0 2px rgba(16, 29, 16, 0.65);
+  color: #fff0b7;
+  cursor: pointer;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 900;
+  min-height: 30px;
+  min-width: 34px;
+  padding: 4px 8px;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+.eduquake-objective-restore {
+  position: absolute;
+  right: clamp(16px, 2vw, 28px);
+  top: clamp(16px, 2vw, 28px);
+  z-index: 49;
+}
+
+.eduquake-hud-overlay:has(.eduquake-comic-card) .eduquake-objective-panel {
+  top: clamp(16px, 2vw, 28px);
+}
+
+.eduquake-objective-panel header span,
+.eduquake-comic-card header span {
+  color: #f4c668;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.86rem, 1.1vw, 1rem);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.eduquake-objective-panel > strong,
+.eduquake-comic-card header strong {
+  color: #fff0b7;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(1.12rem, 1.7vw, 1.42rem);
+  font-weight: 950;
+  line-height: 1.05;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.eduquake-objective-panel__status,
+.eduquake-comic-card p {
+  color: #f9e3aa;
+  font-size: clamp(1.02rem, 1.28vw, 1.14rem);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.eduquake-objective-panel ul {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.eduquake-objective-panel li {
+  align-items: start;
+  color: #fff6ce;
+  display: grid;
+  font-size: clamp(0.98rem, 1.16vw, 1.08rem);
+  gap: 8px;
+  grid-template-columns: 12px minmax(0, 1fr);
+  line-height: 1.25;
+}
+
+.eduquake-objective-panel li i {
+  background: #f4c668;
+  border: 2px solid rgba(43, 29, 14, 0.85);
+  display: block;
+  height: 12px;
+  margin-top: 3px;
+  width: 12px;
+}
+
+.eduquake-objective-panel li.is-done i {
+  background: #64d95a;
+}
+
+.eduquake-objective-panel em {
+  color: #d9a441;
+  font-size: 0.86rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.eduquake-comic-card button,
+.eduquake-comic-restore {
+  background: #355e3b;
+  border: 2px solid rgba(244, 198, 104, 0.86);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.45), inset 0 0 0 2px rgba(16, 29, 16, 0.65);
+  color: #fff0b7;
+  cursor: pointer;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 900;
+  justify-self: end;
+  min-height: 34px;
+  padding: 6px 12px;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+.eduquake-comic-restore {
+  left: clamp(16px, 2vw, 28px);
+  min-height: 36px;
+  padding: 7px 14px;
+  pointer-events: auto;
+  position: absolute;
+  top: clamp(16px, 2vw, 28px);
+  z-index: 49;
+}
+
+.eduquake-comic-card {
+  display: grid;
+  gap: 10px;
+  left: clamp(16px, 2vw, 28px);
+  max-height: min(68vh, 620px);
+  max-width: min(640px, 42vw);
+  overflow-y: auto;
+  padding: 14px;
+  pointer-events: auto;
+  position: absolute;
+  top: clamp(16px, 2vw, 28px);
+  width: min(640px, 42vw);
+  z-index: 48;
+}
+
+.eduquake-comic-card header {
+  background:
+    linear-gradient(180deg, rgba(255, 232, 169, 0.08), rgba(0, 0, 0, 0)),
+    rgba(19, 11, 7, 0.94);
+  display: grid;
+  gap: 4px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin: -4px -4px 0;
+  padding: 4px;
+  position: sticky;
+  top: -4px;
+  z-index: 2;
+}
+
+.eduquake-comic-card header strong {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.eduquake-comic-card header span {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.eduquake-comic-card header button {
+  align-self: start;
+  font-size: 1rem;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  line-height: 1;
+  min-height: 28px;
+  min-width: 34px;
+  padding: 2px 8px;
+}
+
+.eduquake-comic-card figure {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.22);
+  border: 2px solid rgba(217, 164, 65, 0.48);
+  display: grid;
+  margin: 0;
+  max-height: min(50vh, 460px);
+  min-height: 210px;
+  overflow: hidden;
+  place-items: center;
+}
+
+.eduquake-comic-card img {
+  display: block;
+  height: 100%;
+  image-rendering: pixelated;
+  object-fit: contain;
+  width: 100%;
+}
+
+.eduquake-interaction-prompt {
+  left: clamp(16px, 2vw, 28px);
+  top: clamp(16px, 2vw, 28px);
+  color: #fff0b7;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.94rem, 1.2vw, 1.12rem);
+  font-weight: 900;
+  line-height: 1.2;
+  max-width: min(640px, 42vw);
+  padding: 9px 14px;
+  position: absolute;
+  text-align: left;
+}
+
+.eduquake-hud-overlay:has(.eduquake-comic-card) .eduquake-interaction-prompt {
+  top: min(74vh, 680px);
+}
+
+.eduquake-hud-overlay:has(.eduquake-comic-restore) .eduquake-interaction-prompt {
+  top: max(64px, calc(env(safe-area-inset-top, 0px) + 64px));
+}
+
+.eduquake-toast-stack {
+  display: grid;
+  gap: 8px;
+  left: 50%;
+  max-width: min(460px, calc(100% - 32px));
+  position: absolute;
+  top: clamp(16px, 2vw, 28px);
+  transform: translateX(-50%);
+  width: min(460px, calc(100% - 32px));
+}
+
+.eduquake-toast-stack p {
+  color: #fff0b7;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin: 0;
+  padding: 9px 12px;
+  text-align: center;
+}
+
+.eduquake-completion-panel {
+  display: grid;
+  gap: 10px;
+  left: 50%;
+  max-width: min(360px, calc(100% - 32px));
+  padding: 16px 18px;
+  pointer-events: auto;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(360px, calc(100% - 32px));
+  z-index: 70;
+}
+
+.eduquake-completion-panel span {
+  color: #f4c668;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: 0.84rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.eduquake-completion-panel strong {
+  color: #fff0b7;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.38rem);
+  line-height: 1.05;
+}
+
+.eduquake-completion-panel p {
+  color: #f9e3aa;
+  font-size: 0.98rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.eduquake-completion-panel button {
+  background: #355e3b;
+  border: 2px solid rgba(244, 198, 104, 0.86);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.45), inset 0 0 0 2px rgba(16, 29, 16, 0.65);
+  color: #fff0b7;
+  cursor: pointer;
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
+  justify-self: center;
+  min-height: 40px;
+  min-width: 120px;
+  padding: 8px 18px;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+@media (max-width: 1180px) {
+  .final-simulation-page--fullscreen,
+  .final-simulation-game-shell--runtime {
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    overflow: hidden !important;
+    width: 100vw !important;
+  }
+
+  .final-simulation-game-shell--runtime {
+    position: relative !important;
+    touch-action: none !important;
+  }
+
+  .final-simulation-canvas {
+    height: 100% !important;
+    touch-action: none !important;
+    width: 100% !important;
+  }
+
+  .eduquake-touch-controls {
+    bottom: max(14px, env(safe-area-inset-bottom, 0px)) !important;
+    display: grid !important;
+    grid-template-columns: minmax(142px, 38vw) minmax(74px, 20vw) !important;
+    justify-content: space-between !important;
+    left: max(14px, env(safe-area-inset-left, 0px)) !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    right: max(14px, env(safe-area-inset-right, 0px)) !important;
+    z-index: 50 !important;
+  }
+
+  .eduquake-touch-dpad {
+    aspect-ratio: 1 !important;
+    display: grid !important;
+    gap: 8px !important;
+    grid-template-areas:
+      ". up ."
+      "left . right"
+      ". down ." !important;
+    grid-template-columns: repeat(3, minmax(42px, 1fr)) !important;
+    grid-template-rows: repeat(3, minmax(42px, 1fr)) !important;
+    max-width: 178px !important;
+    pointer-events: auto !important;
+    width: min(38vw, 178px) !important;
+  }
+
+  .eduquake-touch-control {
+    align-items: center !important;
+    background:
+      linear-gradient(180deg, rgba(255, 230, 154, 0.28), rgba(79, 45, 20, 0.2)),
+      rgba(23, 17, 13, 0.78) !important;
+    border: 2px solid rgba(244, 198, 104, 0.78) !important;
+    border-radius: 14px !important;
+    box-shadow:
+      0 4px 0 rgba(0, 0, 0, 0.48),
+      inset 0 0 0 2px rgba(36, 21, 13, 0.68) !important;
+    color: #ffe8a8 !important;
+    display: grid !important;
+    font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif !important;
+    font-size: clamp(1.05rem, 6vw, 1.65rem) !important;
+    font-weight: 900 !important;
+    justify-items: center !important;
+    line-height: 1 !important;
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 0 !important;
+    pointer-events: auto !important;
+    text-shadow: 1px 1px 0 #120c08 !important;
+    touch-action: none !important;
+    user-select: none !important;
+  }
+
+  .eduquake-touch-control:active {
+    box-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.48),
+      inset 0 0 0 2px rgba(244, 198, 104, 0.36) !important;
+    transform: translateY(3px) !important;
+  }
+
+  .eduquake-touch-control--up {
+    grid-area: up !important;
+  }
+
+  .eduquake-touch-control--left {
+    grid-area: left !important;
+  }
+
+  .eduquake-touch-control--right {
+    grid-area: right !important;
+  }
+
+  .eduquake-touch-control--down {
+    grid-area: down !important;
+  }
+
+  .eduquake-touch-action {
+    align-self: end !important;
+    aspect-ratio: 1 !important;
+    border-radius: 999px !important;
+    font-size: clamp(1rem, 5vw, 1.45rem) !important;
+    justify-self: end !important;
+    max-width: 92px !important;
+    width: min(20vw, 92px) !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  html,
+  body,
+  #root {
+    max-width: 100%;
+    min-height: 100%;
+    overflow-x: clip !important;
+    overflow-y: auto !important;
+    width: 100%;
+  }
+
+  .quest-dashboard {
+    background-size: cover !important;
+    max-width: 100vw !important;
+    min-height: 100dvh !important;
+    overflow-x: clip !important;
+    overflow-y: auto !important;
+    padding:
+      6px
+      max(8px, env(safe-area-inset-right, 0px))
+      14px
+      max(8px, env(safe-area-inset-left, 0px)) !important;
+    width: 100% !important;
+  }
+
+  .quest-dashboard::after {
+    content: none !important;
+  }
+
+  header.quest-topbar,
+  .quest-topbar {
+    align-items: center !important;
+    border-radius: 16px !important;
+    display: grid !important;
+    gap: 8px !important;
+    grid-template-areas: "brand nav right" !important;
+    grid-template-columns: minmax(150px, 0.9fr) minmax(260px, 1.35fr) auto !important;
+    margin: 0 auto 8px !important;
+    max-width: calc(100vw - 16px) !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    padding: 6px 10px !important;
+    position: relative !important;
+    width: calc(100vw - 16px) !important;
+    z-index: 1000 !important;
+  }
+
+  header.quest-topbar::before,
+  header.quest-topbar::after,
+  .quest-topbar::before,
+  .quest-topbar::after,
+  .quest-topbar__city {
+    display: none !important;
+  }
+
+  .quest-brand {
+    align-items: center !important;
+    display: grid !important;
+    gap: 8px !important;
+    grid-area: brand !important;
+    grid-template-columns: 42px minmax(0, 1fr) !important;
+    justify-self: start !important;
+    min-width: 0 !important;
+    width: auto !important;
+  }
+
+  .quest-brand img {
+    height: 42px !important;
+    max-height: 42px !important;
+    object-fit: contain !important;
+    width: 42px !important;
+  }
+
+  .quest-brand strong {
+    display: block !important;
+    font-size: clamp(1.05rem, 3vw, 1.45rem) !important;
+    line-height: 0.92 !important;
+    white-space: nowrap !important;
+  }
+
+  .quest-brand small {
+    display: block !important;
+    font-size: 0.58rem !important;
+    line-height: 1 !important;
+    margin-top: 4px !important;
+    white-space: nowrap !important;
+  }
+
+  header.quest-topbar .quest-nav,
+  .quest-nav {
+    align-items: center !important;
+    display: flex !important;
+    gap: clamp(8px, 1.4vw, 14px) !important;
+    grid-area: nav !important;
+    justify-content: center !important;
+    min-height: 34px !important;
+    min-width: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    padding: 0 4px !important;
+    scrollbar-width: none !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    z-index: 1001 !important;
+  }
+
+  header.quest-topbar .quest-nav::-webkit-scrollbar,
+  .quest-nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  header.quest-topbar .quest-nav__module {
+    flex: 0 0 auto !important;
+    position: relative !important;
+  }
+
+  header.quest-topbar .quest-nav a,
+  header.quest-topbar .quest-nav button,
+  header.quest-topbar .quest-nav__trigger,
+  .quest-nav a,
+  .quest-nav button {
+    flex: 0 0 auto !important;
+    font-size: clamp(0.72rem, 1.6vw, 0.88rem) !important;
+    min-height: 34px !important;
+    min-width: 86px !important;
+    padding: 7px 8px !important;
+    pointer-events: auto !important;
+  }
+
+  .quest-topbar__right {
+    grid-area: right !important;
+    justify-self: end !important;
+    min-width: 0 !important;
+  }
+
+  .quest-topbar__right .quest-inventory-shortcut,
+  .quest-inventory-shortcut {
+    min-height: 36px !important;
+    min-width: 74px !important;
+    pointer-events: auto !important;
+    width: clamp(78px, 12vw, 112px) !important;
+  }
+
+  .quest-topbar__right .quest-inventory-shortcut img,
+  .quest-inventory-shortcut img {
+    display: block !important;
+    max-height: 38px !important;
+    object-fit: contain !important;
+    width: 100% !important;
+  }
+
+  header.quest-topbar .quest-module-dropdown {
+    left: max(10px, env(safe-area-inset-left, 0px)) !important;
+    max-height: calc(var(--quest-visual-viewport-height) - var(--quest-topbar-bottom) - 14px) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    position: fixed !important;
+    right: max(10px, env(safe-area-inset-right, 0px)) !important;
+    top: calc(var(--quest-topbar-bottom) + 6px) !important;
+    transform: none !important;
+    width: auto !important;
+    z-index: 1500 !important;
+  }
+
+  header.quest-topbar .quest-module-dropdown button {
+    min-height: 44px !important;
+    pointer-events: auto !important;
+  }
+
+  .quest-stage {
+    display: block !important;
+    height: var(--quest-landscape-stage-height, calc(1086px * var(--quest-landscape-scale))) !important;
+    margin: 0 auto 16px !important;
+    max-width: calc(100vw - 16px) !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    position: relative !important;
+    width: var(--quest-landscape-stage-width, calc(1448px * var(--quest-landscape-scale))) !important;
+    z-index: 1 !important;
+  }
+
+  .quest-book {
+    aspect-ratio: auto !important;
+    box-sizing: border-box !important;
+    column-gap: 44px !important;
+    display: grid !important;
+    gap: 0 44px !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    height: 1086px !important;
+    left: 50% !important;
+    margin: 0 !important;
+    max-height: none !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    padding: 117px 116px 66px !important;
+    position: absolute !important;
+    row-gap: 12px !important;
+    top: 0 !important;
+    transform: translateX(-50%) scale(var(--quest-landscape-scale)) !important;
+    transform-origin: top center !important;
+    width: 1448px !important;
+    z-index: 1 !important;
+  }
+
+  .quest-book::before,
+  .quest-book::after,
+  .quest-book__spine,
+  .quest-book__ribbon,
+  .quest-page::before,
+  .quest-page::after {
+    pointer-events: none !important;
+  }
+
+  .quest-book::before {
+    bottom: 13px !important;
+    display: block !important;
+    height: auto !important;
+    left: calc(50% - 12px) !important;
+    right: auto !important;
+    top: 13px !important;
+    transform: none !important;
+    width: 24px !important;
+  }
+
+  .quest-book::after {
+    display: none !important;
+  }
+
+  .quest-book__spine {
+    bottom: 8px !important;
+    display: block !important;
+    left: calc(50% - 9px) !important;
+    position: absolute !important;
+    top: 8px !important;
+    width: 18px !important;
+    z-index: 8 !important;
+  }
+
+  .quest-book__ribbon {
+    display: block !important;
+    height: 92px !important;
+    position: absolute !important;
+    width: 36px !important;
+    z-index: 9 !important;
+  }
+
+  .quest-book__ribbon--top {
+    left: 86px !important;
+    top: -2px !important;
+  }
+
+  .quest-book__ribbon--bottom {
+    bottom: -28px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .quest-page,
+  .quest-page--left,
+  .quest-page--right {
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+    gap: 11px !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    position: relative !important;
+    width: 100% !important;
+    z-index: 3 !important;
+  }
+
+  .quest-page--left {
+    border-radius: 7px 1px 1px 7px !important;
+    padding: 14px 26px 14px 14px !important;
+  }
+
+  .quest-page--right {
+    border-radius: 1px 7px 7px 1px !important;
+    padding: 14px 14px 14px 26px !important;
+  }
+
+  .quest-module-header {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .quest-page--poster {
+    align-content: start !important;
+    grid-template-rows: min-content minmax(0, 1fr) !important;
+    max-height: none !important;
+  }
+
+  .quest-illustration,
+  .quest-illustration--poster {
+    pointer-events: none !important;
+  }
+
+  .quest-book button,
+  .quest-book a,
+  .quest-book input,
+  .quest-book label,
+  .quest-book select,
+  .quest-book textarea,
+  .quest-book [role="button"],
+  .quest-poster-switch button {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+  }
+
+  .quest-sidebar.quest-inventory-module {
+    left: max(8px, env(safe-area-inset-left, 0px)) !important;
+    max-height: calc(var(--quest-visual-viewport-height) - var(--quest-topbar-bottom) - 16px) !important;
+    opacity: 0 !important;
+    overflow: visible !important;
+    pointer-events: none !important;
+    right: auto !important;
+    top: calc(var(--quest-topbar-bottom) + 8px) !important;
+    transform: translateX(-12px) scale(0.98) !important;
+    visibility: hidden !important;
+    width: min(320px, calc(100vw - 16px)) !important;
+    z-index: 1300 !important;
+  }
+
+  .quest-sidebar.quest-inventory-module.is-open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateX(0) scale(1) !important;
+    visibility: visible !important;
+  }
+
+  .quest-sidebar.quest-inventory-module .quest-side-panel {
+    max-height: inherit !important;
+    overflow-y: auto !important;
+  }
+
+  .quest-sidebar.quest-inventory-module .quest-side-panel,
+  .quest-sidebar.quest-inventory-module .quest-side-panel * {
+    pointer-events: none !important;
+  }
+
+  .quest-sidebar.quest-inventory-module.is-open .quest-side-panel,
+  .quest-sidebar.quest-inventory-module.is-open .quest-side-panel * {
+    pointer-events: auto !important;
+  }
+
+  .quest-reward-popup {
+    max-height: calc(var(--quest-visual-viewport-height) - var(--quest-topbar-bottom) - 16px) !important;
+    overflow-y: auto !important;
+    width: min(460px, 72vw, 82vh) !important;
+    z-index: 1400 !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 560px) and (max-width: 1180px) {
+  .eduquake-hud-overlay {
+    z-index: 45;
+  }
+
+  .eduquake-objective-panel {
+    gap: 3px;
+    left: auto;
+    max-width: min(190px, 22vw);
+    padding: 5px 6px;
+    right: max(8px, env(safe-area-inset-right, 0px));
+    top: max(8px, env(safe-area-inset-top, 0px));
+    width: min(190px, 22vw);
+  }
+
+  .eduquake-objective-panel header {
+    gap: 4px;
+  }
+
+  .eduquake-hud-overlay:has(.eduquake-comic-card) .eduquake-objective-panel {
+    top: max(8px, env(safe-area-inset-top, 0px));
+  }
+
+  .eduquake-objective-panel header span,
+  .eduquake-comic-card header span {
+    font-size: clamp(0.36rem, 0.92vw, 0.5rem);
+  }
+
+  .eduquake-objective-panel > strong,
+  .eduquake-comic-card header strong {
+    font-size: clamp(0.5rem, 1.22vw, 0.66rem);
+  }
+
+  .eduquake-objective-panel__status,
+  .eduquake-comic-card p {
+    font-size: clamp(0.42rem, 1vw, 0.56rem);
+    line-height: 1.12;
+  }
+
+  .eduquake-objective-panel ul {
+    gap: 3px;
+  }
+
+  .eduquake-objective-panel li {
+    font-size: clamp(0.44rem, 1.05vw, 0.58rem);
+    gap: 4px;
+    grid-template-columns: 6px minmax(0, 1fr);
+    line-height: 1.08;
+  }
+
+  .eduquake-objective-panel li i {
+    border-width: 1px;
+    height: 6px;
+    margin-top: 1px;
+    width: 6px;
+  }
+
+  .eduquake-objective-panel em {
+    font-size: 0.46rem;
+  }
+
+  .eduquake-objective-panel button,
+  .eduquake-objective-restore,
+  .eduquake-comic-card button,
+  .eduquake-comic-restore {
+    font-size: 0.5rem;
+    min-height: 20px;
+    min-width: 24px;
+    padding: 2px 5px;
+  }
+
+  .eduquake-objective-restore {
+    right: max(8px, env(safe-area-inset-right, 0px));
+    top: max(8px, env(safe-area-inset-top, 0px));
+  }
+
+  .eduquake-comic-restore {
+    left: max(8px, env(safe-area-inset-left, 0px));
+    top: max(8px, env(safe-area-inset-top, 0px));
+  }
+
+  .eduquake-comic-card {
+    gap: 5px;
+    left: 50%;
+    max-height: calc(var(--quest-visual-viewport-height, 100dvh) - 24px);
+    max-width: min(440px, calc(100vw - 32px));
+    overflow-y: auto;
+    padding: 7px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(380px, 54vw);
+    z-index: 68;
+  }
+
+  .eduquake-comic-card header {
+    gap: 2px;
+  }
+
+  .eduquake-comic-card header button {
+    min-height: 18px;
+    min-width: 22px;
+    padding: 0 4px;
+  }
+
+  .eduquake-comic-card figure {
+    border-width: 1px;
+    aspect-ratio: 16 / 9;
+    max-height: min(46vh, 190px);
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .eduquake-comic-card img {
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    width: 100%;
+  }
+
+  .eduquake-comic-card p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .eduquake-interaction-prompt {
+    font-size: clamp(0.46rem, 1.08vw, 0.58rem);
+    left: max(8px, env(safe-area-inset-left, 0px));
+    max-width: min(190px, 22vw);
+    padding: 4px 6px;
+    top: max(8px, env(safe-area-inset-top, 0px));
+  }
+
+  .eduquake-hud-overlay:has(.eduquake-comic-card) .eduquake-interaction-prompt {
+    top: max(8px, env(safe-area-inset-top, 0px));
+  }
+
+  .eduquake-hud-overlay:has(.eduquake-comic-restore) .eduquake-interaction-prompt {
+    top: max(42px, calc(env(safe-area-inset-top, 0px) + 42px));
+  }
+
+  .eduquake-toast-stack {
+    max-width: min(340px, 48vw);
+    top: max(10px, env(safe-area-inset-top, 0px));
+    width: min(340px, 48vw);
+  }
+
+  .eduquake-toast-stack p {
+    font-size: 0.76rem;
+    padding: 7px 10px;
+  }
+
+  .eduquake-completion-panel {
+    gap: 5px;
+    max-width: min(240px, 32vw);
+    padding: 8px 10px;
+    width: min(240px, 32vw);
+  }
+
+  .eduquake-completion-panel span {
+    font-size: clamp(0.48rem, 1.05vw, 0.6rem);
+  }
+
+  .eduquake-completion-panel strong {
+    font-size: clamp(0.72rem, 1.55vw, 0.92rem);
+  }
+
+  .eduquake-completion-panel p {
+    font-size: clamp(0.54rem, 1.18vw, 0.68rem);
+  }
+
+  .eduquake-completion-panel button {
+    font-size: clamp(0.56rem, 1.2vw, 0.72rem);
+    min-height: 26px;
+    min-width: 78px;
+    padding: 4px 9px;
+  }
+
+  .eduquake-touch-controls {
+    bottom: max(8px, env(safe-area-inset-bottom, 0px)) !important;
+    z-index: 60 !important;
+  }
+
+  .eduquake-touch-dpad {
+    width: min(20vw, 106px) !important;
+  }
+
+  .eduquake-touch-action {
+    width: min(11vw, 62px) !important;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 900px) {
+  .quest-dashboard {
+    min-height: 100dvh !important;
+    overflow: hidden !important;
+  }
+
+  .quest-dashboard::after {
+    align-items: center !important;
+    background:
+      linear-gradient(180deg, rgba(31, 18, 9, 0.94), rgba(12, 8, 5, 0.96)),
+      rgba(31, 18, 9, 0.96) !important;
+    color: #f7e3ad !important;
+    content: "Putar perangkat ke mode landscape untuk memainkan EduQuake dengan layout seperti desktop." !important;
+    display: flex !important;
+    font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif !important;
+    font-size: clamp(1rem, 5.2vw, 1.35rem) !important;
+    font-weight: 800 !important;
+    inset: 0 !important;
+    justify-content: center !important;
+    line-height: 1.35 !important;
+    padding: 28px !important;
+    position: fixed !important;
+    text-align: center !important;
+    text-shadow: 1px 1px 0 #120c08 !important;
+    white-space: pre-line !important;
+    z-index: 3000 !important;
+  }
+
+  .quest-dashboard > :not(.quest-topbar) {
+    pointer-events: none !important;
+  }
+
+  .quest-module-dropdown,
+  .quest-sidebar.quest-inventory-module,
+  .quest-reward-popup,
+  .quest-reward-reopen {
+    display: none !important;
+  }
+}

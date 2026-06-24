@@ -80,6 +80,7 @@ const CLASSROOM_LAYOUT = {
     { key: "murid4", x: ROOM.x + 270, y: ROOM.y + 640 },
     { key: "murid1", x: ROOM_CENTER.x - 170, y: ROOM.y + 640 },
     { key: "murid2", x: ROOM_CENTER.x - 20, y: ROOM.y + 640 },
+    { key: "murid4", x: ROOM_CENTER.x + 150, y: ROOM.y + 640 },
     { key: "murid3", x: ROOM.x + ROOM.width - 265, y: ROOM.y + 640 },
   ],
   ui: {
@@ -100,6 +101,7 @@ const SCORE = {
   shelterBonus: 20,
   medicBonus: 15,
 };
+const EVACUATION_TARGET_COUNT = 5;
 
 const UI_DEPTH = 1000;
 const OBJECT_DEPTH = 20;
@@ -235,9 +237,9 @@ const ACT_CONTENT = {
     speaker: "Alam",
     dialog:
       "Aku sudah membawa P3K. Sekarang aku harus membantu mengobati luka ringan temanku dan menghubungi nomor darurat yang benar tanpa panik.",
-    mission: "Obati luka teman, lalu pilih nomor bantuan yang benar.",
+    mission: "Obati luka teman, pergi ke alarm merah, lalu pilih nomor bantuan yang benar.",
     status: "P3K aktif | Hubungi bantuan",
-    triggerHint: "Tekan E di dekat teman cedera, lalu jawab kuis nomor darurat.",
+    triggerHint: "Tekan E di dekat teman cedera, lalu tekan alarm merah.",
   },
   ACT8_EVACUATE_FRIENDS: {
     actNumber: 8,
@@ -248,7 +250,7 @@ const ACT_CONTENT = {
     speaker: "Sistem",
     dialog:
       "Instruksi evakuasi diterima. Semua siswa harus keluar dengan tertib melalui rute aman. Jangan berlari, jangan dorong-dorongan, dan hindari reruntuhan.",
-    mission: "Hampiri 4 teman yang tersisa, lalu arahkan mereka menuju pintu keluar.",
+    mission: "Hampiri 5 teman termasuk teman cedera, lalu arahkan mereka menuju pintu keluar.",
     status: "Evakuasi aktif | Kumpulkan teman",
     triggerHint: "Dekati setiap teman lalu tekan E.",
   },
@@ -297,6 +299,33 @@ const COMIC_TRIGGERS = {
   endingComplete: "Kamu berhasil menerapkan semua langkah siaga gempa!",
 };
 
+const USE_REACT_INFORMATION_OVERLAY = true;
+
+const dispatchEduQuakeHudEvent = (eventName, detail) => {
+  if (!USE_REACT_INFORMATION_OVERLAY || typeof window === "undefined") {
+    return;
+  }
+
+  window.dispatchEvent(new CustomEvent(eventName, { detail }));
+};
+
+const cleanHudText = (text = "") =>
+  String(text)
+    .replace(/^PROMPT\s*/i, "")
+    .replace(/^\n+/, "")
+    .trim();
+
+const createObjectiveTasks = (mission = "", hint = "") => {
+  const taskSource = [mission, hint].filter(Boolean).join(". ");
+
+  return taskSource
+    .split(/\.\s+|;\s+|,\s+lalu\s+|\s+lalu\s+/i)
+    .map((task) => cleanHudText(task))
+    .filter(Boolean)
+    .slice(0, 5)
+    .map((label) => ({ label, done: false }));
+};
+
 export default class ClassroomScene extends Phaser.Scene {
   constructor() {
     super("ClassroomScene");
@@ -316,6 +345,13 @@ export default class ClassroomScene extends Phaser.Scene {
     this.currentMission = "Gunakan WASD / Arrow untuk bergerak. Dekati papan instruksi lalu tekan E.";
     this.currentStatus = "Normal";
     this.currentPrompt = "";
+    this.currentSpeaker = ACT_CONTENT.ACT1_LESSON.speaker;
+    this.lastHudDialogueSignature = "";
+    this.lastHudObjectiveSignature = "";
+    this.lastHudPrompt = "";
+    this.lastHudStatus = "";
+    this.lastHudToast = "";
+    this.legacyInformationObjects = [];
     this.hazardCooldownUntil = 0;
     this.routeHazardCooldownUntil = 0;
     this.resultSubmitted = false;
@@ -342,6 +378,8 @@ export default class ClassroomScene extends Phaser.Scene {
     this.quizFeedback = "";
     this.quizElements = [];
     this.quizFeedbackText = null;
+    this.quizOptions = [];
+    this.quizSelectedIndex = 0;
     this.dialogVisible = false;
 
     this.hazardZones = [];
@@ -366,14 +404,20 @@ export default class ClassroomScene extends Phaser.Scene {
     this.buildText = null;
     this.resultPanel = null;
     this.safeMarker = null;
+    this.safeZoneHighlight = null;
     this.exitMarker = null;
     this.warningIcons = [];
     this.npcs = [];
     this.teacherNpc = null;
     this.panicStudentNpc = null;
     this.panicFrontNpcs = [];
+    this.timsarOfficer = null;
+    this.timsarOfficerReady = false;
     this.teacherTriggerZone = null;
     this.classroomObjects = [];
+    this.runtimeDecor = null;
+    this.randomObjectZones = [];
+    this.runRng = null;
     this.act2FurnitureHazardApplied = false;
     this.wallFrontLayer = null;
     this.floorLayer = null;
@@ -421,6 +465,13 @@ export default class ClassroomScene extends Phaser.Scene {
 
     if (ASSETS.effects.sandstorm) {
       this.load.image("sandstorm", ASSETS.effects.sandstorm);
+    }
+
+    if (ASSETS.npcs?.timsar) {
+      this.load.spritesheet("timsarOfficer", ASSETS.npcs.timsar, {
+        frameWidth: PLAYER_FRAME_SIZE,
+        frameHeight: PLAYER_FRAME_SIZE,
+      });
     }
 
     if (ENABLE_AUDIO && ASSETS.audio.quake) {
@@ -480,6 +531,7 @@ export default class ClassroomScene extends Phaser.Scene {
     }
 
     this.handlePlayerMovement();
+    this.updateTimsarFollower();
 
     this.updateActFlow(time);
     this.updateDustOverlay();
@@ -539,12 +591,15 @@ export default class ClassroomScene extends Phaser.Scene {
     this.safeZone = null;
     this.firstAidKitZone = null;
     this.firstAidKitMarker = null;
+    this.safeZoneHighlight?.setVisible(false);
     this.remainingFriends = [];
     this.rescuedCount = 0;
     this.quizOpen = false;
     this.quizFeedback = "";
     this.quizElements = [];
     this.quizFeedbackText = null;
+    this.quizOptions = [];
+    this.quizSelectedIndex = 0;
     this.dialogVisible = false;
     this.hazardZones = [];
     this.deskZones = [];
@@ -559,8 +614,13 @@ export default class ClassroomScene extends Phaser.Scene {
     this.teacherNpc = null;
     this.panicStudentNpc = null;
     this.panicFrontNpcs = [];
+    this.timsarOfficer = null;
+    this.timsarOfficerReady = false;
     this.teacherTriggerZone = null;
     this.classroomObjects = [];
+    this.runtimeDecor = null;
+    this.randomObjectZones = [];
+    this.runRng = new Phaser.Math.RandomDataGenerator([`${Date.now()}-${Math.random()}`]);
     this.act2FurnitureHazardApplied = false;
     this.wallFrontLayer = null;
     this.floorLayer = null;
@@ -698,8 +758,91 @@ export default class ClassroomScene extends Phaser.Scene {
     this.addDecorObject(x + 38, y + 70, "chair", 56, 58, OBJECT_DEPTH + 1);
   }
 
-  createReferenceTargetDecorZone() {
+  getRunRng() {
+    if (!this.runRng) {
+      this.runRng = new Phaser.Math.RandomDataGenerator([`${Date.now()}-${Math.random()}`]);
+    }
+
+    return this.runRng;
+  }
+
+  getRandomFloorPoint(options = {}) {
+    const rng = this.getRunRng();
+    const marginX = options.marginX ?? 130;
+    const marginTop = options.marginTop ?? 115;
+    const marginBottom = options.marginBottom ?? 95;
+
+    return {
+      x: rng.between(FLOOR.x + marginX, FLOOR.x + FLOOR.width - marginX),
+      y: rng.between(FLOOR.y + marginTop, FLOOR.y + FLOOR.height - marginBottom),
+    };
+  }
+
+  isPointClear(point, radius, occupiedZones = []) {
+    return occupiedZones.every((zone) => {
+      const distance = Phaser.Math.Distance.Between(point.x, point.y, zone.x, zone.y);
+      return distance >= radius + (zone.radius || 0);
+    });
+  }
+
+  createStaticRandomAvoidZones() {
     const decor = CLASSROOM_LAYOUT.decor;
+    const front = CLASSROOM_LAYOUT.front;
+    return [
+      ...CLASSROOM_LAYOUT.studentDesks.map(({ x, y }) => ({ x, y: y + 30, radius: 132 })),
+      { x: front.bookshelfLeft.x, y: front.bookshelfLeft.y, radius: 150 },
+      { x: front.cupboardRight.x, y: front.cupboardRight.y, radius: 150 },
+      { x: front.teacherDesk.x, y: front.teacherDesk.y, radius: 142 },
+      { x: front.teacher.x, y: front.teacher.y, radius: 95 },
+      { x: PLAYER_SPAWN.x, y: PLAYER_SPAWN.y, radius: 115 },
+      { x: DOOR_POSITION.x, y: DOOR_POSITION.y, radius: 140 },
+      { x: ROOM_CENTER.x, y: FLOOR.y + FLOOR.height * 0.52, radius: 150 },
+      { x: decor.leftPlant.x, y: decor.leftPlant.y, radius: 88 },
+      { x: decor.rightPlant.x, y: decor.rightPlant.y, radius: 88 },
+      { x: decor.fireExtinguisher.x, y: decor.fireExtinguisher.y, radius: 72 },
+      { x: decor.worldMap.x, y: decor.worldMap.y, radius: 125 },
+      { x: decor.alarm.x, y: decor.alarm.y, radius: 82 },
+      { x: decor.cabinet.x, y: decor.cabinet.y, radius: 150 },
+    ];
+  }
+
+  getRandomEmptyFloorPoint(options = {}) {
+    const radius = options.radius ?? 72;
+    const occupiedZones = options.occupiedZones ?? this.randomObjectZones ?? [];
+    const maxAttempts = options.maxAttempts ?? 80;
+
+    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+      const point = this.getRandomFloorPoint(options);
+      if (this.isPointClear(point, radius, occupiedZones)) {
+        return point;
+      }
+    }
+
+    return this.getRandomFloorPoint(options);
+  }
+
+  createRuntimeDecorPositions() {
+    const decor = Object.fromEntries(
+      Object.entries(CLASSROOM_LAYOUT.decor).map(([key, value]) => [key, { ...value }])
+    );
+    const occupiedZones = this.createStaticRandomAvoidZones();
+
+    decor.topTrash = this.getRandomEmptyFloorPoint({ marginX: 160, marginTop: 95, marginBottom: 130, radius: 72, occupiedZones });
+    occupiedZones.push({ x: decor.topTrash.x, y: decor.topTrash.y, radius: 82 });
+    decor.bigTrash = this.getRandomEmptyFloorPoint({ marginX: 150, marginTop: 155, marginBottom: 85, radius: 92, occupiedZones });
+    occupiedZones.push({ x: decor.bigTrash.x, y: decor.bigTrash.y, radius: 104 });
+    decor.posterBoard = this.getRandomEmptyFloorPoint({ marginX: 170, marginTop: 125, marginBottom: 125, radius: 112, occupiedZones });
+    occupiedZones.push({ x: decor.posterBoard.x, y: decor.posterBoard.y, radius: 124 });
+    decor.medic = this.getRandomEmptyFloorPoint({ marginX: 160, marginTop: 150, marginBottom: 95, radius: 82, occupiedZones });
+    occupiedZones.push({ x: decor.medic.x, y: decor.medic.y, radius: 94 });
+
+    this.runtimeDecor = decor;
+    this.randomObjectZones = occupiedZones;
+    return decor;
+  }
+
+  createReferenceTargetDecorZone() {
+    const decor = this.runtimeDecor || this.createRuntimeDecorPositions();
 
     this.addDecorObject(decor.topTrash.x, decor.topTrash.y, "trashBin", 52, 60, OBJECT_DEPTH + 2);
     this.addDecorObject(decor.smallFrameRight.x, decor.smallFrameRight.y, "poster", 68, 48, OBJECT_DEPTH + 1);
@@ -719,6 +862,7 @@ export default class ClassroomScene extends Phaser.Scene {
     ];
     this.interactionZones.medic = { x: decor.medic.x, y: decor.medic.y, radius: 130 };
     this.interactionZones.routePoster = { x: decor.posterBoard.x, y: decor.posterBoard.y, radius: 130 };
+    this.interactionZones.alarm = { x: decor.alarm.x, y: decor.alarm.y, radius: 130 };
   }
 
   createClassroomNpcs() {
@@ -740,6 +884,7 @@ export default class ClassroomScene extends Phaser.Scene {
         .sprite(x, y, key, idleFrame)
         .setDisplaySize(118, 118)
         .setDepth(PLAYER_DEPTH - 4 + (index % 2));
+      npc.hasEscaped = false;
       if (panic) {
         this.panicStudentNpc = npc;
       }
@@ -769,16 +914,24 @@ export default class ClassroomScene extends Phaser.Scene {
 
   createPostQuakeDamageObjects() {
     const debrisKeys = ["debris1", "debris2", "debris3", "debris4"];
-    const rng = new Phaser.Math.RandomDataGenerator(["eduquake-act2-debris"]);
+    const rng = this.getRunRng();
     const debrisCount = 24;
 
     for (let index = 0; index < debrisCount; index += 1) {
-      const x = rng.between(FLOOR.x + 100, FLOOR.x + FLOOR.width - 100);
-      const y = rng.between(FLOOR.y + 100, FLOOR.y + FLOOR.height - 80);
       const width = rng.between(44, 86);
       const height = rng.between(30, 62);
-      const debris = this.addPostQuakeHazard(x, y, debrisKeys[index % debrisKeys.length], width, height, OBJECT_DEPTH + 4, 0.92);
+      const radius = Math.max(width, height) * 0.58;
+      const point = this.getRandomEmptyFloorPoint({
+        marginX: 100,
+        marginTop: 100,
+        marginBottom: 80,
+        radius,
+        occupiedZones: this.randomObjectZones,
+        maxAttempts: 55,
+      });
+      const debris = this.addPostQuakeHazard(point.x, point.y, debrisKeys[index % debrisKeys.length], width, height, OBJECT_DEPTH + 4, 0.92);
       debris.setAngle(rng.between(-18, 18));
+      this.randomObjectZones.push({ x: point.x, y: point.y, radius: radius + 12 });
     }
   }
 
@@ -911,16 +1064,20 @@ export default class ClassroomScene extends Phaser.Scene {
     this.createAnimation("player-walk-left", [4, 5, 6, 7]);
     this.createAnimation("player-walk-right", [8, 9, 10, 11]);
     this.createAnimation("player-walk-up", [12, 13, 14, 15]);
+    this.createAnimation("timsar-walk-down", [0, 1, 2, 3], "timsarOfficer");
+    this.createAnimation("timsar-walk-left", [4, 5, 6, 7], "timsarOfficer");
+    this.createAnimation("timsar-walk-right", [8, 9, 10, 11], "timsarOfficer");
+    this.createAnimation("timsar-walk-up", [12, 13, 14, 15], "timsarOfficer");
   }
 
-  createAnimation(key, frames) {
+  createAnimation(key, frames, textureKey = "player") {
     if (this.anims.exists(key)) {
       return;
     }
 
     this.anims.create({
       key,
-      frames: this.anims.generateFrameNumbers("player", { frames }),
+      frames: this.anims.generateFrameNumbers(textureKey, { frames }),
       frameRate: 8,
       repeat: -1,
     });
@@ -979,13 +1136,15 @@ export default class ClassroomScene extends Phaser.Scene {
       .setDepth(UI_DEPTH + 1);
 
     this.addToUIGroup(bg, borderOuter, borderInner);
+    this.legacyInformationObjects.push(bg, borderOuter, borderInner);
 
     if (title) {
-      this.createReadableText(x + 16, y + 10, title, {
+      const titleText = this.createReadableText(x + 16, y + 10, title, {
         fontSize: "13px",
         color: UI_COLORS.accent,
         wrapWidth: w - 32,
       });
+      this.legacyInformationObjects.push(titleText);
     }
 
     return { bg, borderOuter, borderInner };
@@ -1031,6 +1190,13 @@ export default class ClassroomScene extends Phaser.Scene {
       this.uiGroup.clear(true, true);
     }
     this.uiGroup = this.add.group();
+
+    if (USE_REACT_INFORMATION_OVERLAY) {
+      this.createDustOverlay();
+      this.refreshScore();
+      this.hideLegacyInformationUI();
+      return;
+    }
 
     const titleStyle = {
       fontFamily: "monospace",
@@ -1301,6 +1467,7 @@ export default class ClassroomScene extends Phaser.Scene {
     }
 
     this.uiGroup = this.add.group();
+    this.legacyInformationObjects = [];
     this.sideComicPanel = null;
     this.sideComicImage = null;
     this.sideComicTitleText = null;
@@ -1377,6 +1544,7 @@ export default class ClassroomScene extends Phaser.Scene {
     }).setBackgroundColor("#130905").setVisible(false);
 
     this.refreshUIFromActState();
+    this.hideLegacyInformationUI();
   }
 
   createDebugOverlay() {
@@ -1404,7 +1572,7 @@ export default class ClassroomScene extends Phaser.Scene {
     const screenH = this.scale.height;
     const desktopLayout = screenW >= 1180;
     const margin = desktopLayout ? 28 : 16;
-    const gap = desktopLayout ? 24 : 14;
+    const gap = desktopLayout ? 0 : 14;
     const rightW = desktopLayout
       ? Phaser.Math.Clamp(Math.round(screenW * 0.3), 500, 640)
       : screenW - margin * 2;
@@ -1791,20 +1959,25 @@ export default class ClassroomScene extends Phaser.Scene {
   }
 
   layoutUI() {
+    if (USE_REACT_INFORMATION_OVERLAY) {
+      this.hideLegacyInformationUI();
+      return;
+    }
+
     this.rebuildFixedUI();
   }
 
   setupCamera() {
     const camera = this.cameras.main;
     const desktopLayout = this.scale.width >= 1180;
-    const margin = desktopLayout ? 28 : 16;
+    const margin = desktopLayout ? 16 : 16;
     const gap = desktopLayout ? 24 : 14;
-    const rightPanelW = desktopLayout ? Phaser.Math.Clamp(Math.round(this.scale.width * 0.3), 500, 640) : 0;
-    const dialogH = desktopLayout ? Phaser.Math.Clamp(Math.round(this.scale.height * 0.22), 190, 235) : 170;
+    const rightPanelW = desktopLayout ? 0 : 0;
+    const dialogH = desktopLayout ? 0 : 170;
     const mapAreaW = desktopLayout ? this.scale.width - rightPanelW - gap - margin * 2 : this.scale.width - margin * 2;
     const mapAreaH = desktopLayout ? this.scale.height - dialogH - gap - margin * 2 : this.scale.height - margin * 2;
-    const desktopZoom = Math.min(0.68, mapAreaW / ROOM.width, mapAreaH / ROOM.height);
-    const zoom = desktopLayout ? Phaser.Math.Clamp(desktopZoom, 0.42, 0.68) : 0.82;
+    const desktopZoom = Math.min(1.08, mapAreaW / ROOM.width, mapAreaH / ROOM.height);
+    const zoom = desktopLayout ? Phaser.Math.Clamp(desktopZoom, 0.72, 1.08) : 0.82;
 
     camera.setBounds(0, 0, WORLD.width, WORLD.height);
     camera.setZoom(zoom);
@@ -1972,6 +2145,162 @@ export default class ClassroomScene extends Phaser.Scene {
     this.setPrompt("");
   }
 
+  getActiveActContent() {
+    return ACT_CONTENT[this.actState] || ACT_CONTENT.ACT1_LESSON;
+  }
+
+  getPortraitForSpeaker(speaker) {
+    const normalizedSpeaker = String(speaker || "").toLowerCase();
+    if (normalizedSpeaker.includes("guru")) {
+      return ASSETS.sprites.guru;
+    }
+    if (normalizedSpeaker.includes("sistem")) {
+      return null;
+    }
+
+    return ASSETS.sprites.player;
+  }
+
+  emitHudEvent(eventName, detail) {
+    dispatchEduQuakeHudEvent(eventName, detail);
+  }
+
+  createHudObjectivePayload() {
+    const content = this.getActiveActContent();
+    const tasks = createObjectiveTasks(this.currentMission || content.mission, content.triggerHint);
+
+    return {
+      title: content.comicTitle || content.title || "Objective",
+      act: content.actNumber ? `Act ${content.actNumber}` : "Simulasi",
+      tasks,
+      progressText: `Bintang: ${this.score}`,
+      status: this.currentStatus || content.status,
+    };
+  }
+
+  emitObjectiveUpdate() {
+    const objective = this.createHudObjectivePayload();
+    const signature = `${this.actState}|${this.currentMission}|${this.currentStatus}|${this.score}`;
+    if (signature === this.lastHudObjectiveSignature) {
+      return;
+    }
+
+    this.lastHudObjectiveSignature = signature;
+    this.emitHudEvent("eduquake:objective", objective);
+  }
+
+  emitStatusUpdate() {
+    const status = this.currentStatus || "";
+    if (status === this.lastHudStatus) {
+      return;
+    }
+
+    this.lastHudStatus = status;
+    this.emitHudEvent("eduquake:status", { text: status });
+    if (/berhasil|hati-hati|tidak tepat|pintu|selesai/i.test(status) && status !== this.lastHudToast) {
+      this.lastHudToast = status;
+      this.emitHudEvent("eduquake:toast", { text: status });
+    }
+  }
+
+  emitPromptUpdate() {
+    const text = cleanHudText(this.currentPrompt);
+    if (text === this.lastHudPrompt) {
+      return;
+    }
+
+    this.lastHudPrompt = text;
+    this.emitHudEvent("eduquake:prompt", { text });
+  }
+
+  emitDialogueUpdate(message, visible) {
+    const text = cleanHudText(message);
+    if (!visible || !text) {
+      this.lastHudDialogueSignature = "";
+      this.emitHudEvent("eduquake:dialogue:clear");
+      return;
+    }
+
+    const speaker = String(this.currentSpeaker || this.getActiveActContent().speaker || "Sistem");
+    const signature = `${speaker}|${text}`;
+    if (signature === this.lastHudDialogueSignature) {
+      return;
+    }
+
+    this.lastHudDialogueSignature = signature;
+    this.emitHudEvent("eduquake:dialogue", {
+      speaker,
+      portrait: this.getPortraitForSpeaker(speaker),
+      text,
+      mode: speaker.toLowerCase() === "sistem" ? "system" : "character",
+    });
+  }
+
+  emitComicUpdate(content) {
+    if (!content) {
+      return;
+    }
+
+    this.emitHudEvent("eduquake:comic", {
+      title: content.comicTitle || "Komik EduQuake",
+      subtitle: content.title,
+      image: ASSETS.comics?.[content.comic],
+      description: content.comicDescription,
+      dismissible: true,
+    });
+  }
+
+  hideLegacyInformationUI() {
+    if (!USE_REACT_INFORMATION_OVERLAY) {
+      return;
+    }
+
+    [
+      this.uiBackdrop,
+      this.brandPanel,
+      this.brandTitleText,
+      this.brandSubtitleText,
+      this.classroomFrameOuter,
+      this.classroomFrameInner,
+      this.sideComicPanel,
+      this.sideComicImage,
+      this.sideComicTitleText,
+      this.sideComicActText,
+      this.sideComicBodyText,
+      this.sideComicFallbackText,
+      this.hudPanel,
+      this.hudTitleText,
+      this.missionText,
+      this.statusText,
+      this.scoreText,
+      this.controlText,
+      this.promptText,
+      this.dialogPanel,
+      this.dialogPortraitPanel,
+      this.dialogPortrait,
+      this.dialogNameTag,
+      this.dialogArrowText,
+      this.dialogText,
+      this.cutInPanel,
+      this.cutInImage,
+      this.cutInTitleText,
+      this.cutInBodyText,
+      this.footerLeftPanel,
+      this.footerLeftText,
+      this.inventoryButton,
+      this.inventoryText,
+      this.menuButton,
+      this.menuText,
+      this.inputDebugText,
+      this.buildText,
+      this.resultPanel,
+      ...(this.legacyInformationObjects || []),
+    ].forEach((object) => {
+      object?.setVisible?.(false);
+      object?.setAlpha?.(0);
+    });
+  }
+
   setActState(nextState) {
     const content = ACT_CONTENT[nextState];
     if (!content) {
@@ -2046,7 +2375,14 @@ export default class ClassroomScene extends Phaser.Scene {
 
   showSideComic(id) {
     const content = Object.values(ACT_CONTENT).find((item) => item.comic === id);
-    if (!content || !this.sideComicPanel) {
+    if (!content) {
+      return;
+    }
+
+    this.emitComicUpdate(content);
+
+    if (USE_REACT_INFORMATION_OVERLAY || !this.sideComicPanel) {
+      this.hideLegacyInformationUI();
       return;
     }
 
@@ -2068,6 +2404,7 @@ export default class ClassroomScene extends Phaser.Scene {
     }
     this.sideComicFallbackText?.setText(`${content.comicTitle}\n${content.comicDescription}`).setVisible(!hasTexture);
     this.layoutUI();
+    this.hideLegacyInformationUI();
   }
 
   showComicCutIn(id, onClose = null) {
@@ -2104,6 +2441,7 @@ export default class ClassroomScene extends Phaser.Scene {
   }
 
   updateDialogSpeaker(name) {
+    this.currentSpeaker = name || "Sistem";
     this.dialogNameTag?.setText(String(name || "ALAM").toUpperCase());
   }
 
@@ -2266,14 +2604,16 @@ export default class ClassroomScene extends Phaser.Scene {
       this.npcs.find((npc) => npc.visible && npc !== this.teacherNpc);
 
     if (this.injuredStudent) {
+      this.stopNpcWalk(this.injuredStudent);
       this.injuredStudent.setVisible(true);
-      this.injuredStudent.setPosition(ROOM_CENTER.x + 260, FLOOR.y + 620);
       this.injuredStudent.setFrame(12);
       this.injuredStudent.rescued = false;
+      this.injuredStudent.hasEscaped = false;
       this.injuredDebris ??= this.add
         .image(this.injuredStudent.x + 34, this.injuredStudent.y + 34, "debris3")
         .setDisplaySize(82, 56)
         .setDepth(OBJECT_DEPTH + 3);
+      this.injuredDebris.setPosition(this.injuredStudent.x + 34, this.injuredStudent.y + 34);
       this.injuredDebris.setVisible(true);
     }
   }
@@ -2299,9 +2639,19 @@ export default class ClassroomScene extends Phaser.Scene {
     this.setActState(ACT_STATES.ACT6_RESCUE_AND_MEDIC);
     this.showComicCutIn("comic6");
     this.safeZone = { x: ROOM_CENTER.x - 385, y: FLOOR.y + 660, radius: 130 };
+    this.safeZoneHighlight ??= this.add
+      .circle(this.safeZone.x, this.safeZone.y, this.safeZone.radius, 0x32d66f, 0.22)
+      .setStrokeStyle(5, 0x8dff9d, 0.95)
+      .setDepth(UI_DEPTH - 12)
+      .setVisible(false);
+    this.safeZoneHighlight
+      .setPosition(this.safeZone.x, this.safeZone.y)
+      .setRadius(this.safeZone.radius)
+      .setVisible(true);
+    const medicZone = this.interactionZones.medic || CLASSROOM_LAYOUT.decor.medic;
     this.firstAidKitZone = {
-      x: CLASSROOM_LAYOUT.decor.medic.x,
-      y: CLASSROOM_LAYOUT.decor.medic.y,
+      x: medicZone.x,
+      y: medicZone.y,
       radius: 120,
     };
     this.firstAidKitMarker ??= this.add
@@ -2317,6 +2667,7 @@ export default class ClassroomScene extends Phaser.Scene {
       const movedSafe =
         Phaser.Math.Distance.Between(this.injuredStudent.x, this.injuredStudent.y, this.safeZone.x, this.safeZone.y) <=
         this.safeZone.radius;
+      this.safeZoneHighlight?.setVisible(true).setPosition(this.safeZone.x, this.safeZone.y);
       this.safeMarker?.setVisible(true).setPosition(this.safeZone.x, this.safeZone.y - 60);
       this.showInteractionHint("PROMPT\nBawa teman cedera ke area aman yang ditandai.");
 
@@ -2326,6 +2677,8 @@ export default class ClassroomScene extends Phaser.Scene {
 
       this.flags.act6StudentMovedToSafeZone = true;
       this.safeMarker?.setVisible(false);
+      this.safeZoneHighlight?.setVisible(false);
+      this.injuredDebris?.setVisible(false);
       this.updateMissionText("Ambil kotak P3K di lemari medic.");
       this.updateStatusText("Teman sudah berada di tempat aman.");
     }
@@ -2348,24 +2701,41 @@ export default class ClassroomScene extends Phaser.Scene {
   startAct7FirstAidCall() {
     this.setActState(ACT_STATES.ACT7_FIRST_AID_CALL);
     this.showComicCutIn("comic7");
+    this.updateMissionText("Beri P3K kepada teman cedera, lalu pergi ke alarm merah untuk menghubungi bantuan.");
   }
 
   updateAct7FirstAidCall() {
     if (!this.flags.act7FirstAidDone) {
       const nearInjured = this.injuredStudent && this.distanceTo(this.injuredStudent) <= 130;
-      this.showInteractionHint(nearInjured ? "PROMPT\nTekan E untuk memberi P3K." : "PROMPT\nDekati teman cedera untuk memberi P3K.");
+      this.showInteractionHint(nearInjured ? "PROMPT\nTekan E / Space untuk memberi P3K." : "PROMPT\nDekati teman cedera untuk memberi P3K.");
 
       if (nearInjured && this.consumeActionInput()) {
         this.flags.act7FirstAidDone = true;
         this.score = Math.min(150, this.score + 15);
         this.updateScoreText();
         this.updateStatusText("Luka ringan sedang ditangani.");
-        this.showEmergencyQuiz();
+        this.updateMissionText("Pergi ke alarm merah kelas untuk menghubungi bantuan.");
       }
       return;
     }
 
-    if (!this.quizOpen && !this.flags.act7EmergencyCallDone) {
+    if (this.flags.act7EmergencyCallDone) {
+      return;
+    }
+
+    const alarmZone = this.interactionZones.alarm || CLASSROOM_LAYOUT.decor.alarm;
+    const nearAlarm =
+      Phaser.Math.Distance.Between(this.player.x, this.player.y, alarmZone.x, alarmZone.y) <=
+      (alarmZone.radius || 130);
+    this.safeMarker?.setVisible(!nearAlarm).setPosition(alarmZone.x, alarmZone.y - 72);
+    this.showInteractionHint(
+      nearAlarm
+        ? "PROMPT\nTekan E / Space di alarm untuk memilih nomor bantuan."
+        : "PROMPT\nPergi ke alarm merah untuk komunikasi bantuan."
+    );
+
+    if (nearAlarm && this.consumeActionInput()) {
+      this.safeMarker?.setVisible(false);
       this.showEmergencyQuiz();
     }
   }
@@ -2373,18 +2743,28 @@ export default class ClassroomScene extends Phaser.Scene {
   startAct8EvacuateFriends() {
     this.setActState(ACT_STATES.ACT8_EVACUATE_FRIENDS);
     this.showComicCutIn("comic8");
+    this.safeMarker?.setVisible(false);
     this.exitMarker?.setVisible(true);
-    this.remainingFriends = this.npcs
-      .filter((npc) => npc.visible && npc !== this.teacherNpc)
-      .slice(0, 4)
+    this.spawnTimsarOfficer();
+    const evacuationCandidates = [
+      this.injuredStudent,
+      ...this.npcs.filter((npc) => npc.visible && npc !== this.teacherNpc && npc !== this.injuredStudent && !npc.hasEscaped),
+    ].filter(Boolean);
+    this.remainingFriends = evacuationCandidates
+      .slice(0, EVACUATION_TARGET_COUNT)
       .map((npc) => {
         npc.setVisible(true);
         npc.rescued = false;
         return npc;
       });
 
-    while (this.remainingFriends.length < 4) {
-      const backup = this.npcs.find((npc) => npc !== this.teacherNpc && !this.remainingFriends.includes(npc));
+    while (this.remainingFriends.length < EVACUATION_TARGET_COUNT) {
+      const backup = this.npcs.find(
+        (npc) =>
+          npc !== this.teacherNpc &&
+          !npc.hasEscaped &&
+          !this.remainingFriends.includes(npc)
+      );
       if (!backup) {
         break;
       }
@@ -2396,19 +2776,83 @@ export default class ClassroomScene extends Phaser.Scene {
     this.rescuedCount = 0;
   }
 
+  spawnTimsarOfficer() {
+    if (!this.textures.exists("timsarOfficer")) {
+      return;
+    }
+
+    const startX = DOOR_POSITION.x;
+    const startY = DOOR_POSITION.y;
+    const centerX = ROOM_CENTER.x;
+    const centerY = FLOOR.y + FLOOR.height * 0.52;
+
+    if (!this.timsarOfficer) {
+      this.timsarOfficer = this.add
+        .sprite(startX, startY, "timsarOfficer", 12)
+        .setDisplaySize(126, 126)
+        .setDepth(PLAYER_DEPTH - 1);
+    }
+
+    this.timsarOfficerReady = false;
+    this.timsarOfficer.setVisible(true).setAlpha(1).setPosition(startX, startY);
+    this.timsarOfficer.anims.play("timsar-walk-up", true);
+    this.tweens.add({
+      targets: this.timsarOfficer,
+      x: centerX,
+      y: centerY,
+      duration: 1150,
+      ease: "Sine.easeInOut",
+      onComplete: () => {
+        this.timsarOfficerReady = true;
+        this.timsarOfficer?.anims.stop();
+        this.timsarOfficer?.setFrame(0);
+      },
+    });
+  }
+
+  updateTimsarFollower() {
+    if (!this.timsarOfficer?.visible || !this.timsarOfficerReady || this.actState !== ACT_STATES.ACT8_EVACUATE_FRIENDS) {
+      return;
+    }
+
+    const targetX = Phaser.Math.Clamp(this.player.x - 96, FLOOR.x + 55, FLOOR.x + FLOOR.width - 55);
+    const targetY = Phaser.Math.Clamp(this.player.y + 44, FLOOR.y + 55, FLOOR.y + FLOOR.height - 55);
+    const dx = targetX - this.timsarOfficer.x;
+    const dy = targetY - this.timsarOfficer.y;
+    const moving = Math.abs(dx) + Math.abs(dy) > 6;
+    this.timsarOfficer.x = Phaser.Math.Linear(this.timsarOfficer.x, targetX, 0.075);
+    this.timsarOfficer.y = Phaser.Math.Linear(this.timsarOfficer.y, targetY, 0.075);
+    this.timsarOfficer.setDepth(this.player.y > this.timsarOfficer.y ? PLAYER_DEPTH - 1 : PLAYER_DEPTH + 1);
+
+    if (!moving) {
+      this.timsarOfficer.anims.stop();
+      this.timsarOfficer.setFrame(0);
+      return;
+    }
+
+    const direction = Math.abs(dx) > Math.abs(dy)
+      ? dx < 0 ? "left" : "right"
+      : dy < 0 ? "up" : "down";
+    this.timsarOfficer.anims.play(`timsar-walk-${direction}`, true);
+  }
+
   updateAct8EvacuateFriends() {
     const friend = this.remainingFriends.find((npc) => !npc.rescued && this.distanceTo(npc) <= 120);
-    this.showInteractionHint(friend ? "PROMPT\nTekan E untuk mengarahkan teman ke pintu." : `PROMPT\nTeman diarahkan: ${this.rescuedCount} / 4`);
+    this.showInteractionHint(
+      friend
+        ? "PROMPT\nTekan E untuk mengarahkan teman ke pintu."
+        : `PROMPT\nTeman diarahkan: ${this.rescuedCount} / ${EVACUATION_TARGET_COUNT}`
+    );
 
     if (friend && this.consumeActionInput()) {
       friend.rescued = true;
       this.rescuedCount += 1;
       this.updateStatusText("Teman berhasil diarahkan ke rute evakuasi.");
-      this.updateMissionText(`Teman diarahkan: ${this.rescuedCount} / 4`);
+      this.updateMissionText(`Teman diarahkan: ${this.rescuedCount} / ${EVACUATION_TARGET_COUNT}`);
       this.escapeFrontStudentToDoor(friend, 0);
     }
 
-    if (this.rescuedCount >= 4 && !this.flags.act8AllFriendsGuided) {
+    if (this.rescuedCount >= EVACUATION_TARGET_COUNT && !this.flags.act8AllFriendsGuided) {
       this.flags.act8AllFriendsGuided = true;
       this.exitUnlocked = true;
       this.exitZone.door.setAlpha(1);
@@ -2453,7 +2897,6 @@ export default class ClassroomScene extends Phaser.Scene {
     const targetY = this.player.y + 34;
     this.injuredStudent.x = Phaser.Math.Linear(this.injuredStudent.x, targetX, 0.035);
     this.injuredStudent.y = Phaser.Math.Linear(this.injuredStudent.y, targetY, 0.035);
-    this.injuredDebris?.setPosition(this.injuredStudent.x + 34, this.injuredStudent.y + 34);
   }
 
   handlePrematureExitAttempt() {
@@ -2491,27 +2934,53 @@ export default class ClassroomScene extends Phaser.Scene {
 
     this.quizOpen = true;
     this.quizFeedback = "";
+    this.quizSelectedIndex = 0;
+    this.quizOptions = [];
     this.clearEmergencyQuiz();
 
     const mapBounds = this.getFixedMapBounds();
-    const quizW = Math.min(620, mapBounds.width - 80);
-    const quizH = 210;
+    const quizW = Math.min(720, mapBounds.width - 80);
+    const quizH = 286;
     const quizX = mapBounds.x + mapBounds.width / 2 - quizW / 2;
     const quizY = Math.max(24, mapBounds.y + mapBounds.height / 2 - quizH / 2);
     const panel = this.add
-      .rectangle(quizX, quizY, quizW, quizH, UI_COLORS.panel, 0.97)
+      .rectangle(quizX, quizY, quizW, quizH, 0x102316, 0.98)
+      .setOrigin(0, 0)
+      .setStrokeStyle(3, UI_COLORS.strokeBright, 1)
+      .setScrollFactor(0)
+      .setDepth(UI_DEPTH + 1500);
+    const titleBar = this.add
+      .rectangle(quizX + 16, quizY + 14, quizW - 32, 48, 0x355e3b, 0.98)
       .setOrigin(0, 0)
       .setStrokeStyle(2, UI_COLORS.strokeBright, 1)
       .setScrollFactor(0)
-      .setDepth(UI_DEPTH + 1500);
-    const question = this.createReadableText(quizX + 22, quizY + 20, "Nomor mana yang tepat untuk keadaan darurat?", {
-      fontSize: "15px",
-      color: UI_COLORS.accent,
-      wrapWidth: quizW - 44,
+      .setDepth(UI_DEPTH + 1501);
+    const title = this.createReadableText(quizX + 34, quizY + 26, "PILIH NOMOR DARURAT", {
+      fontSize: "18px",
+      color: "#fff7c9",
+      wrapWidth: quizW - 68,
+      depth: UI_DEPTH + 1502,
+    });
+    const question = this.createReadableText(
+      quizX + 24,
+      quizY + 78,
+      "Saat terjadi keadaan darurat dan kamu perlu bantuan cepat, nomor umum yang benar adalah:",
+      {
+        fontSize: "17px",
+        color: "#fff0b7",
+        wrapWidth: quizW - 48,
+        depth: UI_DEPTH + 1501,
+        lineSpacing: 7,
+      }
+    );
+    const hint = this.createReadableText(quizX + 24, quizY + 122, "Gunakan Arrow/WASD untuk memilih, lalu tekan E atau Space.", {
+      fontSize: "14px",
+      color: "#fff0b7",
+      wrapWidth: quizW - 48,
       depth: UI_DEPTH + 1501,
     });
 
-    this.quizElements.push(panel, question);
+    this.quizElements.push(panel, titleBar, title, question, hint);
     [
       ["A", "112"],
       ["B", "123"],
@@ -2521,42 +2990,88 @@ export default class ClassroomScene extends Phaser.Scene {
       const row = Math.floor(index / 2);
       const col = index % 2;
       const x = quizX + 24 + col * (quizW / 2 - 12);
-      const y = quizY + 74 + row * 54;
+      const y = quizY + 158 + row * 52;
       const button = this.add
-        .rectangle(x, y, quizW / 2 - 42, 38, 0x241308, 0.96)
+        .rectangle(x, y, quizW / 2 - 42, 42, 0x223b22, 0.98)
         .setOrigin(0, 0)
-        .setStrokeStyle(2, UI_COLORS.stroke, 1)
+        .setStrokeStyle(2, UI_COLORS.strokeBright, 1)
         .setScrollFactor(0)
         .setDepth(UI_DEPTH + 1501)
         .setInteractive({ useHandCursor: true })
-        .on("pointerdown", () => this.answerEmergencyQuiz(letter));
-      const label = this.createReadableText(x + 14, y + 10, `[${letter}] ${value}`, {
-        fontSize: "14px",
+        .on("pointerover", () => this.setEmergencyQuizSelection(index))
+        .on("pointerdown", () => {
+          this.setEmergencyQuizSelection(index);
+          this.answerEmergencyQuiz(letter);
+        });
+      const label = this.createReadableText(x + 14, y + 10, `${letter}. ${value}`, {
+        fontSize: "17px",
+        color: "#fff6ce",
         wrapWidth: quizW / 2 - 68,
         depth: UI_DEPTH + 1502,
       });
       this.quizElements.push(button, label);
+      this.quizOptions.push({ letter, value, button, label });
     });
 
     this.quizFeedbackText = this.createReadableText(quizX + 22, quizY + quizH - 34, "", {
-      fontSize: "13px",
+      fontSize: "15px",
       color: "#ffb36b",
       wrapWidth: quizW - 44,
       depth: UI_DEPTH + 1502,
     });
     this.quizElements.push(this.quizFeedbackText);
+    this.setEmergencyQuizSelection(0);
   }
 
   updateEmergencyQuizInput() {
-    if (Phaser.Input.Keyboard.JustDown(this.keys.A)) {
-      this.answerEmergencyQuiz("A");
-    } else if (Phaser.Input.Keyboard.JustDown(this.keys.B)) {
-      this.answerEmergencyQuiz("B");
-    } else if (Phaser.Input.Keyboard.JustDown(this.keys.C)) {
-      this.answerEmergencyQuiz("C");
-    } else if (Phaser.Input.Keyboard.JustDown(this.keys.D)) {
-      this.answerEmergencyQuiz("D");
+    const moveLeft = Phaser.Input.Keyboard.JustDown(this.cursors.left) || Phaser.Input.Keyboard.JustDown(this.keys.A);
+    const moveRight = Phaser.Input.Keyboard.JustDown(this.cursors.right) || Phaser.Input.Keyboard.JustDown(this.keys.D);
+    const moveUp = Phaser.Input.Keyboard.JustDown(this.cursors.up) || Phaser.Input.Keyboard.JustDown(this.keys.W);
+    const moveDown = Phaser.Input.Keyboard.JustDown(this.cursors.down) || Phaser.Input.Keyboard.JustDown(this.keys.S);
+
+    if (moveLeft) {
+      this.setEmergencyQuizSelection(this.quizSelectedIndex - 1);
+    } else if (moveRight) {
+      this.setEmergencyQuizSelection(this.quizSelectedIndex + 1);
+    } else if (moveUp) {
+      this.setEmergencyQuizSelection(this.quizSelectedIndex - 2);
+    } else if (moveDown) {
+      this.setEmergencyQuizSelection(this.quizSelectedIndex + 2);
     }
+
+    if (this.consumeActionInput()) {
+      const selected = this.quizOptions[this.quizSelectedIndex];
+      if (selected) {
+        this.answerEmergencyQuiz(selected.letter);
+      }
+    }
+  }
+
+  setEmergencyQuizSelection(nextIndex) {
+    if (!this.quizOptions.length) {
+      return;
+    }
+
+    const optionCount = this.quizOptions.length;
+    this.quizSelectedIndex = ((nextIndex % optionCount) + optionCount) % optionCount;
+    this.quizOptions.forEach((option, index) => {
+      const selected = index === this.quizSelectedIndex;
+      option.button
+        .setFillStyle(selected ? 0x477a42 : 0x223b22, 0.98)
+        .setStrokeStyle(selected ? 4 : 2, selected ? 0xffffff : UI_COLORS.strokeBright, 1);
+      option.label.setColor(selected ? "#ffffff" : "#fff6ce");
+      option.label.setText(`${selected ? "> " : ""}${option.letter}. ${option.value}`);
+    });
+  }
+
+  flashEmergencyQuizSelection() {
+    const selected = this.quizOptions[this.quizSelectedIndex];
+    if (!selected) {
+      return;
+    }
+
+    selected.button.setFillStyle(0x7a3b2f, 0.98);
+    this.time.delayedCall(180, () => this.setEmergencyQuizSelection(this.quizSelectedIndex));
   }
 
   answerEmergencyQuiz(letter) {
@@ -2580,12 +3095,15 @@ export default class ClassroomScene extends Phaser.Scene {
     this.quizFeedback = "Nomor tidak tepat. Coba lagi.";
     this.updateStatusText("Nomor tidak tepat. Coba ingat nomor darurat umum.");
     this.quizFeedbackText?.setText(this.quizFeedback);
+    this.flashEmergencyQuizSelection();
   }
 
   clearEmergencyQuiz() {
     this.quizElements.forEach((object) => object?.destroy?.());
     this.quizElements = [];
     this.quizFeedbackText = null;
+    this.quizOptions = [];
+    this.quizSelectedIndex = 0;
   }
 
   startDustOverlay() {
@@ -2684,21 +3202,41 @@ export default class ClassroomScene extends Phaser.Scene {
       });
     }
 
-    if (this.panicStudentNpc) {
-      this.playNpcWalk(this.panicStudentNpc, "down");
-      this.tweens.add({
-        targets: this.panicStudentNpc,
-        x: DOOR_POSITION.x - 38,
-        y: DOOR_POSITION.y,
-        duration: 1200,
-        ease: "Sine.easeInOut",
-        onComplete: () => this.hideEscapedNpc(this.panicStudentNpc),
-      });
-    }
+    const escapeStudents = [this.panicStudentNpc, ...this.panicFrontNpcs].filter(Boolean).slice(0, 3);
+    escapeStudents.forEach((npc, index) => this.escapeFrontStudentToDoor(npc, index * 180));
+    this.scatterClassroomStudents(new Set(escapeStudents));
+  }
 
-    this.panicFrontNpcs.forEach((npc, index) => {
-      this.escapeFrontStudentToDoor(npc, index * 180);
+  scatterClassroomStudents(excludedStudents = new Set()) {
+    const rng = this.getRunRng();
+    const students = this.npcs.filter(
+      (npc) => npc && npc !== this.teacherNpc && npc.visible && !npc.hasEscaped && !excludedStudents.has(npc)
+    );
+
+    students.forEach((npc, index) => {
+      const target = this.getRandomFloorPoint({ marginX: 150, marginTop: 150, marginBottom: 115 });
+      const direction = Math.abs(target.x - npc.x) > Math.abs(target.y - npc.y)
+        ? target.x < npc.x ? "left" : "right"
+        : target.y < npc.y ? "up" : "down";
+      this.playNpcWalk(npc, direction);
+      this.tweens.add({
+        targets: npc,
+        x: target.x,
+        y: target.y,
+        duration: rng.between(700, 1250),
+        delay: index * 90,
+        ease: "Sine.easeInOut",
+        onComplete: () => this.stopNpcWalk(npc, index),
+      });
     });
+  }
+
+  stopNpcWalk(npc, index = 0) {
+    npc.walkTween?.stop();
+    if (npc.baseScaleY) {
+      npc.setScale(npc.scaleX, npc.baseScaleY);
+    }
+    npc.setFrame([0, 4, 8, 12][index % 4]);
   }
 
   escapeFrontStudentToDoor(npc, delay = 0) {
@@ -2750,6 +3288,7 @@ export default class ClassroomScene extends Phaser.Scene {
     if (npc.baseScaleY) {
       npc.setScale(npc.scaleX, npc.baseScaleY);
     }
+    npc.hasEscaped = true;
     npc.setVisible(false);
   }
 
@@ -3335,13 +3874,18 @@ export default class ClassroomScene extends Phaser.Scene {
     this.player.setVelocity(0, 0);
     this.setPrompt("");
     this.exitMarker?.setVisible(false);
+    this.safeMarker?.setVisible(false);
+    this.safeZoneHighlight?.setVisible(false);
     this.setMission("Simulasi selesai.", "Selesai");
     this.setDialog(COMIC_TRIGGERS.endingComplete, true);
 
     const reward = "Badge Siaga Gempa Level 1";
-    this.resultPanel
-      .setText(`MISI SELESAI\nSkor: ${this.score}\nReward: ${reward}`)
-      .setVisible(true);
+    this.emitHudEvent("eduquake:toast", { text: `Misi selesai. Skor: ${this.score}` });
+    this.emitHudEvent("eduquake:complete", {
+      score: this.score,
+      reward,
+      returnPath: "/#modul-belajar",
+    });
 
     this.submitResult({
       scene: "classroom",
@@ -3399,6 +3943,8 @@ export default class ClassroomScene extends Phaser.Scene {
     this.dialogArrowText?.setVisible(visible);
     this.dialogText?.setVisible(visible);
     this.dialogText?.setText(message);
+    this.emitDialogueUpdate(message, visible);
+    this.hideLegacyInformationUI();
   }
 
   updateHUD() {
@@ -3407,5 +3953,9 @@ export default class ClassroomScene extends Phaser.Scene {
     this.scoreText?.setText(`* SKOR\nBintang: ${this.score}`);
     this.promptText?.setText(this.currentPrompt);
     this.promptText?.setVisible(Boolean(this.currentPrompt));
+    this.emitObjectiveUpdate();
+    this.emitStatusUpdate();
+    this.emitPromptUpdate();
+    this.hideLegacyInformationUI();
   }
 }

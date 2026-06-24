@@ -42,7 +42,7 @@ export const moduleMeta = {
   icon: rewardItems.paspor.icon,
   image: tutorPoster,
   posterStyle: {
-    "--quest-poster-width": "min(100%, 450px)",
+    "--quest-poster-width": "min(100%, 400px)",
     "--quest-poster-offset-y": "-60px",
   },
   headerImage: headUp,
