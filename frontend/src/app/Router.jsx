@@ -1,10 +1,27 @@
+import { useEffect, useState } from "react";
 import DashboardPage from "../pages/DashboardPage";
 import SimulationPage from "../pages/SimulationPage";
 
-const Router = () => {
-  const path = window.location.pathname;
+const getCurrentPath = () => {
+  const browserPath = window.location.pathname.replace(/^\/eduquake/, "") || "/";
+  const hashPath = window.location.hash.replace(/^#\/?/, "");
+  return hashPath || browserPath.replace(/^\//, "");
+};
 
-  if (path === "/final-simulation" || path === "/simulasi-akhir" || path === "/simulation") {
+const Router = () => {
+  const [route, setRoute] = useState(() => getCurrentPath());
+
+  useEffect(() => {
+    const onLocationChange = () => setRoute(getCurrentPath());
+    window.addEventListener("hashchange", onLocationChange);
+    window.addEventListener("popstate", onLocationChange);
+    return () => {
+      window.removeEventListener("hashchange", onLocationChange);
+      window.removeEventListener("popstate", onLocationChange);
+    };
+  }, []);
+
+  if (route === "final-simulation" || route === "simulasi-akhir" || route === "simulation") {
     return <SimulationPage />;
   }
 
