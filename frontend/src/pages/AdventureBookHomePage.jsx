@@ -15,6 +15,17 @@ const AdventureBookHomePage = ({ navigationProps, playerHud, children }) => {
   const [activePixelFrame, setActivePixelFrame] = useState(0);
   const [isInventoryOpen, setIsInventoryOpen] = useState(false);
 
+  const blurInventoryFocus = () => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement) {
+      activeElement.blur();
+    }
+  };
+
   const closeInventory = () => {
     blurInventoryFocus();
     setIsInventoryOpen(false);
@@ -43,22 +54,16 @@ const AdventureBookHomePage = ({ navigationProps, playerHud, children }) => {
         <span className="quest-drawer-trigger" aria-hidden="true">
           <b>Sidebar Progress</b>
         </span>
-        {isInventoryOpen ? (
-          <button
-            className="quest-inventory-backdrop"
-            type="button"
-            aria-label="Tutup inventory"
-            onClick={closeInventory}
-          />
-        ) : null}
-        <BookSidebar
-          {...navigationProps}
-          {...playerHud}
-          isInventoryOpen={isInventoryOpen}
-          onCloseInventory={closeInventory}
-        />
         {children}
       </main>
+
+      <BookSidebar
+        {...navigationProps}
+        {...playerHud}
+        className="quest-inventory-module--below-book"
+        isInventoryOpen={isInventoryOpen}
+        onCloseInventory={closeInventory}
+      />
 
       <section
         className="quest-pixel-section"

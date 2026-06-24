@@ -755,6 +755,39 @@
     padding: 14px 14px 14px 26px !important;
   }
 
+  .quest-gameplay--module03-left .quest-module03-comic-stack {
+    --module03-comic-width: min(108%, 505px) !important;
+    --module03-main-height: 325px !important;
+    --module03-result-height: 180px !important;
+    align-content: start !important;
+    gap: 4px !important;
+  }
+
+  .quest-gameplay--module03-left .quest-module03-main-comic {
+    overflow: visible !important;
+  }
+
+  .quest-gameplay--module03-left .quest-module03-main-comic img {
+    height: var(--module03-main-height) !important;
+    object-fit: contain !important;
+    object-position: top center !important;
+  }
+
+  .quest-gameplay--module07 .quest-module07-craft-board {
+    --module07-material-slot-size: clamp(68px, 7.1vw, 104px) !important;
+    --module07-actmed-slot-size: clamp(104px, 10.8vw, 156px) !important;
+  }
+
+  .quest-gameplay--module08-right .quest-module08-material {
+    left: 50% !important;
+    margin: 0 !important;
+    max-height: none !important;
+    max-width: none !important;
+    position: relative !important;
+    transform: translateX(-50%) !important;
+    width: min(100%, 470px) !important;
+  }
+
   .quest-module-header {
     height: auto !important;
     min-height: 0 !important;
@@ -1019,6 +1052,42 @@
   .eduquake-touch-action {
     width: min(11vw, 62px) !important;
   }
+}
+
+.quest-sidebar.quest-inventory-module.quest-inventory-module--below-book {
+  bottom: auto !important;
+  display: none !important;
+  inset: auto !important;
+  left: auto !important;
+  margin: clamp(18px, 3vw, 34px) auto 0 !important;
+  max-height: none !important;
+  opacity: 0 !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+  position: relative !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  visibility: hidden !important;
+  width: min(430px, calc(100vw - 32px)) !important;
+  z-index: 8 !important;
+}
+
+.quest-sidebar.quest-inventory-module.quest-inventory-module--below-book.is-open {
+  display: block !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+.quest-sidebar.quest-inventory-module.quest-inventory-module--below-book .quest-side-panel {
+  height: min(610px, calc(100vw * 1.42)) !important;
+  margin-inline: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
+  width: 100% !important;
 }
 
 @media (orientation: portrait) and (max-width: 900px) {

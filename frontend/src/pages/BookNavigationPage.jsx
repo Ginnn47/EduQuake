@@ -36,7 +36,8 @@ export const BookTopbar = ({
     const designHeight = 1086;
     const marginX = 16;
     const marginY = 18;
-    const heightOverflowAllowance = 5.85;
+    const heightOverflowAllowance = 1.15;
+    const mobileLandscapeScaleMultiplier = 0.86;
     let frameId = 0;
 
     const updateTopbarMetrics = () => {
@@ -52,7 +53,10 @@ export const BookTopbar = ({
         const availableHeight = Math.max(1, viewportHeight - topbarHeight - marginY);
         const widthFitScale = availableWidth / designWidth;
         const relaxedHeightScale = (availableHeight / designHeight) * heightOverflowAllowance;
-        const nextScale = Math.min(widthFitScale, relaxedHeightScale, 1);
+        const isResponsiveLandscape = viewportWidth <= 1180 && viewportWidth > viewportHeight;
+        const scaleMultiplier = isResponsiveLandscape ? mobileLandscapeScaleMultiplier : 1;
+        const baseScale = isResponsiveLandscape ? widthFitScale : Math.min(widthFitScale, relaxedHeightScale, 1);
+        const nextScale = Math.min(baseScale, 1) * scaleMultiplier;
         const landscapeScale = Number.isFinite(nextScale) ? Math.max(0.1, nextScale) : 1;
         const stageWidth = Math.round(designWidth * landscapeScale);
         const stageHeight = Math.round(designHeight * landscapeScale);
@@ -99,7 +103,7 @@ export const BookTopbar = ({
   }, []);
 
   return (
-    <header className="quest-topbar">
+    <header className="quest-topbar" ref={topbarRef}>
       <a className="quest-brand" href="#modul-belajar" aria-label="EduQuake">
         <img src={logoPanel} alt="" />
         <span className="quest-brand__text">
@@ -173,6 +177,7 @@ export const BookSidebar = ({
   moduleProgressText = "500 / 1000 XP",
   isInventoryOpen = false,
   onCloseInventory,
+  className = "",
 }) => {
   const earnedProfileBadges = modules.flatMap((module) =>
     completedModuleIds.has(module.id)
@@ -186,7 +191,13 @@ export const BookSidebar = ({
   return (
     <aside
       id="inventory"
-      className={`quest-sidebar quest-inventory-module${isInventoryOpen ? " is-open" : ""}`}
+      className={[
+        "quest-sidebar quest-inventory-module",
+        className,
+        isInventoryOpen ? "is-open" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       aria-label="Profile dan inventory"
       aria-hidden={!isInventoryOpen}
     >
