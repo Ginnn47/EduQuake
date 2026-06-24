@@ -9,7 +9,7 @@ const simulationPosters = [
   { id: "poster-1", image: posterOne, label: "Poster simulasi 1" },
   { id: "poster-2", image: posterTwo, label: "Poster simulasi 2" },
 ];
-const simulationHref = "/final-simulation";
+const simulationHref = "/#/final-simulation";
 
 export const moduleMeta = {
   id: "simulasi-akhir",
