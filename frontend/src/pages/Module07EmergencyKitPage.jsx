@@ -2,7 +2,7 @@ import { useState } from "react";
 import obatItem from "../assets/items/obat-cutout.png";
 import antiseptikItem from "../assets/items/antibiotik-cutout.png";
 import perbanItem from "../assets/items/perban-cutout.png";
-import kasaItem from "../assets/items/kasa-cutout.png";
+import kasaItem from "../assets/items/lakbanluka-cutout.png";
 import plesterItem from "../assets/items/plester-cutout.png";
 import guntingItem from "../assets/items/gunting-cutout.png";
 import pinsetItem from "../assets/items/pinset-cutout.png";
@@ -30,11 +30,11 @@ const craftRecipes = [
     description: "Luka lecet atau gores kecil yang kotor perlu dibersihkan dengan antiseptik agar tidak infeksi.",
   },
   {
-    id: "kasa-plester",
+    id: "kasa-pleser",
     items: ["kasa", "plester"],
     title: "Perlindungan Luka",
     formula: "Kasa + Plester",
-    itemA: { label: "Kasa", icon: kasaItem },
+    itemA: { label: "Perban", icon: kasaItem },
     itemB: { label: "Plester", icon: plesterItem },
     result: actMed2,
     resultLabel: "Perlindungan Luka",
@@ -65,13 +65,13 @@ const craftRecipes = [
 ];
 
 const medkitMaterials = [
-  { id: "antiseptik", label: "Antiseptik", icon: antiseptikItem, description: "Membersihkan luka agar risiko infeksi berkurang." },
+  { id: "antiseptik", label: "Obat Merah", icon: antiseptikItem, description: "Membersihkan luka agar risiko infeksi berkurang." },
   { id: "gunting", label: "Gunting", icon: guntingItem, description: "Memotong perban, kasa, atau bahan medis sesuai kebutuhan." },
   { id: "plester", label: "Plester", icon: plesterItem, description: "Menahan kasa atau menutup luka kecil agar terlindungi." },
   { id: "sarungtangan", label: "Sarung Tangan", icon: sarungTanganItem, description: "Melindungi tangan saat menolong dan merawat luka." },
-  { id: "kasa", label: "Kasa", icon: kasaItem, description: "Menutup luka agar tetap bersih dan menyerap cairan luka." },
+  { id: "kasa", label: "Perban", icon: kasaItem, description: "Menutup luka agar tetap bersih dan menyerap cairan luka." },
   { id: "pinset", label: "Pinset", icon: pinsetItem, description: "Mengambil serpihan kecil tanpa menyentuh luka langsung." },
-  { id: "perban", label: "Perban", icon: perbanItem, description: "Membalut luka dan membantu menahan perdarahan ringan." },
+  { id: "perban", label: "Antiseptik", icon: perbanItem, description: "Menahan perdarahan ringan." },
   { id: "masker", label: "Masker", icon: maskerItem, description: "Menutup mulut dan hidung agar pertolongan lebih higienis." },
 ];
 
