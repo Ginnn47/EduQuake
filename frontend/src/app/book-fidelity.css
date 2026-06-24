@@ -2395,17 +2395,9 @@
   justify-self: center;
   max-height: clamp(560px, 48vw, 790px);
   position: relative;
-  width: min(128%, 560px);
+  width: min(100%, 560px);
 }
 
-.quest-module04-puzzle > img {
-  display: block;
-  height: 100%;
-  image-rendering: pixelated;
-  object-fit: contain;
-  pointer-events: none;
-  width: 100%;
-}
 
 .quest-module04-dropzone {
   align-items: center;
@@ -3207,6 +3199,22 @@
   text-align: center;
   text-transform: uppercase;
 }
+
+.quest-module04-route-piece.is-selected {
+  outline: 3px solid #ff0000; /* Garis merah penanda seleksi */
+  transform: scale(1.1);      /* Sedikit membesar agar menonjol */
+  z-index: 10;
+}
+
+/* Efek untuk rute yang sudah diletakkan (sudah digunakan) */
+.quest-module04-route-piece.is-used {
+  filter: grayscale(100%) brightness(50%); /* Membuatnya jadi hitam/abu-abu gelap */
+  opacity: 0.7;
+  cursor: not-allowed;
+  /* Tambahkan bayangan jika ingin */
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8); 
+}
+
 
 .quest-module05-info-header span {
   font-family: "VT323", "Pixelify Sans", monospace;
@@ -4365,7 +4373,21 @@
     padding: clamp(8px, 1vw, 14px) clamp(16px, 1.6vw, 24px) clamp(8px, 1vw, 14px) clamp(8px, 1vw, 14px);
   }
 
+
+  .quest-module04-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Mendorong konten ke tengah vertikal */
+  align-items: center; /* Mendorong konten ke tengah horizontal */
+  
+  /* PENTING: flex: 1 menyuruh bungkusan ini mengambil SEMUA sisa tinggi halaman */
+  flex: 1; 
+  width: 100%;
+}
   .quest-page--right {
+    display: flex;
+  flex-direction: column;
+  min-width: 0;
     padding: clamp(8px, 1vw, 14px) clamp(8px, 1vw, 14px) clamp(8px, 1vw, 14px) clamp(16px, 1.6vw, 24px);
   }
 
@@ -4396,6 +4418,9 @@
   .quest-book__spine {
     display: none;
   }
+ 
+/* Wrapper untuk Module 04 agar Title dan Puzzle berada di tengah vertikal */
+
 
   .quest-page--left,
   .quest-page--right {
@@ -4462,6 +4487,7 @@
     height: auto;
     padding: 10px;
   }
+
 
   .quest-module-header > img {
     display: block;

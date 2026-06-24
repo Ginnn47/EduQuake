@@ -11,11 +11,7 @@ const profileBadges = [
   { key: "badge-survival-ready", label: "Survival Ready", icon: badgeSprites.survivalReady },
 ];
 
-const navItems = [
-  { label: "Beranda", href: "#beranda" },
-  { label: "Modul Belajar", href: "#modul-belajar", active: true },
-  { label: "Tentang Kami", href: "#tentang-kami" },
-];
+const navItems = [{ label: "Modul Belajar", href: "#modul-belajar", active: true }];
 
 export const BookTopbar = ({
   modules = [],
@@ -29,7 +25,7 @@ export const BookTopbar = ({
 
   return (
     <header className="quest-topbar">
-      <a className="quest-brand" href="#beranda" aria-label="EduQuake">
+      <a className="quest-brand" href="#modul-belajar" aria-label="EduQuake">
         <img src={logoPanel} alt="" />
         <span className="quest-brand__text">
           <strong>EDUQUAKE</strong>

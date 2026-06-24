@@ -31,7 +31,7 @@ export const moduleMeta = {
   },
   headerImage: headRoute,
   subtitle: "Pelajari jalur evakuasi yang aman untuk keluarga",
-  pageTitle: "Follow the right path and assemble safely",
+  pageTitle: "Temukan Jalan yang Tepat !",
   description: "Pelajari titik kumpul, jalur alternatif, dan area terbuka agar keluarga punya arah yang jelas setelah gempa berhenti.",
   leftPosterOnly: true,
   hideTip: true,
@@ -46,8 +46,7 @@ export const moduleMeta = {
       { id: "route-02", title: "Jalur 02", piece: routePiece02, x: "87.54%", y: "17.08%", w: "6.64%", h: "10.03%" },
       { id: "safe-route", title: "Jalur Aman", piece: routePiece03, correct: true, x: "78.27%", y: "32.59%", w: "6.64%", h: "10.03%" },
       { id: "route-04", title: "Jalur 04", piece: routePiece04, x: "87.54%", y: "32.59%", w: "6.64%", h: "10.03%" },
-      { id: "route-05", title: "Jalur 05", piece: routePiece05, x: "78.27%", y: "43.50%", w: "6.64%", h: "10.03%" },
-      { id: "route-06", title: "Jalur 06", piece: routePiece06, x: "87.54%", y: "48.28%", w: "6.64%", h: "10.03%" },
+      { id: "route-05", title: "Jalur 05", piece: routePiece05, x: "78.27%", y: "48.28%", w: "6.64%", h: "10.03%" },        { id: "route-06", title: "Jalur 06", piece: routePiece06, x: "87.54%", y: "48.28%", w: "6.64%", h: "10.03%" },
       { id: "route-07", title: "Jalur 07", piece: routePiece07, x: "78.27%", y: "63.97%", w: "6.64%", h: "10.03%" },
       { id: "route-08", title: "Jalur 08", piece: routePiece08, x: "87.54%", y: "63.97%", w: "6.64%", h: "10.03%" },
       { id: "route-09", title: "Jalur 09", piece: routePiece09, x: "78.27%", y: "79.67%", w: "6.64%", h: "10.03%" },
@@ -78,24 +77,42 @@ const Module04EvacuationRoutePage = ({ module, gameplay, activeDetail, completed
     }
 
     setPlacedRoutes((current) => {
+      // Hapus rute dari state jika sebelumnya rute ini diletakkan di slot yang lain
       const withoutDuplicate = Object.fromEntries(
         Object.entries(current).filter(([, currentRouteId]) => currentRouteId !== routeId),
       );
+      
+      // Masukkan rute ke slot yang baru
       const next = {
         ...withoutDuplicate,
         [slotId]: routeId,
       };
-      const filledCount = gameplay.routeSlots.filter((slot) => next[slot.id]).length;
 
-      if (filledCount === gameplay.routeSlots.length) {
+      // --- KUNCI JAWABAN ---
+      const correctSequence = {
+        "slot-01": "route-09",
+        "slot-02": "route-10",
+        "slot-03": "route-02",
+        "slot-04": "route-05",
+      };
+
+      // Cek apakah isi dari 'next' (kondisi puzzle saat ini) 
+      // sama persis dengan kunci jawaban (correctSequence)
+      const isCorrect = Object.keys(correctSequence).every(
+        (slot) => next[slot] === correctSequence[slot]
+      );
+
+      // Trigger selesai hanya jika urutan sudah 100% benar
+      if (isCorrect) {
         markAction("safe-route", routeId);
       }
 
       return next;
     });
+    
     setActiveDetail(module.id, routeId);
   };
-
+  
   const chooseRoute = (route) => {
     const firstEmptySlot = gameplay.routeSlots.find((slot) => !placedRoutes[slot.id]);
 
@@ -115,94 +132,84 @@ const Module04EvacuationRoutePage = ({ module, gameplay, activeDetail, completed
       placeRoute(slotId, routeId);
     }
   };
+      // ... kode di atasnya tetap sama
 
   return (
-    <section className="quest-gameplay quest-gameplay--map quest-gameplay--module04">
-      <div
-        className={["quest-module04-puzzle", isRouteComplete ? "is-complete" : ""].filter(Boolean).join(" ")}
-      >
-        <img src={gameplay.puzzleImage} alt="" />
-        {gameplay.routeSlots.map((slot) => {
-          const placedRoute = gameplay.routes.find((route) => route.id === placedRoutes[slot.id]);
+    /* BUNGKUSAN BARU */
+    <div className="quest-module04-wrapper">
+      
+      <section className="quest-gameplay quest-gameplay--map quest-gameplay--module04">
+        <div
+          className={["quest-module04-puzzle", isRouteComplete ? "is-complete" : ""].filter(Boolean).join(" ")}
+        >
+          <img src={gameplay.puzzleImage} alt="" />
+          {gameplay.routeSlots.map((slot) => {
+            const placedRoute = gameplay.routes.find((route) => route.id === placedRoutes[slot.id]);
 
-          return (
+            return (
+              <button
+                key={slot.id}
+                type="button"
+                className={["quest-module04-dropzone", placedRoute ? "is-filled" : ""].filter(Boolean).join(" ")}
+                style={{
+                  "--module04-slot-x": slot.x,
+                  "--module04-slot-y": slot.y,
+                  "--module04-slot-w": slot.w,
+                  "--module04-slot-h": slot.h,
+                }}
+                onDragOver={(event) => event.preventDefault()}
+                onDrop={(event) => handleDrop(slot.id, event)}
+                onClick={() => {
+                  if (placedRoute) {
+                    setPlacedRoutes((current) => {
+                      const next = { ...current };
+                      delete next[slot.id];
+                      return next;
+                    });
+                    setActiveDetail(module.id, slot.id);
+                  }
+                }}
+                aria-label={placedRoute ? `${slot.label} berisi ${placedRoute.title}` : `${slot.label} kosong`}
+              >
+                {placedRoute?.piece ? <img src={placedRoute.piece} alt="" /> : null}
+              </button>
+            );
+          })}
+          {gameplay.routes.map((route) => (
             <button
-              key={slot.id}
+              key={route.id}
               type="button"
-              className={["quest-module04-dropzone", placedRoute ? "is-filled" : ""].filter(Boolean).join(" ")}
+              draggable={!usedRouteIds.has(route.id)}
+              className={[
+                "quest-module04-route-piece",
+                activeDetail === route.id ? "is-selected" : "",
+                usedRouteIds.has(route.id) ? "is-used" : "",
+              ].filter(Boolean).join(" ")}
               style={{
-                "--module04-slot-x": slot.x,
-                "--module04-slot-y": slot.y,
-                "--module04-slot-w": slot.w,
-                "--module04-slot-h": slot.h,
+                "--module04-piece-x": route.x,
+                "--module04-piece-y": route.y,
+                "--module04-piece-w": route.w,
+                "--module04-piece-h": route.h,
               }}
-              onDragOver={(event) => event.preventDefault()}
-              onDrop={(event) => handleDrop(slot.id, event)}
-              onClick={() => {
-                if (placedRoute) {
-                  setPlacedRoutes((current) => {
-                    const next = { ...current };
-                    delete next[slot.id];
-                    return next;
-                  });
-                  setActiveDetail(module.id, slot.id);
+              onDragStart={(event) => {
+                if (usedRouteIds.has(route.id)) {
+                  event.preventDefault();
+                  return;
                 }
-              }}
-              aria-label={placedRoute ? `${slot.label} berisi ${placedRoute.title}` : `${slot.label} kosong`}
-            >
-              {placedRoute?.piece ? <img src={placedRoute.piece} alt="" /> : null}
-            </button>
-          );
-        })}
-        {gameplay.routes.map((route) => (
-          <button
-            key={route.id}
-            type="button"
-            draggable={!usedRouteIds.has(route.id)}
-            className={[
-              "quest-module04-route-piece",
-              activeDetail === route.id ? "is-selected" : "",
-              usedRouteIds.has(route.id) ? "is-used" : "",
-            ].filter(Boolean).join(" ")}
-            style={{
-              "--module04-piece-x": route.x,
-              "--module04-piece-y": route.y,
-              "--module04-piece-w": route.w,
-              "--module04-piece-h": route.h,
-            }}
-            onDragStart={(event) => {
-              if (usedRouteIds.has(route.id)) {
-                event.preventDefault();
-                return;
-              }
 
-              event.dataTransfer.setData("text/plain", route.id);
-            }}
-            onClick={() => chooseRoute(route)}
-            aria-label={`Pilih ${route.title}`}
-            disabled={usedRouteIds.has(route.id)}
-          >
-            <img src={route.piece} alt="" />
-          </button>
-        ))}
-      </div>
-      <aside className="quest-module04-route-tip">
-        <div className="quest-module04-route-tip__row">
-          <div>
-            <strong>Kenali Rute Aman</strong>
-            <p>Pilih jalur terbuka menuju titik kumpul. Ikuti rambu evakuasi, tetap bersama rombongan, dan gunakan jalur yang paling jelas terlihat.</p>
-          </div>
-          <img src={womanGuideRoute} alt="" />
+                event.dataTransfer.setData("text/plain", route.id);
+              }}
+              onClick={() => chooseRoute(route)}
+              aria-label={`Pilih ${route.title}`}
+              disabled={usedRouteIds.has(route.id)}
+            >
+              <img src={route.piece} alt="" />
+            </button>
+          ))}
         </div>
-        <div className="quest-module04-route-tip__row quest-module04-route-tip__row--reverse">
-          <img src={womanGuideRisk} alt="" />
-          <div>
-            <strong>Hindari Area Berisiko</strong>
-            <p>Jauhi zona retak, tiang listrik rawan, jembatan rusak, bangunan tinggi, dan area sempit yang bisa menghambat evakuasi.</p>
-          </div>
-        </div>
-      </aside>
-    </section>
+      </section>
+
+    </div>
   );
 };
 
