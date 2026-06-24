@@ -38,6 +38,11 @@ export const moduleMeta = {
         answer: "Area rawan, jalur aman, dan bangunan sekitar",
         options: ["Area rawan, jalur aman, dan bangunan sekitar", "Warna baju petugas", "Arah dekorasi ruangan"],
       },
+      {
+        question: "Bentuk mitigasi struktural untuk mengurangi dampak gempa adalah?",
+        answer: "Membangun rumah dengan struktur tahan gempa",
+        options: ["Membangun rumah dengan struktur tahan gempa", "Menyediakan tas siaga bencana", "Menghafal jalur evakuasi"],
+      }
     ],
   },
   rewards: [rewardItems.senter, rewardItems.gunting],
@@ -112,19 +117,22 @@ export const moduleMeta = {
   },
 };
 
-const Module02EarthquakePage = ({ module, gameplay, activeDetail, completedActions, markAction, currentQuizIndex, quizQuestions, setQuizQuestionIndex, renderQuizBlock }) => {
-  const activeNote = gameplay.notes.find((note) => note.id === activeDetail) ?? gameplay.notes[0];
+const Module02EarthquakePage = ({ module, gameplay, activeDetail, completedActions, markAction, currentQuizIndex, quizQuestions, setQuizQuestionIndex, renderQuizBlock, quizAnswers = {} }) => {
+  
   const goToQuestion = (offset) => {
     const nextIndex = (currentQuizIndex + offset + quizQuestions.length) % quizQuestions.length;
-
     setQuizQuestionIndex(module.id, nextIndex);
   };
 
+  const isCurrentAnswered = quizAnswers[currentQuizIndex] !== undefined;
+
   return (
     <section className="quest-gameplay quest-gameplay--seismic quest-gameplay--module02">
-      <p className="quest-module02-instruction">Klik catatan hijau untuk membuka materi.</p>
+      <p className="quest-module02-instruction">Klik catatan untuk membuka materi.</p>
 
       <div className="quest-module02-notes" style={{ "--module02-notes": `url(${notesBoard})` }} aria-label="Catatan penyelidik">
+        
+        {/* 1. Merender SEMUA area klik (tombol hotspot) */}
         {gameplay.notes.map((note) => (
           <button
             key={note.id}
@@ -133,21 +141,28 @@ const Module02EarthquakePage = ({ module, gameplay, activeDetail, completedActio
               "quest-module02-note-button",
               note.buttonClass,
               completedActions.includes(note.id) ? "is-open" : "",
-              activeNote.id === note.id ? "is-active" : "",
+              activeDetail === note.id ? "is-active" : "",
             ].filter(Boolean).join(" ")}
             onClick={() => markAction(note.id)}
             aria-label={note.title}
           />
         ))}
-        <article className={["quest-module02-note-paper", activeNote.paperClass].join(" ")}>
-          <strong>{activeNote.title}</strong>
-          <small>{activeNote.detail}</small>
-        </article>
+
+        {/* 2. Merender SEMUA tulisan yang SUDAH diklik (disimpan di mading) */}
+        {gameplay.notes.map((note) => {
+          if (!completedActions.includes(note.id)) return null; // Sembunyikan kalau belum diklik
+          return (
+            <article key={`paper-${note.id}`} className={["quest-module02-note-paper", note.paperClass].join(" ")}>
+              <strong>{note.title}</strong>
+              <small>{note.detail}</small>
+            </article>
+          );
+        })}
       </div>
 
       <article className="quest-module02-question-nav" aria-label="Navigasi pertanyaan modul">
         <button type="button" onClick={() => goToQuestion(-1)} aria-label="Pertanyaan sebelumnya">&lt;</button>
-        <span>Pertanyaan {currentQuizIndex + 1} / {quizQuestions.length}</span>
+        <span>Pertanyaan {currentQuizIndex + 1} / {quizQuestions.length} {isCurrentAnswered ? "✓" : ""}</span>
         <button type="button" onClick={() => goToQuestion(1)} aria-label="Pertanyaan berikutnya">&gt;</button>
       </article>
 

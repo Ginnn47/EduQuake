@@ -155,12 +155,13 @@ const inspectionObjects = [
 
 const requiredDangerIds = ["gas", "kabel", "tv", "kaca", "rak-buku"];
 
+// Koordinat presisi untuk 5 kolom sejajar
 const inspectionSlotPositions = [
-  { x: 3.01, y: 10.93, w: 30.31, h: 42.64 },
-  { x: 35.63, y: 10.93, w: 30.31, h: 42.64 },
-  { x: 68.47, y: 10.93, w: 30.31, h: 42.64 },
-  { x: 16.8, y: 59.52, w: 32.1, h: 40.62 },
-  { x: 54.89, y: 59.52, w: 32.1, h: 40.62 },
+  { x: 5.0,  y: 28.0, w: 16.0, h: 62.0 },
+  { x: 23.5, y: 28.0, w: 16.0, h: 62.0 },
+  { x: 42.0, y: 28.0, w: 16.0, h: 62.0 },
+  { x: 60.5, y: 28.0, w: 16.0, h: 62.0 },
+  { x: 79.0, y: 28.0, w: 16.0, h: 62.0 },
 ];
 
 export const moduleMeta = {
@@ -198,29 +199,30 @@ export const moduleMeta = {
 const Module06HomeMitigationPage = ({ module, gameplay, activeDetail, completedActions, markAction, setActiveDetail, placement = "default" }) => {
   const selectedObject = gameplay.objects.find((object) => object.id === activeDetail) ?? gameplay.objects[0];
   const foundDangerCount = requiredDangerIds.filter((id) => completedActions.includes(id)).length;
+  
   const storedDangerObjects = completedActions
     .filter((actionId) => requiredDangerIds.includes(actionId))
     .map((actionId) => gameplay.objects.find((object) => object.id === actionId))
     .filter(Boolean)
     .slice(0, requiredDangerIds.length);
+    
   const canPreviewNonDanger = foundDangerCount < requiredDangerIds.length;
+  // Menampilkan preview objek Aman/Waspada (seperti sofa, pot, mainan) HANYA jika misi bahaya belum 100% selesai
   const previewObject = selectedObject.status !== "Bahaya" && canPreviewNonDanger ? selectedObject : null;
+  
   const displayedInspectionObjects = previewObject
     ? [...storedDangerObjects, previewObject].slice(0, requiredDangerIds.length)
     : storedDangerObjects;
-  const mitigationObjects = storedDangerObjects.slice(0, 3);
 
+  // === FUNGSI KLIK YANG SEHAT ===
   const inspectObject = (object) => {
+    // 1. Selalu laporkan semua benda yang diklik ke sistem agar UI tombol dan papan inspeksi merespon
+    setActiveDetail(module.id, object.id);
+
+    // 2. Jika benda yang diklik adalah BAHAYA, kirim datanya untuk dicatat sebagai misi berhasil
     if (object.status === "Bahaya") {
       markAction(object.id, object.id);
-      return;
     }
-
-    if (!canPreviewNonDanger) {
-      return;
-    }
-
-    setActiveDetail(module.id, object.id);
   };
 
   if (placement === "left") {
@@ -238,6 +240,7 @@ const Module06HomeMitigationPage = ({ module, gameplay, activeDetail, completedA
                 completedActions.includes(object.id) ? "is-found" : "",
               ].filter(Boolean).join(" ")}
               style={{
+                // Hanya mengandalkan CSS bawaan class milikmu agar tidak bertabrakan
                 "--module06-x": object.x,
                 "--module06-y": object.y,
               }}
@@ -253,43 +256,117 @@ const Module06HomeMitigationPage = ({ module, gameplay, activeDetail, completedA
   }
 
   return (
-    <section className="quest-gameplay quest-gameplay--module06 quest-gameplay--module06-right">
-        <img className="quest-module06-scale" src={dangerScale} alt="" />
+    <section 
+      className="quest-gameplay quest-gameplay--module06 quest-gameplay--module06-right"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        height: "100%",
+        width: "100%",
+        boxSizing: "border-box"
+      }}
+    >
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <img 
+          className="quest-module06-scale" 
+          src={dangerScale} 
+          alt="Skala Bahaya" 
+          style={{ width: "100%", height: "auto", objectFit: "contain", display: "block" }}
+        />
+      </div>
 
-        <figure className="quest-module06-inspection-board">
-          <img className="quest-module06-inspection-board__frame" src={inspectionBoard} alt="" />
-          {displayedInspectionObjects.map((object, index) => (
-            <figcaption
-              key={object.id}
-              className={`quest-module06-inspection-slot is-${object.status.toLowerCase()}`}
-              style={{
-                "--module06-slot-x": `${inspectionSlotPositions[index].x}%`,
-                "--module06-slot-y": `${inspectionSlotPositions[index].y}%`,
-                "--module06-slot-w": `${inspectionSlotPositions[index].w}%`,
-                "--module06-slot-h": `${inspectionSlotPositions[index].h}%`,
-              }}
-            >
-              <img src={object.image} alt="" />
-              <strong>{object.name}</strong>
-              <small>{object.risk}</small>
-            </figcaption>
-          ))}
-        </figure>
+      <figure 
+        className="quest-module06-inspection-board" 
+        style={{ 
+          position: "relative", 
+          width: "100%", 
+          margin: "1rem 0", 
+          display: "flex", 
+          justifyContent: "center" 
+        }}
+      >
+        <img 
+          className="quest-module06-inspection-board__frame" 
+          src={inspectionBoard} 
+          alt="Papan Inspeksi" 
+          style={{ width: "100%", height: "auto", display: "block" }} 
+        />
+       {displayedInspectionObjects.map((object, index) => (
+  <figcaption
+    key={object.id}
+    className={`quest-module06-inspection-slot is-${object.status.toLowerCase()}`}
+    style={{
+      position: "absolute",
+      left: `${inspectionSlotPositions[index].x}%`,
+      top: `${inspectionSlotPositions[index].y}%`,
+      width: `${inspectionSlotPositions[index].w}%`,
+      height: `${inspectionSlotPositions[index].h}%`,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      padding: "15% 4% 5% 4%", // Padding disesuaikan agar lebih proporsional
+      boxSizing: "border-box",
+      textAlign: "center",
+      overflow: "hidden" 
+    }}
+  >
+    {/* Wrapper gambar fleksibel */}
+      <div style={{ 
+      flex: "1 1 auto", // Mengisi ruang yang tersedia secara proporsional
+      width: "100%", 
+      display: "flex", 
+      alignItems: "center", 
+      justifyContent: "center", 
+      marginBottom: "8px",
+      minHeight: "0" // Mencegah flex item meluap
+    }}>
+      <img 
+        src={object.image} 
+        alt={object.name} 
+        style={{ 
+          maxWidth: "100%", 
+          maxHeight: "100%", 
+          objectFit: "contain" // Menjaga aspek rasio gambar
+        }} 
+      />
+      </div>
+    
+      {/* Teks tetap di bawah */}
+      <strong style={{ 
+      fontSize: "clamp(6px, 0.9vw, 9px)", 
+      lineHeight: "1", 
+      marginBottom: "4px",
+      color: "#111"
+      }}>
+      {object.name}
+      </strong>
+       <small style={{ 
+      fontSize: "clamp(5px, 0.6vw, 8px)", 
+      lineHeight: "1.2", 
+      color: "#333",
+      display: "-webkit-box",
+      WebkitLineClamp: 3,
+      WebkitBoxOrient: "vertical",
+      overflow: "hidden"
+        }}>
+      {object.risk}
+      </small>
+      </figcaption>
+      ))}
+      </figure>
 
-        <article className="quest-module06-mitigation">
-          <strong>Penanggulangan Bahaya</strong>
-          <ul>
-            {mitigationObjects.map((object, index) => (
-              <li key={object.id}>
-                <b>{index + 1}</b>
-                <span>{object.fix}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-        <p className="quest-module06-found">{foundDangerCount} / {requiredDangerIds.length} bahaya ditemukan</p>
-        <img className="quest-module06-meja-illustration" src={mejaIllustration} alt="" />
-      </section>
+      <div style={{ width: "100%", marginTop: "auto" }}>        
+        <p 
+          className="quest-module06-found" 
+          style={{ textAlign: "center", marginTop: "10px", fontWeight: "bold" }}
+        >
+          {foundDangerCount} / {requiredDangerIds.length} bahaya ditemukan
+        </p>
+      </div>
+    </section>
   );
 };
 

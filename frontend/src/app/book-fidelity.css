@@ -1250,6 +1250,50 @@
   transform: translateX(5px);
 }
 
+/* 1. Bikin lingkaran kosong di sebelah kanan sebagai tempat/indikator default */
+.quest-bookmark-drawer__item::after {
+  content: "";
+  position: absolute;
+  right: clamp(16px, 2.5vw, 24px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(16px, 2vw, 20px);
+  height: clamp(16px, 2vw, 20px);
+  border: 2px solid rgba(43, 29, 14, 0.3);
+  border-radius: 50%;
+  background: rgba(255, 238, 184, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent; /* Teks disembunyikan dulu */
+  font-family: "Pixelify Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-size: clamp(0.55rem, 0.65vw, 0.75rem);
+  font-weight: 800;
+  transition: all 0.2s ease;
+  z-index: 3;
+}
+
+/* 2. Highlight lingkaran kalau bookmark sedang aktif (is-active) */
+.quest-bookmark-drawer__item.is-active::after {
+  border-color: var(--codex-gold);
+  box-shadow: 0 0 8px rgba(217, 164, 65, 0.5);
+  background: rgba(217, 164, 65, 0.2);
+}
+
+/* 3. Ubah lingkaran jadi label "SELESAI" warna hijau kalau sudah dikerjakan (is-stamped) */
+.quest-bookmark-drawer__item.is-stamped::after {
+  content: "SELESAI";
+  width: auto; /* Biar melebar menyesuaikan teks */
+  height: auto;
+  border-radius: 12px; /* Ubah dari lingkaran penuh jadi bentuk oval/pill */
+  padding: 4px 10px;
+  background: var(--codex-green); /* Pakai warna hijau dari variabel yang udah ada */
+  border-color: #1a2e1d;
+  color: #f6e5b5; /* Teks warna terang biar kontras */
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  letter-spacing: 0.5px;
+}
+
 .quest-bookmark-drawer__item.is-stamped {
   filter: sepia(0.06) saturate(1.08) brightness(1.02);
 }
@@ -1278,6 +1322,8 @@
   line-height: 0.95;
   text-transform: uppercase;
 }
+
+
 
 .quest-bookmark-drawer__text small {
   color: #1f150b;
@@ -1534,6 +1580,8 @@
   transform: rotate(45deg);
   width: 6px;
 }
+
+
 
 .quest-module02-note-button--top-left {
   left: 6.4%;
@@ -3192,7 +3240,6 @@
 }
 
 .quest-module05-call-card--info {
-  margin-top: 20px;
   max-height: clamp(256px, 16.4vw, 312px);
   width: 200%;
 }

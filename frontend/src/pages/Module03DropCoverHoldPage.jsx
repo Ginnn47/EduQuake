@@ -113,7 +113,9 @@ const Module03DropCoverHoldPage = ({ module, gameplay, activeDetail, completedAc
             {hasSelectedDecision ? (
               <img src={selectedDecision.panel} alt="" />
             ) : (
-              <figcaption>Choose Right Act</figcaption>
+              <figcaption style={{ color: "#B13A2E", fontSize: "1.75rem", fontWeight: "900", textAlign: "center", textTransform: "uppercase", textShadow: "1px 1px 0px rgba(0,0,0,0.2)" }}>
+                Choose The Right Action!
+              </figcaption>
             )}
           </figure>
         </div>
