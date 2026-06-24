@@ -1,8 +1,9 @@
 {
-  "chalkboard_hazard": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_007.png",
-  "cabinet": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_041.png",
-  "cupboard_hazard": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_035.png",
-  "poster": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_046.png",
-  "poster_2": "frontend/public/game/assets/objects/simulation_selector/tileset1/tileset1_object_042.png",
-  "debris_3": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_054.png"
+  "alarm": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_069.png",
+  "pemadam": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_066.png",
+  "debris_1": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_054.png",
+  "debris_2": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_059.png",
+  "debris_3": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_047.png",
+  "debris_4": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_060.png",
+  "warning_icon": "frontend/public/game/assets/objects/simulation_selector/tileset2_hazard/tileset2_hazard_object_055.png"
 }
