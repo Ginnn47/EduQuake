@@ -531,7 +531,6 @@ export default class ClassroomScene extends Phaser.Scene {
     }
 
     this.handlePlayerMovement();
-    this.updateTimsarFollower();
 
     this.updateActFlow(time);
     this.updateDustOverlay();
@@ -2745,7 +2744,8 @@ export default class ClassroomScene extends Phaser.Scene {
     this.showComicCutIn("comic8");
     this.safeMarker?.setVisible(false);
     this.exitMarker?.setVisible(true);
-    this.spawnTimsarOfficer();
+    this.timsarOfficer?.setVisible(false);
+    this.timsarOfficerReady = false;
     const evacuationCandidates = [
       this.injuredStudent,
       ...this.npcs.filter((npc) => npc.visible && npc !== this.teacherNpc && npc !== this.injuredStudent && !npc.hasEscaped),
